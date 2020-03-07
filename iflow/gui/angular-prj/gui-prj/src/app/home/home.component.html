@@ -4,7 +4,9 @@
 <div class="cubes-container-parent">
 
 	<div class="cubes-container">
-		
+		<div class="cubes-container-toolbar">
+			<i class="material-icons cubes-container-toolbar-button" (click)="startEditCubes()">build</i>
+		</div>
 		<div *ngFor="let cubeRow of cubes; let row = index">
 		
 			<a *ngFor="let cube of cubeRow; let col = index" class="cube" (click)="selectMenuItem(cube)">

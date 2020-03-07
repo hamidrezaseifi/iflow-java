@@ -112,5 +112,10 @@ export class HomeComponent implements OnInit {
       this.hideMenuDialog();
     }
     
+    startEditCubes(){
+      
+    }
+    
+    
 
 }

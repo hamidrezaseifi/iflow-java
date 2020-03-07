@@ -6,26 +6,26 @@
 
 .cubes-container{
 	margin: 30px auto;
-	background-color: #ededed;
+	background-color: #f7f7f7;
 	min-height: 300px;
 	padding: 2px;
 }
 
 a.cube{
 	display: inline-block;
-	border: 2px solid gray;
+	border: 2px solid #f4f4f4;
 	background-color: white;
 	margin: 2px;
-	width: 120px;
-	height: 120px;
+	width: 100px;
+	height: 100px;
 	cursor: pointer;
 }
 
 span.cube-text{
-	color: gray;
+	color: #efefef;
 	display: block;
 	text-align: center;
-	line-height: 120px;
+	line-height: 100px;
 }
 
 .modal-dialog.menuitem-dialog{
@@ -82,5 +82,21 @@ span.cube-text{
     width: 20px;
     height: 20px;
     float: left;
+}
+
+.cubes-container-toolbar{
+	height: 30px;
+	margin-bottom: 5px;	
+	padding: 3px 10px;
+}
+
+.cubes-container-toolbar-button{
+	font-size: 14px;
+    float: left;
+    color: gray;
+    cursor: pointer;
+    border: 2px solid gray;
+    border-radius: 50%;
+    padding: 2px;
 }
 
