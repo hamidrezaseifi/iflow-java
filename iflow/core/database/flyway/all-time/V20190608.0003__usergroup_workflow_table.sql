@@ -1,7 +1,7 @@
 
 
 
-CREATE SEQUENCE companies_id_seq;
+CREATE SEQUENCE companies_id_seq INCREMENT 10 START 1;
   
 CREATE TABLE companies (
   id bigint NOT NULL PRIMARY KEY DEFAULT nextval('companies_id_seq'),
@@ -16,7 +16,7 @@ CREATE TABLE companies (
 );
 ALTER SEQUENCE companies_id_seq OWNED BY companies.id;
 
-CREATE SEQUENCE departments_id_seq;
+CREATE SEQUENCE departments_id_seq INCREMENT 10 START 1;
 
 CREATE TABLE departments (
   id bigint NOT NULL PRIMARY KEY DEFAULT nextval('departments_id_seq'),
@@ -33,7 +33,7 @@ CREATE TABLE departments (
 ALTER SEQUENCE departments_id_seq OWNED BY departments.id;
 
 
-CREATE SEQUENCE iflow_roles_id_seq;
+CREATE SEQUENCE iflow_roles_id_seq INCREMENT 10 START 1;
  
 CREATE TABLE iflow_roles (
   id bigint NOT NULL PRIMARY KEY DEFAULT nextval('iflow_roles_id_seq'),
@@ -46,7 +46,7 @@ CREATE TABLE iflow_roles (
 ALTER SEQUENCE iflow_roles_id_seq OWNED BY iflow_roles.id;
  
 
-CREATE SEQUENCE users_id_seq;
+CREATE SEQUENCE users_id_seq INCREMENT 10 START 1;
 
 CREATE TABLE users (
   id bigint NOT NULL PRIMARY KEY DEFAULT nextval('users_id_seq'),
@@ -68,7 +68,7 @@ CREATE TABLE users (
 ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
  
-CREATE SEQUENCE user_group_id_seq;
+CREATE SEQUENCE user_group_id_seq INCREMENT 10 START 1;
  
 CREATE TABLE user_group (
   id bigint NOT NULL PRIMARY KEY DEFAULT nextval('user_group_id_seq'),
@@ -95,7 +95,7 @@ CREATE TABLE user_deputy (
 ) ;
 
 
-CREATE SEQUENCE user_department_id_seq;
+CREATE SEQUENCE user_department_id_seq INCREMENT 10 START 1;
 
 
 CREATE TABLE user_departments (
@@ -129,7 +129,7 @@ CREATE TABLE user_roles (
   CONSTRAINT FK_USERROLES_USERS FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
-CREATE SEQUENCE workflow_type_id_seq;
+CREATE SEQUENCE workflow_type_id_seq INCREMENT 10 START 1;
 
 CREATE TABLE workflow_type (
   id bigint NOT NULL PRIMARY KEY DEFAULT nextval('workflow_type_id_seq'),
@@ -148,7 +148,7 @@ CREATE TABLE workflow_type (
 ALTER SEQUENCE workflow_type_id_seq OWNED BY workflow_type.id;
 
 
-CREATE SEQUENCE workflow_type_step_id_seq;
+CREATE SEQUENCE workflow_type_step_id_seq INCREMENT 10 START 1;
  
 CREATE TABLE workflow_type_step (
   id bigint NOT NULL PRIMARY KEY DEFAULT nextval('workflow_type_step_id_seq'),
@@ -169,7 +169,7 @@ CREATE TABLE workflow_type_step (
 ALTER SEQUENCE workflow_type_step_id_seq OWNED BY workflow_type_step.id;
 
 
-CREATE SEQUENCE workflow_id_seq;
+CREATE SEQUENCE workflow_id_seq INCREMENT 10 START 1;
  
 CREATE TABLE workflow (
   id bigint NOT NULL PRIMARY KEY DEFAULT nextval('workflow_id_seq'),
@@ -193,7 +193,7 @@ CREATE TABLE workflow (
 ALTER SEQUENCE workflow_id_seq OWNED BY workflow.id;
 
 
-CREATE SEQUENCE workflow_actions_id_seq;
+CREATE SEQUENCE workflow_actions_id_seq INCREMENT 10 START 1;
  
 CREATE TABLE workflow_actions (
   id bigint NOT NULL PRIMARY KEY DEFAULT nextval('workflow_actions_id_seq'),
@@ -211,7 +211,7 @@ ALTER SEQUENCE workflow_actions_id_seq OWNED BY workflow_actions.id;
 
 
 
-CREATE SEQUENCE workflow_files_id_seq;
+CREATE SEQUENCE workflow_files_id_seq INCREMENT 10 START 1;
  
 CREATE TABLE workflow_files (
   id bigint NOT NULL PRIMARY KEY DEFAULT nextval('workflow_files_id_seq'),
@@ -234,7 +234,7 @@ ALTER SEQUENCE workflow_files_id_seq OWNED BY workflow_files.id;
 
  
  
-CREATE SEQUENCE workflow_files_versions_id_seq;
+CREATE SEQUENCE workflow_files_versions_id_seq INCREMENT 10 START 1;
 
 CREATE TABLE workflow_files_versions (
   id bigint NOT NULL PRIMARY KEY DEFAULT nextval('workflow_files_versions_id_seq'),

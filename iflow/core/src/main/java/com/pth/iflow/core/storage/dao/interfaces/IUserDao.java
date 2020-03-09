@@ -3,6 +3,7 @@ package com.pth.iflow.core.storage.dao.interfaces;
 import java.util.Collection;
 import java.util.List;
 
+import com.pth.iflow.core.model.entity.UserDashboardMenuEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
@@ -27,5 +28,12 @@ public interface IUserDao {
   public List<UserEntity> getAllUserIdentityListByDepartmentId(final String identity) throws IFlowStorageException;
 
   public UserEntity getLastIdentity(Long companyId) throws IFlowStorageException;
+
+  public List<UserDashboardMenuEntity> getUserDashboardMenuListByUserId(Long id) throws IFlowStorageException;
+
+  public List<UserDashboardMenuEntity> getUserDashboardMenuListByUserIdentity(final String identity) throws IFlowStorageException;
+
+  public List<UserDashboardMenuEntity> saveUserDashboardMenuListByUserId(Long id, List<UserDashboardMenuEntity> list)
+      throws IFlowStorageException;
 
 }

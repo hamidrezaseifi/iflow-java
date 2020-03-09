@@ -147,6 +147,7 @@ public class TestDataProducer {
     edo.setPresetName(presetName);
     edo.setVersion(1);
     edo.setWorkflowTypeIdentity("workflowIdentity");
+    edo.setIdentity("identity-" + presetName);
     edo
         .setItems(Arrays
             .asList(getTestCompanyWorkflowtypeItemOcrSettingPresetItemEdo("prop-1"),

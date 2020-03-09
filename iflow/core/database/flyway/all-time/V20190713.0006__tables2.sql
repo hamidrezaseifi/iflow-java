@@ -33,7 +33,7 @@ INSERT INTO workflow_type_step(id, identity, workflow_type_id, title, step_index
 
 DROP SEQUENCE IF EXISTS  workflow_message_id_seq;
 
-CREATE SEQUENCE workflow_message_id_seq;
+CREATE SEQUENCE workflow_message_id_seq INCREMENT 10 START 1;
 
 CREATE TABLE workflow_message (
   id bigint NOT NULL PRIMARY KEY DEFAULT nextval('workflow_message_id_seq'),

@@ -1,4 +1,5 @@
 
+DROP TABLE IF EXISTS user_dashboard_menus;
 
 DROP TABLE IF EXISTS company_workflowtype_items_ocr_preset_items;
 
@@ -81,4 +82,7 @@ DROP SEQUENCE IF EXISTS company_workflowtype_items_ocr_settings_seq;
 DROP SEQUENCE IF EXISTS company_workflowtype_items_ocr_preset_seq;
 
 DROP SEQUENCE IF EXISTS company_workflowtype_items_ocr_preset_items_seq;
+
+DROP SEQUENCE IF EXISTS user_dashboard_menus_seq;
+
 

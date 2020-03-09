@@ -12,9 +12,11 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pth.iflow.core.model.entity.UserDashboardMenuEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
@@ -132,6 +134,92 @@ public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
     final List<UserEntity> list = typedQuery.getResultList();
 
     return list.size() > 0 ? list.get(0) : null;
+  }
+
+  @Override
+  public List<UserDashboardMenuEntity> getUserDashboardMenuListByUserId(final Long id) throws IFlowStorageException {
+
+    final Session session = this.createSession();
+
+    final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+    final CriteriaQuery<UserDashboardMenuEntity> query = criteriaBuilder.createQuery(UserDashboardMenuEntity.class);
+    final Root<UserDashboardMenuEntity> root = query.from(UserDashboardMenuEntity.class);
+    query.select(root);
+
+    final Path<String> userIdPath = root.get("userId");
+    final Predicate predicate = criteriaBuilder.equal(userIdPath, id);
+    query.where(predicate);
+
+    final TypedQuery<UserDashboardMenuEntity> typedQuery = session.createQuery(query);
+
+    // final String qr =
+    // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
+    // System.out.println("search workflow query: " + qr);
+
+    final List<UserDashboardMenuEntity> list = typedQuery.getResultList();
+    session.close();
+    return list;
+  }
+
+  @Override
+  public List<UserDashboardMenuEntity> getUserDashboardMenuListByUserIdentity(final String identity) throws IFlowStorageException {
+
+    final Session session = this.createSession();
+
+    final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+    final CriteriaQuery<UserDashboardMenuEntity> query = criteriaBuilder.createQuery(UserDashboardMenuEntity.class);
+    final Root<UserDashboardMenuEntity> root = query.from(UserDashboardMenuEntity.class);
+    query.select(root);
+
+    final Path<String> userIdentityPath = root.get("user").get("identity");
+    final Predicate predicate = criteriaBuilder.equal(userIdentityPath, identity);
+    query.where(predicate);
+
+    final TypedQuery<UserDashboardMenuEntity> typedQuery = session.createQuery(query);
+
+    // final String qr =
+    // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
+    // System.out.println("search workflow query: " + qr);
+
+    final List<UserDashboardMenuEntity> list = typedQuery.getResultList();
+    session.close();
+    return list;
+  }
+
+  @Override
+  public List<UserDashboardMenuEntity> saveUserDashboardMenuListByUserId(final Long id, final List<UserDashboardMenuEntity> list)
+      throws IFlowStorageException {
+
+    deleteAllUserDashboardMenuListByUserId(id);
+
+    final Session session = this.createSession();
+    final Transaction transaction = session.beginTransaction();
+
+    for (final UserDashboardMenuEntity userDashboardMenu : list) {
+      userDashboardMenu.setUserId(id);
+      userDashboardMenu.setVersion(1);
+      session.persist(userDashboardMenu);
+    }
+    transaction.commit();
+    session.close();
+
+    return getUserDashboardMenuListByUserId(id);
+  }
+
+  @Transactional
+  private void deleteAllUserDashboardMenuListByUserId(final Long id) {
+
+    final Session session = this.createSession();
+
+    final Transaction transaction = session.beginTransaction();
+    session
+        .createQuery("delete UserDashboardMenuEntity where userId= :userid")
+        .setParameter("userid", id)
+        .executeUpdate();
+
+    transaction.commit();
+    session.close();
+
   }
 
 }

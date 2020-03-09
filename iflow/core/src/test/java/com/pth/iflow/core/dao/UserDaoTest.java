@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.UserDashboardMenuEntity;
 import com.pth.iflow.core.model.entity.UserDepartmentEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
@@ -194,6 +195,44 @@ public class UserDaoTest extends TestDataProducer {
     Assert
         .assertEquals("Result user has lastname '" + createdUser.getFirstName() + "'!", updatedUser.getLastName(),
             createdUser.getLastName());
+
+  }
+
+  @Test
+  public void testSaveUserDashboardMenuListByUserId() throws Exception {
+
+    final UserEntity user = getTestNewUser();
+    user.setVersion(10);
+    user.setDeputies(new ArrayList<>());
+    user.setGroups(new ArrayList<>());
+    user.setRoles(new ArrayList<>());
+    user.setUserDepartments(new ArrayList<>());
+
+    final UserEntity createdUser = userDao.create(user);
+    createdModels.add(createdUser);
+
+    Assert.assertNotNull("Result created user is not null!", createdUser);
+
+    final List<UserDashboardMenuEntity> list = userDao.getUserDashboardMenuListByUserId(createdUser.getId());
+
+    Assert.assertTrue("Result list is empty!", list.isEmpty());
+
+    for (int i = 1; i < 5; i++) {
+      final UserDashboardMenuEntity userDashboardMenu = new UserDashboardMenuEntity();
+      userDashboardMenu.setUserId(createdUser.getId());
+      userDashboardMenu.setColumnIndex(i);
+      userDashboardMenu.setRowIndex(i);
+      userDashboardMenu.setStatus(1);
+      userDashboardMenu.setMenuId("menuId-" + i);
+      list.add(userDashboardMenu);
+    }
+
+    final List<UserDashboardMenuEntity> savedList = userDao.saveUserDashboardMenuListByUserId(createdUser.getId(), list);
+    Assert.assertNotNull("Result list is not null!", savedList);
+    Assert.assertEquals("Result list has the same size of source!", savedList.size(), list.size());
+    Assert
+        .assertEquals("First item of result list has the same row_index of source!", savedList.get(0).getRowIndex(),
+            list.get(0).getRowIndex());
 
   }
 

@@ -1,6 +1,6 @@
 
 
-CREATE SEQUENCE company_workflowtype_items_ocr_preset_seq;
+CREATE SEQUENCE company_workflowtype_items_ocr_preset_seq INCREMENT 10 START 1;
 
 CREATE TABLE company_workflowtype_items_ocr_preset
 (
@@ -30,7 +30,7 @@ CREATE TABLE company_workflowtype_items_ocr_preset
 ALTER SEQUENCE company_workflowtype_items_ocr_preset_seq OWNED BY company_workflowtype_items_ocr_preset.id;
 
 
-CREATE SEQUENCE company_workflowtype_items_ocr_preset_items_seq;
+CREATE SEQUENCE company_workflowtype_items_ocr_preset_items_seq INCREMENT 10 START 1;
 
 CREATE TABLE company_workflowtype_items_ocr_preset_items
 (

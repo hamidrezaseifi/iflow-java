@@ -1,6 +1,4 @@
 
-DROP TABLE IF EXISTS company_workflowtype_controller;
-
 CREATE TABLE company_workflowtype_controller (
   company_id bigint NOT NULL,
   workflow_type_id bigint NOT NULL,
