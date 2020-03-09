@@ -144,6 +144,11 @@ public class UserDashboardMenuEntity extends EntityHelper {
     this.createdAt = createdAt;
   }
 
+  public UserEntity getUser() {
+
+    return user;
+  }
+
   @Override
   public void increaseVersion() {
 

@@ -1,12 +1,17 @@
 package com.pth.iflow.common.models.edo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 
 @XmlRootElement(name = "ProfileResponse", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -26,6 +31,11 @@ public class ProfileResponseEdo {
   @XmlElement(name = "Sessionid", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String sessionid;
 
+  @NotNull(message = "UserDashboardMenuList must not be null")
+  @XmlElementWrapper(name = "UserDashboardMenuList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "UserDashboardMenu", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private final List<UserDashboardMenuEdo> userDashboardMenus = new ArrayList<>();
+
   public ProfileResponseEdo() {
 
     this.user = null;
@@ -33,11 +43,13 @@ public class ProfileResponseEdo {
     this.sessionid = "";
   }
 
-  public ProfileResponseEdo(final UserEdo user, final CompanyProfileEdo company, final String sessionid) {
+  public ProfileResponseEdo(final UserEdo user, final CompanyProfileEdo company, final String sessionid,
+      final List<UserDashboardMenuEdo> userDashboardMenus) {
 
     this.user = user;
     this.companyProfile = company;
     this.sessionid = sessionid;
+    this.setUserDashboardMenus(userDashboardMenus);
   }
 
   public UserEdo getUser() {
@@ -68,6 +80,20 @@ public class ProfileResponseEdo {
   public void setSessionid(final String sessionid) {
 
     this.sessionid = sessionid;
+  }
+
+  public List<UserDashboardMenuEdo> getUserDashboardMenus() {
+
+    return this.userDashboardMenus;
+  }
+
+  @JsonSetter
+  public void setUserDashboardMenus(final List<UserDashboardMenuEdo> userDashboardMenus) {
+
+    this.userDashboardMenus.clear();
+    if (userDashboardMenus != null) {
+      this.userDashboardMenus.addAll(userDashboardMenus);
+    }
   }
 
 }

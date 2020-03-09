@@ -1,10 +1,12 @@
 package com.pth.iflow.core.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.UserDashboardMenuEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 
@@ -13,6 +15,7 @@ public class ProfileResponse {
   private UserEntity user;
   private CompanyProfile companyProfile;
   private String sessionid;
+  private List<UserDashboardMenuEntity> userDashboardMenus = new ArrayList<>();
 
   public ProfileResponse() {
 
@@ -65,6 +68,16 @@ public class ProfileResponse {
   public void setSessionid(final String sessionid) {
 
     this.sessionid = sessionid;
+  }
+
+  public List<UserDashboardMenuEntity> getUserDashboardMenus() {
+
+    return userDashboardMenus;
+  }
+
+  public void setUserDashboardMenus(final List<UserDashboardMenuEntity> userDashboardMenus) {
+
+    this.userDashboardMenus = userDashboardMenus;
   }
 
 }

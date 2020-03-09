@@ -1,5 +1,6 @@
 package com.pth.iflow.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -11,6 +12,7 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
+import com.pth.iflow.common.models.edo.UserDashboardMenuEdo;
 import com.pth.iflow.common.models.edo.UserDepartmentEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.core.helper.CoreDataHelper;
@@ -20,6 +22,7 @@ import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowTypeControllerEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.UserDashboardMenuEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
@@ -225,7 +228,8 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   @Override
   public ProfileResponseEdo toProfileResponseEdo(final ProfileResponse model) {
 
-    return new ProfileResponseEdo(toEdo(model.getUser()), toCompanyProfileEdo(model.getCompanyProfile()), model.getSessionid());
+    return new ProfileResponseEdo(toEdo(model.getUser()), toCompanyProfileEdo(model.getCompanyProfile()), model.getSessionid(),
+        toUserDashboardMenuEdoList(model.getUserDashboardMenus()));
   }
 
   public CompanyProfileEdo toCompanyProfileEdo(final CompanyProfile model) {
@@ -258,6 +262,52 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
         wtc.getId().getPriority());
 
     return workflowTypeControllerEdo;
+  }
+
+  private UserDashboardMenuEdo toUserDashboardMenuEdo(final UserDashboardMenuEntity model) {
+
+    final UserDashboardMenuEdo edo = new UserDashboardMenuEdo();
+    edo.setUserIdentity(model.getUser().getIdentity());
+    edo.setColumnIndex(model.getColumnIndex());
+    edo.setMenuId(model.getMenuId());
+    edo.setRowIndex(model.getRowIndex());
+    edo.setStatus(model.getStatus());
+    edo.setVersion(model.getVersion());
+
+    return edo;
+  }
+
+  private List<UserDashboardMenuEdo> toUserDashboardMenuEdoList(final List<UserDashboardMenuEntity> modelList) {
+
+    final List<UserDashboardMenuEdo> edoList = new ArrayList<>();
+    for (final UserDashboardMenuEntity model : modelList) {
+      edoList.add(toUserDashboardMenuEdo(model));
+    }
+
+    return edoList;
+  }
+
+  private UserDashboardMenuEntity fromUserDashboardMenuEdo(final UserDashboardMenuEdo edo) {
+
+    final UserDashboardMenuEntity model = new UserDashboardMenuEntity();
+    model.setUserId(userDao.getByIdentity(edo.getUserIdentity()).getId());
+    model.setColumnIndex(edo.getColumnIndex());
+    model.setMenuId(edo.getMenuId());
+    model.setRowIndex(edo.getRowIndex());
+    model.setStatus(edo.getStatus());
+    model.setVersion(edo.getVersion());
+
+    return model;
+  }
+
+  private List<UserDashboardMenuEntity> fromUserDashboardMenuEdoList(final List<UserDashboardMenuEdo> edoList) {
+
+    final List<UserDashboardMenuEntity> modelList = new ArrayList<>();
+    for (final UserDashboardMenuEdo edo : edoList) {
+      modelList.add(fromUserDashboardMenuEdo(edo));
+    }
+
+    return modelList;
   }
 
   @Override

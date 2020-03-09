@@ -25,6 +25,7 @@ import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetEd
 import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetItemEdo;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
+import com.pth.iflow.common.models.edo.UserDashboardMenuEdo;
 import com.pth.iflow.common.models.edo.UserDepartmentEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserGroupEdo;
@@ -45,6 +46,7 @@ import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetItemEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.UserDashboardMenuEntity;
 import com.pth.iflow.core.model.entity.UserDepartmentEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
@@ -124,7 +126,51 @@ public class TestDataProducer {
         Arrays
             .asList(getTestCompanyWorkflowtypeItemOcrSettingPresetEdo("prop1"), getTestCompanyWorkflowtypeItemOcrSettingPresetEdo("prop2"),
                 getTestCompanyWorkflowtypeItemOcrSettingPresetEdo("prop3")));
-    return new ProfileResponseEdo(user, companyProfileEdo, "not-set");
+    return new ProfileResponseEdo(user, companyProfileEdo, "not-set", getTestUserDashboardMenuEdoList(user.getIdentity()));
+  }
+
+  protected UserDashboardMenuEntity getTestUserDashboardMenuEntity(final int row, final int column, final long userId) {
+
+    final UserDashboardMenuEntity model = new UserDashboardMenuEntity();
+    model.setColumnIndex(column);
+    model.setMenuId("menuId-" + row + "-" + column);
+    model.setRowIndex(row);
+    model.setStatus(1);
+    model.setUserId(userId);
+    model.setVersion(1);
+
+    return model;
+  }
+
+  protected List<UserDashboardMenuEntity> getTestUserDashboardMenuEntityList(final long userId) {
+
+    final List<UserDashboardMenuEntity> list = Arrays
+        .asList(getTestUserDashboardMenuEntity(1, 1, userId), getTestUserDashboardMenuEntity(2, 2, userId),
+            getTestUserDashboardMenuEntity(3, 3, userId));
+
+    return list;
+  }
+
+  protected UserDashboardMenuEdo getTestUserDashboardMenuEdo(final int row, final int column, final String userIdentity) {
+
+    final UserDashboardMenuEdo edo = new UserDashboardMenuEdo();
+    edo.setColumnIndex(column);
+    edo.setMenuId("menuId-" + row + "-" + column);
+    edo.setRowIndex(row);
+    edo.setStatus(1);
+    edo.setUserIdentity(userIdentity);
+    edo.setVersion(1);
+
+    return edo;
+  }
+
+  protected List<UserDashboardMenuEdo> getTestUserDashboardMenuEdoList(final String userIdentity) {
+
+    final List<UserDashboardMenuEdo> list = Arrays
+        .asList(getTestUserDashboardMenuEdo(1, 1, userIdentity), getTestUserDashboardMenuEdo(2, 2, userIdentity),
+            getTestUserDashboardMenuEdo(3, 3, userIdentity));
+
+    return list;
   }
 
   protected CompanyWorkflowtypeItemOcrSettingPresetItemEdo getTestCompanyWorkflowtypeItemOcrSettingPresetItemEdo(final String propName) {
