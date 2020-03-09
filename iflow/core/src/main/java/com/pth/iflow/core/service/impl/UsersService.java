@@ -277,7 +277,8 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     return edo;
   }
 
-  private List<UserDashboardMenuEdo> toUserDashboardMenuEdoList(final List<UserDashboardMenuEntity> modelList) {
+  @Override
+  public List<UserDashboardMenuEdo> toUserDashboardMenuEdoList(final List<UserDashboardMenuEntity> modelList) {
 
     final List<UserDashboardMenuEdo> edoList = new ArrayList<>();
     for (final UserDashboardMenuEntity model : modelList) {
@@ -287,7 +288,9 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     return edoList;
   }
 
-  private UserDashboardMenuEntity fromUserDashboardMenuEdo(final UserDashboardMenuEdo edo) {
+  private UserDashboardMenuEntity fromUserDashboardMenuEdo(final UserDashboardMenuEdo edo) throws IFlowMessageConversionFailureException {
+
+    validateCustomer(edo);
 
     final UserDashboardMenuEntity model = new UserDashboardMenuEntity();
     model.setUserId(userDao.getByIdentity(edo.getUserIdentity()).getId());
@@ -300,7 +303,9 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     return model;
   }
 
-  private List<UserDashboardMenuEntity> fromUserDashboardMenuEdoList(final List<UserDashboardMenuEdo> edoList) {
+  @Override
+  public List<UserDashboardMenuEntity> fromUserDashboardMenuEdoList(final List<UserDashboardMenuEdo> edoList)
+      throws IFlowMessageConversionFailureException {
 
     final List<UserDashboardMenuEntity> modelList = new ArrayList<>();
     for (final UserDashboardMenuEdo edo : edoList) {
@@ -314,6 +319,19 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   public List<UserEntity> getUserListByIdentityList(final Set<String> identityList) throws IFlowStorageException {
 
     return userDao.getListByIdentityList(identityList);
+  }
+
+  @Override
+  public List<UserDashboardMenuEntity> getUserDashboardMenuListByUserIdentity(final String identity) throws IFlowStorageException {
+
+    return userDao.getUserDashboardMenuListByUserIdentity(identity);
+  }
+
+  @Override
+  public List<UserDashboardMenuEntity> saveUserDashboardMenuListByUserIdentity(final String identity, final List<UserDashboardMenuEntity> list)
+      throws IFlowStorageException {
+
+    return userDao.saveUserDashboardMenuListByUserId(userDao.getByIdentity(identity).getId(), list);
   }
 
 }

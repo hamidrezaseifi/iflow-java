@@ -15,7 +15,7 @@ public class ProfileResponse {
   private UserEntity user;
   private CompanyProfile companyProfile;
   private String sessionid;
-  private List<UserDashboardMenuEntity> userDashboardMenus = new ArrayList<>();
+  private final List<UserDashboardMenuEntity> userDashboardMenus = new ArrayList<>();
 
   public ProfileResponse() {
 
@@ -77,7 +77,10 @@ public class ProfileResponse {
 
   public void setUserDashboardMenus(final List<UserDashboardMenuEntity> userDashboardMenus) {
 
-    this.userDashboardMenus = userDashboardMenus;
+    this.userDashboardMenus.clear();
+    if (userDashboardMenus != null) {
+      this.userDashboardMenus.addAll(userDashboardMenus);
+    }
   }
 
 }

@@ -21,6 +21,7 @@ import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserAuthenticationRequestEdo;
 import com.pth.iflow.common.models.edo.UserAuthenticationResponseEdo;
+import com.pth.iflow.common.models.edo.UserDashboardMenuEdo;
 import com.pth.iflow.common.models.edo.UserDepartmentEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserGroupEdo;
@@ -36,6 +37,7 @@ import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
+import com.pth.iflow.profile.model.UserDashboardMenu;
 import com.pth.iflow.profile.model.UserDepartment;
 import com.pth.iflow.profile.model.UserGroup;
 import com.pth.iflow.profile.model.UserPasswordChangeRequest;
@@ -362,12 +364,63 @@ public class ProfileModelEdoMapper {
 
   public static ProfileResponseEdo toEdo(final ProfileResponse model) {
 
-    return new ProfileResponseEdo(toEdo(model.getUser()), toEdo(model.getCompanyProfile()), model.getSessionid());
+    return new ProfileResponseEdo(toEdo(model.getUser()), toEdo(model.getCompanyProfile()), model.getSessionid(),
+        toUserDashboardMenuEdoList(model.getUserDashboardMenus()));
   }
 
   public static ProfileResponse fromEdo(final ProfileResponseEdo edo) throws IFlowMessageConversionFailureException {
 
-    return new ProfileResponse(fromEdo(edo.getUser()), fromEdo(edo.getCompanyProfile()), edo.getSessionid());
+    return new ProfileResponse(fromEdo(edo.getUser()), fromEdo(edo.getCompanyProfile()), edo.getSessionid(),
+        fromUserDashboardMenuEdoList(edo.getUserDashboardMenus()));
+  }
+
+  private static UserDashboardMenuEdo toUserDashboardMenuEdo(final UserDashboardMenu model) {
+
+    final UserDashboardMenuEdo edo = new UserDashboardMenuEdo();
+    edo.setUserIdentity(model.getUserIdentity());
+    edo.setColumnIndex(model.getColumnIndex());
+    edo.setMenuId(model.getMenuId());
+    edo.setRowIndex(model.getRowIndex());
+    edo.setStatus(model.getStatus());
+    edo.setVersion(model.getVersion());
+
+    return edo;
+  }
+
+  public static List<UserDashboardMenuEdo> toUserDashboardMenuEdoList(final List<UserDashboardMenu> modelList) {
+
+    final List<UserDashboardMenuEdo> edoList = new ArrayList<>();
+    for (final UserDashboardMenu model : modelList) {
+      edoList.add(toUserDashboardMenuEdo(model));
+    }
+
+    return edoList;
+  }
+
+  private static UserDashboardMenu fromUserDashboardMenuEdo(final UserDashboardMenuEdo edo) throws IFlowMessageConversionFailureException {
+
+    validateCustomer(edo);
+
+    final UserDashboardMenu model = new UserDashboardMenu();
+    model.setUserIdentity(edo.getUserIdentity());
+    model.setColumnIndex(edo.getColumnIndex());
+    model.setMenuId(edo.getMenuId());
+    model.setRowIndex(edo.getRowIndex());
+    model.setStatus(edo.getStatus());
+    model.setVersion(edo.getVersion());
+
+    return model;
+  }
+
+  public static List<UserDashboardMenu> fromUserDashboardMenuEdoList(final List<UserDashboardMenuEdo> edoList)
+      throws IFlowMessageConversionFailureException {
+
+    final List<UserDashboardMenu> modelList = new ArrayList<>();
+    for (final UserDashboardMenuEdo edo : edoList) {
+      modelList.add(fromUserDashboardMenuEdo(edo));
+    }
+
+    return modelList;
   }
 
   public static CompanyProfile fromEdo(final CompanyProfileEdo edo) throws IFlowMessageConversionFailureException {

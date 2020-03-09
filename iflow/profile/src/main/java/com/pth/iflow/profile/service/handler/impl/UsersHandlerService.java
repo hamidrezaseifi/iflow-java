@@ -15,6 +15,7 @@ import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
+import com.pth.iflow.profile.model.UserDashboardMenu;
 import com.pth.iflow.profile.model.UserDepartment;
 import com.pth.iflow.profile.model.UserPasswordChangeRequest;
 import com.pth.iflow.profile.service.access.IDepartmentAccessService;
@@ -98,6 +99,20 @@ public class UsersHandlerService implements IUsersHandlerService {
 
     this.authenticationService.deleteAuthentication(request);
 
+  }
+
+  @Override
+  public List<UserDashboardMenu> getUserDashboardMenuListByUserIdentity(final String identity)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    return this.usersService.getUserDashboardMenuListByUserIdentity(identity);
+  }
+
+  @Override
+  public List<UserDashboardMenu> saveUserDashboardMenuListByUserIdentity(final String identity,
+      final List<UserDashboardMenu> requestedModelList) throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    return this.usersService.saveUserDashboardMenuListByUserIdentity(identity, requestedModelList);
   }
 
   private void verifyDepartmentDeputy(final User user) throws MalformedURLException, IFlowMessageConversionFailureException {

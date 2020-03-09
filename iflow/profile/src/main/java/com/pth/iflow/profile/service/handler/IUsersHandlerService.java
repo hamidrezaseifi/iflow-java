@@ -7,6 +7,7 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
+import com.pth.iflow.profile.model.UserDashboardMenu;
 import com.pth.iflow.profile.model.UserPasswordChangeRequest;
 
 public interface IUsersHandlerService {
@@ -20,12 +21,18 @@ public interface IUsersHandlerService {
   ProfileResponse getUserProfileByIdentity(final String email)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public User saveUser(final User user) throws MalformedURLException, IFlowMessageConversionFailureException;
+  User saveUser(final User user) throws MalformedURLException, IFlowMessageConversionFailureException;
 
-  public void deleteUser(User user) throws MalformedURLException, IFlowMessageConversionFailureException;
+  void deleteUser(User user) throws MalformedURLException, IFlowMessageConversionFailureException;
 
-  public void resetUserPassword(UserPasswordChangeRequest fromEdo);
+  void resetUserPassword(UserPasswordChangeRequest fromEdo);
 
-  public void deleteUserAuthentication(UserPasswordChangeRequest fromEdo);
+  void deleteUserAuthentication(UserPasswordChangeRequest fromEdo);
+
+  List<UserDashboardMenu> getUserDashboardMenuListByUserIdentity(String identity)
+      throws MalformedURLException, IFlowMessageConversionFailureException;
+
+  List<UserDashboardMenu> saveUserDashboardMenuListByUserIdentity(String identity, List<UserDashboardMenu> requestedModelList)
+      throws MalformedURLException, IFlowMessageConversionFailureException;
 
 }

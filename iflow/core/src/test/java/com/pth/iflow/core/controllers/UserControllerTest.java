@@ -27,6 +27,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
+import com.pth.iflow.common.models.edo.UserDashboardMenuEdo;
+import com.pth.iflow.common.models.edo.UserDashboardMenuListEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserGroupEdo;
 import com.pth.iflow.common.models.edo.UserGroupListEdo;
@@ -36,6 +38,7 @@ import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.UserDashboardMenuEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.interfaces.IDepartmentService;
@@ -265,6 +268,61 @@ public class UserControllerTest extends TestDataProducer {
         .andExpect(content().xml(resultAsXmlString));
 
     verify(this.usersService, times(1)).getProfileResponseByEmail(any(String.class));
+
+  }
+
+  @Test
+  public void testReadUserDashboardMenuByIdentity() throws Exception {
+
+    final List<UserDashboardMenuEntity> modelList = this.getTestUserDashboardMenuEntityList(1L);
+    final List<UserDashboardMenuEdo> edoList = this.getTestUserDashboardMenuEdoList("userIdentity");
+
+    when(this.usersService.getUserDashboardMenuListByUserIdentity(any(String.class))).thenReturn(modelList);
+    when(this.usersService.toUserDashboardMenuEdoList(any(List.class))).thenReturn(edoList);
+
+    final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(new UserDashboardMenuListEdo(edoList));
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.USERDASHBOARDMENU_READ_BY_USERIDENTITY, "identity")
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(resultAsXmlString));
+
+    verify(this.usersService, times(1)).getUserDashboardMenuListByUserIdentity(any(String.class));
+    verify(this.usersService, times(1)).toUserDashboardMenuEdoList(any(List.class));
+
+  }
+
+  @Test
+  public void testSaveUserDashboardMenuByIdentity() throws Exception {
+
+    final List<UserDashboardMenuEntity> modelList = this.getTestUserDashboardMenuEntityList(1L);
+    final List<UserDashboardMenuEdo> edoList = this.getTestUserDashboardMenuEdoList("userIdentity");
+
+    final UserDashboardMenuListEdo listEdo = new UserDashboardMenuListEdo(edoList);
+
+    when(this.usersService.saveUserDashboardMenuListByUserIdentity(any(String.class), any(List.class))).thenReturn(modelList);
+    when(this.usersService.toUserDashboardMenuEdoList(any(List.class))).thenReturn(edoList);
+    when(this.usersService.fromUserDashboardMenuEdoList(any(List.class))).thenReturn(modelList);
+
+    final String requestAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
+    final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders
+            .post(IflowRestPaths.CoreModule.USERDASHBOARDMENU_SAVE_BY_USERIDENTITY, "identity")
+            .content(requestAsXmlString)
+            .contentType(MediaType.APPLICATION_XML_VALUE)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isCreated())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(resultAsXmlString));
+
+    verify(this.usersService, times(1)).saveUserDashboardMenuListByUserIdentity(any(String.class), any(List.class));
+    verify(this.usersService, times(1)).toUserDashboardMenuEdoList(any(List.class));
+    verify(this.usersService, times(1)).fromUserDashboardMenuEdoList(any(List.class));
 
   }
 

@@ -18,12 +18,15 @@ import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
+import com.pth.iflow.common.models.edo.UserDashboardMenuEdo;
+import com.pth.iflow.common.models.edo.UserDashboardMenuListEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserGroupListEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.UserDashboardMenuEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.interfaces.IDepartmentService;
@@ -150,4 +153,33 @@ public class UserController {
 
     return ControllerHelper.createResponseEntity(request, this.usersService.toProfileResponseEdo(profile), HttpStatus.OK);
   }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USERDASHBOARDMENU_READ_BY_USERIDENTITY)
+  public ResponseEntity<UserDashboardMenuListEdo> readUserDashboardMenuByIdentity(@PathVariable(name = "identity") final String identity,
+      final HttpServletRequest request) throws Exception {
+
+    final List<UserDashboardMenuEntity> list = this.usersService.getUserDashboardMenuListByUserIdentity(identity);
+
+    final List<UserDashboardMenuEdo> edoList = this.usersService.toUserDashboardMenuEdoList(list);
+
+    return ControllerHelper.createResponseEntity(request, new UserDashboardMenuListEdo(edoList), HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.CREATED)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.USERDASHBOARDMENU_SAVE_BY_USERIDENTITY)
+  public ResponseEntity<UserDashboardMenuListEdo>
+      saveUserDashboardMenuByIdentity(@RequestBody final UserDashboardMenuListEdo requestedEdoList, @PathVariable(name = "identity") final String identity, final HttpServletRequest request)
+          throws Exception {
+
+    final List<UserDashboardMenuEntity> requestedModelList = this.usersService
+        .fromUserDashboardMenuEdoList(requestedEdoList.getUserDashboardMenus());
+
+    final List<UserDashboardMenuEntity> list = this.usersService.saveUserDashboardMenuListByUserIdentity(identity, requestedModelList);
+
+    final List<UserDashboardMenuEdo> edoList = this.usersService.toUserDashboardMenuEdoList(list);
+
+    return ControllerHelper.createResponseEntity(request, new UserDashboardMenuListEdo(edoList), HttpStatus.CREATED);
+  }
+
 }

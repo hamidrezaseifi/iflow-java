@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
+import com.pth.iflow.common.models.edo.UserDashboardMenuListEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -18,6 +19,7 @@ import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
+import com.pth.iflow.profile.model.UserDashboardMenu;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.access.IUsersAccessService;
 import com.pth.iflow.profile.service.handler.IProfileRestTemplateCall;
@@ -118,6 +120,35 @@ public class UsersAccessService implements IUsersAccessService {
             ProfileModelEdoMapper.toEdo(user),
             Void.class, true);
 
+  }
+
+  @Override
+  public List<UserDashboardMenu> getUserDashboardMenuListByUserIdentity(final String identity)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    logger.debug("Request UserDashboardMenu for user {}", identity);
+
+    final UserDashboardMenuListEdo listEdo = this.restTemplate
+        .callRestGet(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USERDASHBOARDMENU_BY_IDENTITY(identity)), EModule.CORE,
+            UserDashboardMenuListEdo.class, true);
+
+    return ProfileModelEdoMapper.fromUserDashboardMenuEdoList(listEdo.getUserDashboardMenus());
+  }
+
+  @Override
+  public List<UserDashboardMenu> saveUserDashboardMenuListByUserIdentity(final String identity,
+      final List<UserDashboardMenu> requestedModelList) throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    logger.debug("Save UserDashboardMenu for user {}", identity);
+
+    final UserDashboardMenuListEdo listEdo = this.restTemplate
+        .callRestPost(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.SAVE_USERDASHBOARDMENU_BY_IDENTITY(identity)), EModule.CORE,
+            ProfileModelEdoMapper.toUserDashboardMenuEdoList(requestedModelList),
+            UserDashboardMenuListEdo.class, true);
+
+    return ProfileModelEdoMapper.fromUserDashboardMenuEdoList(listEdo.getUserDashboardMenus());
   }
 
 }

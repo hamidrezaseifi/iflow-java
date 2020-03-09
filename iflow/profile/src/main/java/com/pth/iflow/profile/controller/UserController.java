@@ -2,6 +2,7 @@ package com.pth.iflow.profile.controller;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,12 +21,15 @@ import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.models.edo.UserDashboardMenuEdo;
+import com.pth.iflow.common.models.edo.UserDashboardMenuListEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserPasswordChangeRequestEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.User;
+import com.pth.iflow.profile.model.UserDashboardMenu;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.handler.ITokenUserDataManager;
 import com.pth.iflow.profile.service.handler.IUsersHandlerService;
@@ -122,6 +126,34 @@ public class UserController {
     this.tokenUserDataManager.validateToken(headerTokenId);
     this.usersHandlerService.deleteUserAuthentication(ProfileModelEdoMapper.fromEdo(userPasswordChangeRequestEdo));
 
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.ProfileModule.USERDASHBOARDMENU_READ_BY_USERIDENTITY)
+  public ResponseEntity<UserDashboardMenuListEdo> readUserDashboardMenuByIdentity(@PathVariable(name = "identity") final String identity,
+      final HttpServletRequest request) throws Exception {
+
+    final List<UserDashboardMenu> list = this.usersHandlerService.getUserDashboardMenuListByUserIdentity(identity);
+
+    final List<UserDashboardMenuEdo> edoList = ProfileModelEdoMapper.toUserDashboardMenuEdoList(list);
+
+    return ControllerHelper.createResponseEntity(request, new UserDashboardMenuListEdo(edoList), HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.CREATED)
+  @IflowPostRequestMapping(path = IflowRestPaths.ProfileModule.USERDASHBOARDMENU_SAVE_BY_USERIDENTITY)
+  public ResponseEntity<UserDashboardMenuListEdo>
+      saveUserDashboardMenuByIdentity(@RequestBody final UserDashboardMenuListEdo requestedEdoList, @PathVariable(name = "identity") final String identity, final HttpServletRequest request)
+          throws Exception {
+
+    final List<UserDashboardMenu> requestedModelList = ProfileModelEdoMapper
+        .fromUserDashboardMenuEdoList(requestedEdoList.getUserDashboardMenus());
+
+    final List<UserDashboardMenu> list = this.usersHandlerService.saveUserDashboardMenuListByUserIdentity(identity, requestedModelList);
+
+    final List<UserDashboardMenuEdo> edoList = ProfileModelEdoMapper.toUserDashboardMenuEdoList(list);
+
+    return ControllerHelper.createResponseEntity(request, new UserDashboardMenuListEdo(edoList), HttpStatus.CREATED);
   }
 
 }

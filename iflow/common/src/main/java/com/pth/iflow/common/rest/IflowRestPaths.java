@@ -39,6 +39,8 @@ public class IflowRestPaths {
     public static final String USER_USER_LIST_BY_DEPARTMENTIDENTITY = "/users/department/users/{identity}";
     public static final String USERPROFILE_READ_BY_EMAIL = "/users/readprofile/email/{email}";
     public static final String USERPROFILE_READ_BY_USERIDENTITY = "/users/readprofile/identity/{identity}";
+    public static final String USERDASHBOARDMENU_READ_BY_USERIDENTITY = "/users/dashboardmenu/read/{identity}";
+    public static final String USERDASHBOARDMENU_SAVE_BY_USERIDENTITY = "/users/dashboardmenu/svae/{identity}";
 
     public static final String COMPANY_READ_BY_IDENTITY = "/companies/readbyidentity/{companyidentity}";
     public static final String COMPANY_SAVE = "/companies/save";
@@ -149,6 +151,18 @@ public class IflowRestPaths {
     public static URI READ_USERPROFILE_BY_IDENTITY(final String identity) {
 
       final IflowUriBuilder builder = new IflowUriBuilder(USERPROFILE_READ_BY_USERIDENTITY);
+      return builder.build(identity);
+    }
+
+    public static URI READ_USERDASHBOARDMENU_BY_IDENTITY(final String identity) {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(USERDASHBOARDMENU_READ_BY_USERIDENTITY);
+      return builder.build(identity);
+    }
+
+    public static URI SAVE_USERDASHBOARDMENU_BY_IDENTITY(final String identity) {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(USERDASHBOARDMENU_SAVE_BY_USERIDENTITY);
       return builder.build(identity);
     }
 
@@ -623,6 +637,8 @@ public class IflowRestPaths {
     public static final String USER_DELETE = "/users/delete";
     public static final String USER_RESETPASSWORD = "/users/resetpassword";
     public static final String USER_DELETE_AUTHENTICATION = "/users/delete/auth";
+    public static final String USERDASHBOARDMENU_READ_BY_USERIDENTITY = "/users/dashboardmenu/read/{identity}";
+    public static final String USERDASHBOARDMENU_SAVE_BY_USERIDENTITY = "/users/dashboardmenu/save/{identity}";
 
     public static URI READ_COMPANY_BY_ID_URIBUILDER(final String companyidentity) {
 
@@ -747,6 +763,18 @@ public class IflowRestPaths {
     public static URI READ_USER_BY_IDENTITY_URIBUILDER(final String identity) {
 
       final IflowUriBuilder builder = new IflowUriBuilder(USER_READ_BY_IDENTITY);
+      return builder.build(identity);
+    }
+
+    public static URI READ_USERDASHBOARDMENU_BY_IDENTITY(final String identity) {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(USERDASHBOARDMENU_READ_BY_USERIDENTITY);
+      return builder.build(identity);
+    }
+
+    public static URI SAVE_USERDASHBOARDMENU_BY_IDENTITY(final String identity) {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(USERDASHBOARDMENU_SAVE_BY_USERIDENTITY);
       return builder.build(identity);
     }
 

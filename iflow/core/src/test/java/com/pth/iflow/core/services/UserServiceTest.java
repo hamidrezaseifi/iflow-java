@@ -22,6 +22,7 @@ import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.UserDashboardMenuEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.impl.UsersService;
@@ -241,4 +242,39 @@ public class UserServiceTest extends TestDataProducer {
     verify(this.userDao, times(1)).getByIdentity(any(String.class));
 
   }
+
+  @Test
+  public void testGetUserDashboardMenuListByUserIdentity() throws Exception {
+
+    final List<UserDashboardMenuEntity> modelList = this.getTestUserDashboardMenuEntityList(1L);
+
+    when(this.userDao.getUserDashboardMenuListByUserIdentity(any(String.class))).thenReturn(modelList);
+
+    final List<UserDashboardMenuEntity> resList = this.userService.getUserDashboardMenuListByUserIdentity("identity");
+
+    Assert.assertNotNull("Result list is not null!", resList);
+    Assert.assertEquals("Result list has " + modelList.size() + " items.", modelList.size(), resList.size());
+
+    verify(this.userDao, times(1)).getUserDashboardMenuListByUserIdentity(any(String.class));
+
+  }
+
+  @Test
+  public void testSaveUserDashboardMenuListByUserIdentity() throws Exception {
+
+    final List<UserDashboardMenuEntity> modelList = this.getTestUserDashboardMenuEntityList(1L);
+
+    when(this.userDao.saveUserDashboardMenuListByUserId(any(Long.class), any(List.class))).thenReturn(modelList);
+    when(this.userDao.getByIdentity(any(String.class))).thenReturn(getTestUser());
+
+    final List<UserDashboardMenuEntity> resList = this.userService.saveUserDashboardMenuListByUserIdentity("identity", modelList);
+
+    Assert.assertNotNull("Result list is not null!", resList);
+    Assert.assertEquals("Result list has " + modelList.size() + " items.", modelList.size(), resList.size());
+
+    verify(this.userDao, times(1)).saveUserDashboardMenuListByUserId(any(Long.class), any(List.class));
+    verify(this.userDao, times(1)).getByIdentity(any(String.class));
+
+  }
+
 }

@@ -3,10 +3,13 @@ package com.pth.iflow.core.service.interfaces;
 import java.util.List;
 import java.util.Set;
 
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
+import com.pth.iflow.common.models.edo.UserDashboardMenuEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.UserDashboardMenuEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.base.ICoreModelEdoMapperService;
@@ -39,5 +42,15 @@ public interface IUsersService extends ICoreModelEdoMapperService<UserEntity, Us
   List<UserEntity> getUserListByIdentityList(final Set<String> identityList) throws IFlowStorageException;
 
   ProfileResponseEdo toProfileResponseEdo(final ProfileResponse model);
+
+  List<UserDashboardMenuEntity> getUserDashboardMenuListByUserIdentity(final String identity) throws IFlowStorageException;
+
+  List<UserDashboardMenuEntity> saveUserDashboardMenuListByUserIdentity(String identity, List<UserDashboardMenuEntity> list)
+      throws IFlowStorageException;
+
+  List<UserDashboardMenuEdo> toUserDashboardMenuEdoList(final List<UserDashboardMenuEntity> modelList);
+
+  List<UserDashboardMenuEntity> fromUserDashboardMenuEdoList(final List<UserDashboardMenuEdo> edoList)
+      throws IFlowMessageConversionFailureException;
 
 }
