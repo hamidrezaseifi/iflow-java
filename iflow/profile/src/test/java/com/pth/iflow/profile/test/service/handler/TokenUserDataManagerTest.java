@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.service;
+package com.pth.iflow.profile.test.service.handler;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.Department;
@@ -32,6 +31,7 @@ import com.pth.iflow.profile.service.access.IUsersAccessService;
 import com.pth.iflow.profile.service.handler.ISessionManager;
 import com.pth.iflow.profile.service.handler.ITokenUserDataManager;
 import com.pth.iflow.profile.service.handler.impl.TokenUserDataManager;
+import com.pth.iflow.profile.test.TestDataProducer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.controller;
+package com.pth.iflow.profile.test.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -32,7 +32,6 @@ import com.pth.iflow.common.models.edo.UserGroupListEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
-import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSettingPreset;
 import com.pth.iflow.profile.model.Department;
@@ -42,6 +41,7 @@ import com.pth.iflow.profile.model.UserGroup;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.handler.ICompaniesHandlerService;
 import com.pth.iflow.profile.service.handler.ITokenUserDataManager;
+import com.pth.iflow.profile.test.TestDataProducer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

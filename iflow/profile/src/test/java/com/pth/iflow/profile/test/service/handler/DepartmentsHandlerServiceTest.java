@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.service;
+package com.pth.iflow.profile.test.service.handler;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -16,25 +16,23 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
-import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.access.IDepartmentAccessService;
 import com.pth.iflow.profile.service.access.impl.DepartmentAccessService;
 import com.pth.iflow.profile.service.handler.IProfileRestTemplateCall;
+import com.pth.iflow.profile.test.TestDataProducer;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
 @AutoConfigureMockMvc
-public class DepartmentServiceTest extends TestDataProducer {
+public class DepartmentsHandlerServiceTest extends TestDataProducer {
 
   private IDepartmentAccessService departmentService;
 

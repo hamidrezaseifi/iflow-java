@@ -1,4 +1,4 @@
-package com.pth.iflow.profile;
+package com.pth.iflow.profile.test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

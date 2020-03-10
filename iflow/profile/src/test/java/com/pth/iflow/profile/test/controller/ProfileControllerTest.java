@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.controller;
+package com.pth.iflow.profile.test.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -28,7 +28,6 @@ import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.TokenProfileRequestEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
-import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
@@ -41,6 +40,7 @@ import com.pth.iflow.profile.service.access.IDepartmentAccessService;
 import com.pth.iflow.profile.service.access.IUserGroupAccessService;
 import com.pth.iflow.profile.service.access.IUsersAccessService;
 import com.pth.iflow.profile.service.handler.ISessionManager;
+import com.pth.iflow.profile.test.TestDataProducer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.service;
+package com.pth.iflow.profile.test.service.handler;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -16,25 +16,26 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.models.edo.UserDashboardMenuEdo;
+import com.pth.iflow.common.models.edo.UserDashboardMenuListEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
-import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.User;
+import com.pth.iflow.profile.model.UserDashboardMenu;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.access.IUsersAccessService;
 import com.pth.iflow.profile.service.access.impl.UsersAccessService;
 import com.pth.iflow.profile.service.handler.IProfileRestTemplateCall;
+import com.pth.iflow.profile.test.TestDataProducer;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
 @AutoConfigureMockMvc
-public class UsersServiceTest extends TestDataProducer {
+public class UsersHandlerServiceTest extends TestDataProducer {
 
   private IUsersAccessService usersService;
 
@@ -123,6 +124,40 @@ public class UsersServiceTest extends TestDataProducer {
 
     verify(this.restTemplate, times(1))
         .callRestPost(any(URI.class), eq(EModule.CORE), any(UserEdo.class), eq(Void.class), any(boolean.class));
+
+  }
+
+  @Test
+  public void testGetUserDashboardMenuListByUserIdentity() throws Exception {
+
+    final List<UserDashboardMenuEdo> edoList = this.getTestUserDashboardMenuEdoList("userIdentity");
+    final UserDashboardMenuListEdo listEdo = new UserDashboardMenuListEdo(edoList);
+
+    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(UserDashboardMenuListEdo.class), any(boolean.class)))
+        .thenReturn(listEdo);
+
+    final List<UserDashboardMenu> resList = this.usersService.getUserDashboardMenuListByUserIdentity("userIdentity");
+
+    Assert.assertNotNull("Result list is not null!", resList);
+    Assert.assertEquals("Result list has " + edoList.size() + " items.", edoList.size(), resList.size());
+
+  }
+
+  @Test
+  public void testSaveUserDashboardMenuListByUserIdentity() throws Exception {
+
+    final List<UserDashboardMenu> list = this.getTestUserDashboardMenuList("userIdentity");
+    final UserDashboardMenuListEdo listEdo = new UserDashboardMenuListEdo(ProfileModelEdoMapper.toUserDashboardMenuEdoList(list));
+
+    when(this.restTemplate
+        .callRestPost(any(URI.class), eq(EModule.CORE), any(UserDashboardMenuListEdo.class), eq(UserDashboardMenuListEdo.class),
+            any(boolean.class)))
+                .thenReturn(listEdo);
+
+    final List<UserDashboardMenu> resList = this.usersService.saveUserDashboardMenuListByUserIdentity("userIdentity", list);
+
+    Assert.assertNotNull("Result list is not null!", resList);
+    Assert.assertEquals("Result list has " + list.size() + " items.", list.size(), resList.size());
 
   }
 

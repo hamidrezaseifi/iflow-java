@@ -145,7 +145,7 @@ public class UsersAccessService implements IUsersAccessService {
     final UserDashboardMenuListEdo listEdo = this.restTemplate
         .callRestPost(
             this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.SAVE_USERDASHBOARDMENU_BY_IDENTITY(identity)), EModule.CORE,
-            ProfileModelEdoMapper.toUserDashboardMenuEdoList(requestedModelList),
+            new UserDashboardMenuListEdo(ProfileModelEdoMapper.toUserDashboardMenuEdoList(requestedModelList)),
             UserDashboardMenuListEdo.class, true);
 
     return ProfileModelEdoMapper.fromUserDashboardMenuEdoList(listEdo.getUserDashboardMenus());
