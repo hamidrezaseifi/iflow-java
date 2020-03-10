@@ -40,6 +40,9 @@ public class UserDashboardMenuEntity extends EntityHelper {
   @Column(name = "menu_id")
   private String menuId;
 
+  @Column(name = "app_id")
+  private String appId;
+
   @Column(name = "row_index")
   private Integer rowIndex;
 
@@ -80,6 +83,16 @@ public class UserDashboardMenuEntity extends EntityHelper {
   public void setUserId(final Long userId) {
 
     this.userId = userId;
+  }
+
+  public String getAppId() {
+
+    return appId;
+  }
+
+  public void setAppId(final String appId) {
+
+    this.appId = appId;
   }
 
   public String getMenuId() {

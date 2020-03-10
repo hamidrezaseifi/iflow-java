@@ -7,7 +7,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.pth.iflow.common.enums.EApplication;
 import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
+import com.pth.iflow.common.models.validation.AEnumNameValidator;
 
 @XmlRootElement(name = "UserDashboardMenu", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -17,6 +19,11 @@ public class UserDashboardMenuEdo {
   @NotNull(message = "UserIdentity must not be null")
   @XmlElement(name = "UserIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String userIdentity;
+
+  @AEnumNameValidator(enumClazz = EApplication.class)
+  @NotNull(message = "AppId must not be null")
+  @XmlElement(name = "AppId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String appId;
 
   @NotNull(message = "MenuId must not be null")
   @XmlElement(name = "MenuId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -46,6 +53,16 @@ public class UserDashboardMenuEdo {
   public void setUserIdentity(final String userIdentity) {
 
     this.userIdentity = userIdentity;
+  }
+
+  public String getAppId() {
+
+    return this.appId;
+  }
+
+  public void setAppId(final String appId) {
+
+    this.appId = appId;
   }
 
   public String getMenuId() {

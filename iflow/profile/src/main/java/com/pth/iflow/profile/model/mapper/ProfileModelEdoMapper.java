@@ -379,6 +379,7 @@ public class ProfileModelEdoMapper {
     final UserDashboardMenuEdo edo = new UserDashboardMenuEdo();
     edo.setUserIdentity(model.getUserIdentity());
     edo.setColumnIndex(model.getColumnIndex());
+    edo.setAppId(model.getAppId());
     edo.setMenuId(model.getMenuId());
     edo.setRowIndex(model.getRowIndex());
     edo.setStatus(model.getStatus());
@@ -404,6 +405,7 @@ public class ProfileModelEdoMapper {
     final UserDashboardMenu model = new UserDashboardMenu();
     model.setUserIdentity(edo.getUserIdentity());
     model.setColumnIndex(edo.getColumnIndex());
+    model.setAppId(edo.getAppId());
     model.setMenuId(edo.getMenuId());
     model.setRowIndex(edo.getRowIndex());
     model.setStatus(edo.getStatus());

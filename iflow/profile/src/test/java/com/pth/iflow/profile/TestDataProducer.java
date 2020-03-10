@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.pth.iflow.common.enums.EApplication;
 import com.pth.iflow.common.enums.ECompanyType;
 import com.pth.iflow.common.enums.EOcrType;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
@@ -17,6 +18,7 @@ import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetEd
 import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetItemEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.TokenProfileRequestEdo;
+import com.pth.iflow.common.models.edo.UserDashboardMenuEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyProfile;
@@ -28,6 +30,7 @@ import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
+import com.pth.iflow.profile.model.UserDashboardMenu;
 import com.pth.iflow.profile.model.UserDepartment;
 import com.pth.iflow.profile.model.UserGroup;
 import com.pth.iflow.profile.model.WorkflowMessage;
@@ -298,15 +301,72 @@ public class TestDataProducer {
     model.setCompanyProfile(ProfileModelEdoMapper.toEdo(this.getTestCompanyProfile()));
     model.setSessionid(sessionid);
     model.setUser(user);
+    model.setUserDashboardMenus(this.getTestUserDashboardMenuEdoList(user.getIdentity()));
 
     return model;
   }
 
   protected ProfileResponse getTestProfileResponse(final String sessionid) {
 
-    final ProfileResponse model = new ProfileResponse(this.getTestUser(), this.getTestCompanyProfile(), sessionid);
+    final User testUser = this.getTestUser();
+    final ProfileResponse model = new ProfileResponse(testUser, this.getTestCompanyProfile(), sessionid,
+        this.getTestUserDashboardMenuList(testUser.getIdentity()));
 
     return model;
+  }
+
+  protected ProfileResponse getTestProfileResponse(final String sessionid, final User testUser) {
+
+    final ProfileResponse model = new ProfileResponse(testUser, this.getTestCompanyProfile(), sessionid,
+        this.getTestUserDashboardMenuList(testUser.getIdentity()));
+
+    return model;
+  }
+
+  protected UserDashboardMenu getTestUserDashboardMenu(final int row, final int column, final String userIdentity) {
+
+    final UserDashboardMenu model = new UserDashboardMenu();
+    model.setColumnIndex(column);
+    model.setAppId(EApplication.IFLOW.getIdentity());
+    model.setMenuId("menuId-" + row + "-" + column);
+    model.setRowIndex(row);
+    model.setStatus(1);
+    model.setUserIdentity(userIdentity);
+    model.setVersion(1);
+
+    return model;
+  }
+
+  protected List<UserDashboardMenu> getTestUserDashboardMenuList(final String userIdentity) {
+
+    final List<UserDashboardMenu> list = Arrays
+        .asList(this.getTestUserDashboardMenu(1, 1, userIdentity), this.getTestUserDashboardMenu(2, 2, userIdentity),
+            this.getTestUserDashboardMenu(3, 3, userIdentity));
+
+    return list;
+  }
+
+  protected UserDashboardMenuEdo getTestUserDashboardMenuEdo(final int row, final int column, final String userIdentity) {
+
+    final UserDashboardMenuEdo edo = new UserDashboardMenuEdo();
+    edo.setColumnIndex(column);
+    edo.setAppId(EApplication.IFLOW.getIdentity());
+    edo.setMenuId("menuId-" + row + "-" + column);
+    edo.setRowIndex(row);
+    edo.setStatus(1);
+    edo.setUserIdentity(userIdentity);
+    edo.setVersion(1);
+
+    return edo;
+  }
+
+  protected List<UserDashboardMenuEdo> getTestUserDashboardMenuEdoList(final String userIdentity) {
+
+    final List<UserDashboardMenuEdo> list = Arrays
+        .asList(this.getTestUserDashboardMenuEdo(1, 1, userIdentity), this.getTestUserDashboardMenuEdo(2, 2, userIdentity),
+            this.getTestUserDashboardMenuEdo(3, 3, userIdentity));
+
+    return list;
   }
 
   protected AuthenticatedProfileRequestEdo getTestAuthenticatedProfileRequestEdo(final String email, final String token) {

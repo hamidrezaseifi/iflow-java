@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.pth.iflow.common.enums.EApplication;
 import com.pth.iflow.common.enums.ECompanyType;
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.enums.EInvoiceType;
@@ -133,6 +134,7 @@ public class TestDataProducer {
 
     final UserDashboardMenuEntity model = new UserDashboardMenuEntity();
     model.setColumnIndex(column);
+    model.setAppId(EApplication.IFLOW.getIdentity());
     model.setMenuId("menuId-" + row + "-" + column);
     model.setRowIndex(row);
     model.setStatus(1);
@@ -155,6 +157,7 @@ public class TestDataProducer {
 
     final UserDashboardMenuEdo edo = new UserDashboardMenuEdo();
     edo.setColumnIndex(column);
+    edo.setAppId(EApplication.IFLOW.getIdentity());
     edo.setMenuId("menuId-" + row + "-" + column);
     edo.setRowIndex(row);
     edo.setStatus(1);

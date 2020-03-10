@@ -19,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.pth.iflow.common.enums.EApplication;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.UserDashboardMenuEntity;
@@ -223,6 +224,7 @@ public class UserDaoTest extends TestDataProducer {
       userDashboardMenu.setColumnIndex(i);
       userDashboardMenu.setRowIndex(i);
       userDashboardMenu.setStatus(1);
+      userDashboardMenu.setAppId(EApplication.IFLOW.getIdentity());
       userDashboardMenu.setMenuId("menuId-" + i);
       list.add(userDashboardMenu);
     }

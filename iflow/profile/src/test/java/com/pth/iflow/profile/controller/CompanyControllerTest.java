@@ -34,7 +34,6 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.model.Company;
-import com.pth.iflow.profile.model.CompanyProfile;
 import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSettingPreset;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
@@ -65,8 +64,6 @@ public class CompanyControllerTest extends TestDataProducer {
 
   private Company company;
 
-  private CompanyProfile companyProfile;
-
   String TestToken = "test-roken";
 
   @Before
@@ -74,7 +71,6 @@ public class CompanyControllerTest extends TestDataProducer {
 
     this.user = this.getTestUser();
     this.company = this.getTestCompany();
-    this.companyProfile = this.getTestCompanyProfile();
 
   }
 
@@ -88,7 +84,7 @@ public class CompanyControllerTest extends TestDataProducer {
 
     final CompanyEdo companyEdo = ProfileModelEdoMapper.toEdo(this.company);
 
-    final ProfileResponse profile = new ProfileResponse(this.user, this.companyProfile, "sessionid");
+    final ProfileResponse profile = this.getTestProfileResponse("sessionid", this.user);
     when(this.tokenUserDataManager.getProfileByToken(any(String.class))).thenReturn(profile);
 
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);

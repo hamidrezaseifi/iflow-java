@@ -269,6 +269,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     final UserDashboardMenuEdo edo = new UserDashboardMenuEdo();
     edo.setUserIdentity(model.getUser().getIdentity());
     edo.setColumnIndex(model.getColumnIndex());
+    edo.setAppId(model.getAppId());
     edo.setMenuId(model.getMenuId());
     edo.setRowIndex(model.getRowIndex());
     edo.setStatus(model.getStatus());
@@ -295,6 +296,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     final UserDashboardMenuEntity model = new UserDashboardMenuEntity();
     model.setUserId(userDao.getByIdentity(edo.getUserIdentity()).getId());
     model.setColumnIndex(edo.getColumnIndex());
+    model.setAppId(edo.getAppId());
     model.setMenuId(edo.getMenuId());
     model.setRowIndex(edo.getRowIndex());
     model.setStatus(edo.getStatus());
@@ -328,7 +330,8 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   }
 
   @Override
-  public List<UserDashboardMenuEntity> saveUserDashboardMenuListByUserIdentity(final String identity, final List<UserDashboardMenuEntity> list)
+  public List<UserDashboardMenuEntity> saveUserDashboardMenuListByUserIdentity(final String identity,
+      final List<UserDashboardMenuEntity> list)
       throws IFlowStorageException {
 
     return userDao.saveUserDashboardMenuListByUserId(userDao.getByIdentity(identity).getId(), list);

@@ -6,6 +6,7 @@ CREATE TABLE user_dashboard_menus
 (
     id bigint NOT NULL DEFAULT nextval('user_dashboard_menus_seq'),
     user_id bigint NOT NULL,
+    app_id varchar(45) DEFAULT NULL,
     menu_id varchar(45) DEFAULT NULL,
     row_index int NOT NULL,
     column_index int NOT NULL,

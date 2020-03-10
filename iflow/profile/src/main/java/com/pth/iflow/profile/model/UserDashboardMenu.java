@@ -4,6 +4,8 @@ public class UserDashboardMenu {
 
   private String userIdentity;
 
+  private String appId;
+
   private String menuId;
 
   private Integer rowIndex;
@@ -22,6 +24,16 @@ public class UserDashboardMenu {
   public void setUserIdentity(final String userIdentity) {
 
     this.userIdentity = userIdentity;
+  }
+
+  public String getAppId() {
+
+    return this.appId;
+  }
+
+  public void setAppId(final String appId) {
+
+    this.appId = appId;
   }
 
   public String getMenuId() {
