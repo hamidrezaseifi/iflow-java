@@ -158,9 +158,9 @@ public class UsersHandlerServiceTest extends TestDataProducer {
 
     final List<UserDashboardMenu> list = this.getTestUserDashboardMenuList("userIdentity");
 
-    when(this.usersAccessService.getUserDashboardMenuListByUserIdentity(any(String.class))).thenReturn(list);
+    when(this.usersAccessService.getUserDashboardMenuListByUserIdentity(any(String.class), any(String.class))).thenReturn(list);
 
-    final List<UserDashboardMenu> resList = this.usersHandlerService.getUserDashboardMenuListByUserIdentity("userIdentity");
+    final List<UserDashboardMenu> resList = this.usersHandlerService.getUserDashboardMenuListByUserIdentity("appIdentity", "userIdentity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", list.size(), resList.size());
@@ -172,9 +172,11 @@ public class UsersHandlerServiceTest extends TestDataProducer {
 
     final List<UserDashboardMenu> list = this.getTestUserDashboardMenuList("userIdentity");
 
-    when(this.usersAccessService.saveUserDashboardMenuListByUserIdentity(any(String.class), any(List.class))).thenReturn(list);
+    when(this.usersAccessService.saveUserDashboardMenuListByUserIdentity(any(String.class), any(String.class), any(List.class)))
+        .thenReturn(list);
 
-    final List<UserDashboardMenu> resList = this.usersHandlerService.saveUserDashboardMenuListByUserIdentity("userIdentity", list);
+    final List<
+        UserDashboardMenu> resList = this.usersHandlerService.saveUserDashboardMenuListByUserIdentity("appIdentity", "userIdentity", list);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", list.size(), resList.size());

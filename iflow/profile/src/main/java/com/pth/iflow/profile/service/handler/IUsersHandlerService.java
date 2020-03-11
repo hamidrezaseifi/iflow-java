@@ -29,10 +29,11 @@ public interface IUsersHandlerService {
 
   void deleteUserAuthentication(UserPasswordChangeRequest request);
 
-  List<UserDashboardMenu> getUserDashboardMenuListByUserIdentity(String identity)
+  List<UserDashboardMenu> getUserDashboardMenuListByUserIdentity(String appIdentity, String userIdentity)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<UserDashboardMenu> saveUserDashboardMenuListByUserIdentity(String identity, List<UserDashboardMenu> requestedModelList)
+  List<UserDashboardMenu> saveUserDashboardMenuListByUserIdentity(String appIdentity, String userIdentity,
+      List<UserDashboardMenu> requestedModelList)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 
 }

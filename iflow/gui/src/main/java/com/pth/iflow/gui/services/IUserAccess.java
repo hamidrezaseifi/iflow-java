@@ -6,6 +6,7 @@ import java.util.List;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.User;
+import com.pth.iflow.gui.models.UserDashboardMenu;
 
 public interface IUserAccess {
 
@@ -18,5 +19,7 @@ public interface IUserAccess {
   public void resetUserPassword(User user) throws GuiCustomizedException, MalformedURLException;
 
   public void deleteAuthenticate(User user) throws GuiCustomizedException, MalformedURLException;
+
+  public List<UserDashboardMenu> saveUserDashboardMenus(List<UserDashboardMenu> userDashboardMenuList, String appIdentity);
 
 }

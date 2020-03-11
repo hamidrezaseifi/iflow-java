@@ -26,6 +26,7 @@ import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetIt
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserAuthenticationResponseEdo;
+import com.pth.iflow.common.models.edo.UserDashboardMenuEdo;
 import com.pth.iflow.common.models.edo.UserDepartmentEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserGroupEdo;
@@ -53,6 +54,7 @@ import com.pth.iflow.gui.models.Department;
 import com.pth.iflow.gui.models.ProfileResponse;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.UserAuthenticationResponse;
+import com.pth.iflow.gui.models.UserDashboardMenu;
 import com.pth.iflow.gui.models.UserDepartment;
 import com.pth.iflow.gui.models.UserGroup;
 import com.pth.iflow.gui.models.WorkflowAction;
@@ -1057,7 +1059,59 @@ public class GuiModelEdoMapper {
 
   public static ProfileResponseEdo toEdo(final ProfileResponse model) {
 
-    return new ProfileResponseEdo(toEdo(model.getUser()), toEdo(model.getCompanyProfile()), model.getSessionid());
+    return new ProfileResponseEdo(toEdo(model.getUser()), toEdo(model.getCompanyProfile()), model.getSessionid(),
+        toUserDashboardMenuEdoList(model.getUserDashboardMenus()));
+  }
+
+  private static UserDashboardMenuEdo toUserDashboardMenuEdo(final UserDashboardMenu model) {
+
+    final UserDashboardMenuEdo edo = new UserDashboardMenuEdo();
+    edo.setUserIdentity(model.getUserIdentity());
+    edo.setColumnIndex(model.getColumnIndex());
+    edo.setAppId(model.getAppId());
+    edo.setMenuId(model.getMenuId());
+    edo.setRowIndex(model.getRowIndex());
+    edo.setStatus(model.getStatus());
+    edo.setVersion(model.getVersion());
+
+    return edo;
+  }
+
+  public static List<UserDashboardMenuEdo> toUserDashboardMenuEdoList(final List<UserDashboardMenu> modelList) {
+
+    final List<UserDashboardMenuEdo> edoList = new ArrayList<>();
+    for (final UserDashboardMenu model : modelList) {
+      edoList.add(toUserDashboardMenuEdo(model));
+    }
+
+    return edoList;
+  }
+
+  private static UserDashboardMenu fromUserDashboardMenuEdo(final UserDashboardMenuEdo edo) throws IFlowMessageConversionFailureException {
+
+    validateCustomer(edo);
+
+    final UserDashboardMenu model = new UserDashboardMenu();
+    model.setUserIdentity(edo.getUserIdentity());
+    model.setColumnIndex(edo.getColumnIndex());
+    model.setAppId(edo.getAppId());
+    model.setMenuId(edo.getMenuId());
+    model.setRowIndex(edo.getRowIndex());
+    model.setStatus(edo.getStatus());
+    model.setVersion(edo.getVersion());
+
+    return model;
+  }
+
+  public static List<UserDashboardMenu> fromUserDashboardMenuEdoList(final List<UserDashboardMenuEdo> edoList)
+      throws IFlowMessageConversionFailureException {
+
+    final List<UserDashboardMenu> modelList = new ArrayList<>();
+    for (final UserDashboardMenuEdo edo : edoList) {
+      modelList.add(fromUserDashboardMenuEdo(edo));
+    }
+
+    return modelList;
   }
 
   public static List<Department> fromDepartmentEdoList(final List<DepartmentEdo> edoList) throws IFlowMessageConversionFailureException {
@@ -1135,7 +1189,8 @@ public class GuiModelEdoMapper {
   public static ProfileResponse fromEdo(final ProfileResponseEdo edo) throws IFlowMessageConversionFailureException {
 
     validateCustomer(edo);
-    return new ProfileResponse(fromEdo(edo.getUser()), fromEdo(edo.getCompanyProfile()), edo.getSessionid());
+    return new ProfileResponse(fromEdo(edo.getUser()), fromEdo(edo.getCompanyProfile()), edo.getSessionid(),
+        fromUserDashboardMenuEdoList(edo.getUserDashboardMenus()));
 
   }
 

@@ -209,12 +209,18 @@ public class UserDaoTest extends TestDataProducer {
     user.setRoles(new ArrayList<>());
     user.setUserDepartments(new ArrayList<>());
 
+    final UserEntity existsUser = userDao.getByEmail(user.getEmail());
+    if (existsUser != null) {
+      userDao.deleteById(existsUser.getId());
+    }
+
     final UserEntity createdUser = userDao.create(user);
     createdModels.add(createdUser);
 
     Assert.assertNotNull("Result created user is not null!", createdUser);
 
-    final List<UserDashboardMenuEntity> list = userDao.getUserDashboardMenuListByUserId(createdUser.getId());
+    final List<UserDashboardMenuEntity> list = userDao
+        .getUserDashboardMenuListByUserIdentity(EApplication.IFLOW.getIdentity(), createdUser.getIdentity());
 
     Assert.assertTrue("Result list is empty!", list.isEmpty());
 
@@ -229,7 +235,8 @@ public class UserDaoTest extends TestDataProducer {
       list.add(userDashboardMenu);
     }
 
-    final List<UserDashboardMenuEntity> savedList = userDao.saveUserDashboardMenuListByUserId(createdUser.getId(), list);
+    final List<UserDashboardMenuEntity> savedList = userDao
+        .saveUserDashboardMenuListByUserIdentity(EApplication.IFLOW.getIdentity(), createdUser.getIdentity(), list);
     Assert.assertNotNull("Result list is not null!", savedList);
     Assert.assertEquals("Result list has the same size of source!", savedList.size(), list.size());
     Assert

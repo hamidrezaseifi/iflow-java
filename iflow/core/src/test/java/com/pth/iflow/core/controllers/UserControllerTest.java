@@ -277,20 +277,20 @@ public class UserControllerTest extends TestDataProducer {
     final List<UserDashboardMenuEntity> modelList = this.getTestUserDashboardMenuEntityList(1L);
     final List<UserDashboardMenuEdo> edoList = this.getTestUserDashboardMenuEdoList("userIdentity");
 
-    when(this.usersService.getUserDashboardMenuListByUserIdentity(any(String.class))).thenReturn(modelList);
+    when(this.usersService.getUserDashboardMenuListByUserIdentity(any(String.class), any(String.class))).thenReturn(modelList);
     when(this.usersService.toUserDashboardMenuEdoList(any(List.class))).thenReturn(edoList);
 
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(new UserDashboardMenuListEdo(edoList));
 
     this.mockMvc
         .perform(MockMvcRequestBuilders
-            .get(IflowRestPaths.CoreModule.USERDASHBOARDMENU_READ_BY_USERIDENTITY, "identity")
+            .get(IflowRestPaths.CoreModule.USERDASHBOARDMENU_READ_BY_USERIDENTITY, "appidentity", "useridentity")
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(resultAsXmlString));
 
-    verify(this.usersService, times(1)).getUserDashboardMenuListByUserIdentity(any(String.class));
+    verify(this.usersService, times(1)).getUserDashboardMenuListByUserIdentity(any(String.class), any(String.class));
     verify(this.usersService, times(1)).toUserDashboardMenuEdoList(any(List.class));
 
   }
@@ -303,7 +303,8 @@ public class UserControllerTest extends TestDataProducer {
 
     final UserDashboardMenuListEdo listEdo = new UserDashboardMenuListEdo(edoList);
 
-    when(this.usersService.saveUserDashboardMenuListByUserIdentity(any(String.class), any(List.class))).thenReturn(modelList);
+    when(this.usersService.saveUserDashboardMenuListByUserIdentity(any(String.class), any(String.class), any(List.class)))
+        .thenReturn(modelList);
     when(this.usersService.toUserDashboardMenuEdoList(any(List.class))).thenReturn(edoList);
     when(this.usersService.fromUserDashboardMenuEdoList(any(List.class))).thenReturn(modelList);
 
@@ -312,7 +313,7 @@ public class UserControllerTest extends TestDataProducer {
 
     this.mockMvc
         .perform(MockMvcRequestBuilders
-            .post(IflowRestPaths.CoreModule.USERDASHBOARDMENU_SAVE_BY_USERIDENTITY, "identity")
+            .post(IflowRestPaths.CoreModule.USERDASHBOARDMENU_SAVE_BY_USERIDENTITY, "appidentity", "useridentity")
             .content(requestAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE)
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
@@ -320,7 +321,7 @@ public class UserControllerTest extends TestDataProducer {
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(resultAsXmlString));
 
-    verify(this.usersService, times(1)).saveUserDashboardMenuListByUserIdentity(any(String.class), any(List.class));
+    verify(this.usersService, times(1)).saveUserDashboardMenuListByUserIdentity(any(String.class), any(String.class), any(List.class));
     verify(this.usersService, times(1)).toUserDashboardMenuEdoList(any(List.class));
     verify(this.usersService, times(1)).fromUserDashboardMenuEdoList(any(List.class));
 

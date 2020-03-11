@@ -16,6 +16,7 @@ import com.pth.iflow.common.models.edo.UserPasswordChangeRequestEdo;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.User;
+import com.pth.iflow.gui.models.UserDashboardMenu;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.IRestTemplateCall;
@@ -108,6 +109,13 @@ public class UserAccess implements IUserAccess {
         .callRestPost(this.profileModuleAccessConfig.getDeleteUserAuthenticationUri(), EModule.CORE, request, Void.class,
             this.sessionUserInfo.getToken(), true);
 
+  }
+
+  @Override
+  public List<UserDashboardMenu> saveUserDashboardMenus(final List<UserDashboardMenu> userDashboardMenuList, final String appIdentity) {
+
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }

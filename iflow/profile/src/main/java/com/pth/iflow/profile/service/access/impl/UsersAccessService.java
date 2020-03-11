@@ -123,28 +123,30 @@ public class UsersAccessService implements IUsersAccessService {
   }
 
   @Override
-  public List<UserDashboardMenu> getUserDashboardMenuListByUserIdentity(final String identity)
+  public List<UserDashboardMenu> getUserDashboardMenuListByUserIdentity(final String appIdentity, final String userIdentity)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    logger.debug("Request UserDashboardMenu for user {}", identity);
+    logger.debug("Request UserDashboardMenu for user {}", userIdentity);
 
     final UserDashboardMenuListEdo listEdo = this.restTemplate
         .callRestGet(
-            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USERDASHBOARDMENU_BY_IDENTITY(identity)), EModule.CORE,
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USERDASHBOARDMENU_BY_IDENTITY(appIdentity, userIdentity)),
+            EModule.CORE,
             UserDashboardMenuListEdo.class, true);
 
     return ProfileModelEdoMapper.fromUserDashboardMenuEdoList(listEdo.getUserDashboardMenus());
   }
 
   @Override
-  public List<UserDashboardMenu> saveUserDashboardMenuListByUserIdentity(final String identity,
+  public List<UserDashboardMenu> saveUserDashboardMenuListByUserIdentity(final String appIdentity, final String userIdentity,
       final List<UserDashboardMenu> requestedModelList) throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    logger.debug("Save UserDashboardMenu for user {}", identity);
+    logger.debug("Save UserDashboardMenu for user {}", userIdentity);
 
     final UserDashboardMenuListEdo listEdo = this.restTemplate
         .callRestPost(
-            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.SAVE_USERDASHBOARDMENU_BY_IDENTITY(identity)), EModule.CORE,
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.SAVE_USERDASHBOARDMENU_BY_IDENTITY(appIdentity, userIdentity)),
+            EModule.CORE,
             new UserDashboardMenuListEdo(ProfileModelEdoMapper.toUserDashboardMenuEdoList(requestedModelList)),
             UserDashboardMenuListEdo.class, true);
 

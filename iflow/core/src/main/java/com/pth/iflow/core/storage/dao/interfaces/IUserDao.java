@@ -29,11 +29,11 @@ public interface IUserDao {
 
   public UserEntity getLastIdentity(Long companyId) throws IFlowStorageException;
 
-  public List<UserDashboardMenuEntity> getUserDashboardMenuListByUserId(Long id) throws IFlowStorageException;
+  public List<UserDashboardMenuEntity> getUserDashboardMenuListByUserIdentity(String appIdentity, String userIdentity)
+      throws IFlowStorageException;
 
-  public List<UserDashboardMenuEntity> getUserDashboardMenuListByUserIdentity(final String identity) throws IFlowStorageException;
-
-  public List<UserDashboardMenuEntity> saveUserDashboardMenuListByUserId(Long id, List<UserDashboardMenuEntity> list)
+  public List<UserDashboardMenuEntity> saveUserDashboardMenuListByUserIdentity(String appIdentity, String userIdentity,
+      List<UserDashboardMenuEntity> list)
       throws IFlowStorageException;
 
 }

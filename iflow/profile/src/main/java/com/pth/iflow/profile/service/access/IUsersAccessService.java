@@ -27,10 +27,11 @@ public interface IUsersAccessService {
 
   void deleteUser(User user) throws MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<UserDashboardMenu> getUserDashboardMenuListByUserIdentity(String identity)
+  List<UserDashboardMenu> getUserDashboardMenuListByUserIdentity(final String appIdentity, final String userIdentity)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<UserDashboardMenu> saveUserDashboardMenuListByUserIdentity(String identity, List<UserDashboardMenu> requestedModelList)
+  List<UserDashboardMenu> saveUserDashboardMenuListByUserIdentity(final String appIdentity, final String userIdentity,
+      List<UserDashboardMenu> requestedModelList)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 
 }

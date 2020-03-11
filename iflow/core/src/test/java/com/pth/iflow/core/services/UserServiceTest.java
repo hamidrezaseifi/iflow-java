@@ -14,7 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -34,7 +33,6 @@ import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
 @AutoConfigureMockMvc
 public class UserServiceTest extends TestDataProducer {
 
@@ -248,14 +246,14 @@ public class UserServiceTest extends TestDataProducer {
 
     final List<UserDashboardMenuEntity> modelList = this.getTestUserDashboardMenuEntityList(1L);
 
-    when(this.userDao.getUserDashboardMenuListByUserIdentity(any(String.class))).thenReturn(modelList);
+    when(this.userDao.getUserDashboardMenuListByUserIdentity(any(String.class), any(String.class))).thenReturn(modelList);
 
-    final List<UserDashboardMenuEntity> resList = this.userService.getUserDashboardMenuListByUserIdentity("identity");
+    final List<UserDashboardMenuEntity> resList = this.userService.getUserDashboardMenuListByUserIdentity("appidentity", "useridentity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + modelList.size() + " items.", modelList.size(), resList.size());
 
-    verify(this.userDao, times(1)).getUserDashboardMenuListByUserIdentity(any(String.class));
+    verify(this.userDao, times(1)).getUserDashboardMenuListByUserIdentity(any(String.class), any(String.class));
 
   }
 
@@ -264,16 +262,16 @@ public class UserServiceTest extends TestDataProducer {
 
     final List<UserDashboardMenuEntity> modelList = this.getTestUserDashboardMenuEntityList(1L);
 
-    when(this.userDao.saveUserDashboardMenuListByUserId(any(Long.class), any(List.class))).thenReturn(modelList);
+    when(this.userDao.saveUserDashboardMenuListByUserIdentity(any(String.class), any(String.class), any(List.class))).thenReturn(modelList);
     when(this.userDao.getByIdentity(any(String.class))).thenReturn(getTestUser());
 
-    final List<UserDashboardMenuEntity> resList = this.userService.saveUserDashboardMenuListByUserIdentity("identity", modelList);
+    final List<UserDashboardMenuEntity> resList = this.userService
+        .saveUserDashboardMenuListByUserIdentity("appidentity", "useridentity", modelList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + modelList.size() + " items.", modelList.size(), resList.size());
 
-    verify(this.userDao, times(1)).saveUserDashboardMenuListByUserId(any(Long.class), any(List.class));
-    verify(this.userDao, times(1)).getByIdentity(any(String.class));
+    verify(this.userDao, times(1)).saveUserDashboardMenuListByUserIdentity(any(String.class), any(String.class), any(List.class));
 
   }
 

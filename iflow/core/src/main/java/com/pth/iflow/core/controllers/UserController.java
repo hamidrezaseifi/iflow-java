@@ -156,10 +156,11 @@ public class UserController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USERDASHBOARDMENU_READ_BY_USERIDENTITY)
-  public ResponseEntity<UserDashboardMenuListEdo> readUserDashboardMenuByIdentity(@PathVariable(name = "identity") final String identity,
+  public ResponseEntity<UserDashboardMenuListEdo> readUserDashboardMenuByIdentity(
+      @PathVariable(name = "appIdentity") final String appIdentity, @PathVariable(name = "userIdentity") final String userIdentity,
       final HttpServletRequest request) throws Exception {
 
-    final List<UserDashboardMenuEntity> list = this.usersService.getUserDashboardMenuListByUserIdentity(identity);
+    final List<UserDashboardMenuEntity> list = this.usersService.getUserDashboardMenuListByUserIdentity(appIdentity, userIdentity);
 
     final List<UserDashboardMenuEdo> edoList = this.usersService.toUserDashboardMenuEdoList(list);
 
@@ -169,13 +170,14 @@ public class UserController {
   @ResponseStatus(HttpStatus.CREATED)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.USERDASHBOARDMENU_SAVE_BY_USERIDENTITY)
   public ResponseEntity<UserDashboardMenuListEdo>
-      saveUserDashboardMenuByIdentity(@RequestBody final UserDashboardMenuListEdo requestedEdoList, @PathVariable(name = "identity") final String identity, final HttpServletRequest request)
+      saveUserDashboardMenuByIdentity(@RequestBody final UserDashboardMenuListEdo requestedEdoList, @PathVariable(name = "appIdentity") final String appIdentity, @PathVariable(name = "userIdentity") final String userIdentity, final HttpServletRequest request)
           throws Exception {
 
     final List<UserDashboardMenuEntity> requestedModelList = this.usersService
         .fromUserDashboardMenuEdoList(requestedEdoList.getUserDashboardMenus());
 
-    final List<UserDashboardMenuEntity> list = this.usersService.saveUserDashboardMenuListByUserIdentity(identity, requestedModelList);
+    final List<UserDashboardMenuEntity> list = this.usersService
+        .saveUserDashboardMenuListByUserIdentity(appIdentity, userIdentity, requestedModelList);
 
     final List<UserDashboardMenuEdo> edoList = this.usersService.toUserDashboardMenuEdoList(list);
 

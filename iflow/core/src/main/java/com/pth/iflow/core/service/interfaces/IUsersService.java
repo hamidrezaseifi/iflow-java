@@ -21,36 +21,38 @@ public interface IUsersService extends ICoreModelEdoMapperService<UserEntity, Us
 
   void delete(UserEntity model);
 
-  UserEntity getUserByIdentity(final String identity);
+  UserEntity getUserByIdentity(String identity);
 
-  UserEntity getUserByEmail(final String email);
+  UserEntity getUserByEmail(String email);
 
-  ProfileResponse getProfileResponseByEmail(final String email);
+  ProfileResponse getProfileResponseByEmail(String email);
 
-  ProfileResponse getProfileResponseByIdentity(final String identity);
+  ProfileResponse getProfileResponseByIdentity(String identity);
 
-  List<UserGroupEntity> getUserGroups(final String identity);
+  List<UserGroupEntity> getUserGroups(String identity);
 
-  List<DepartmentEntity> getUserDepartments(final String identity);
+  List<DepartmentEntity> getUserDepartments(String identity);
 
-  List<UserEntity> getUserDeputies(final String identity);
+  List<UserEntity> getUserDeputies(String identity);
 
-  List<UserEntity> getCompanyUsers(final String companyIdentity);
+  List<UserEntity> getCompanyUsers(String companyIdentity);
 
-  List<UserEntity> getAllUserIdentityListByDepartmentIdentity(final String identity) throws IFlowStorageException;
+  List<UserEntity> getAllUserIdentityListByDepartmentIdentity(String identity) throws IFlowStorageException;
 
-  List<UserEntity> getUserListByIdentityList(final Set<String> identityList) throws IFlowStorageException;
+  List<UserEntity> getUserListByIdentityList(Set<String> identityList) throws IFlowStorageException;
 
-  ProfileResponseEdo toProfileResponseEdo(final ProfileResponse model);
+  ProfileResponseEdo toProfileResponseEdo(ProfileResponse model);
 
-  List<UserDashboardMenuEntity> getUserDashboardMenuListByUserIdentity(final String identity) throws IFlowStorageException;
-
-  List<UserDashboardMenuEntity> saveUserDashboardMenuListByUserIdentity(String identity, List<UserDashboardMenuEntity> list)
+  List<UserDashboardMenuEntity> getUserDashboardMenuListByUserIdentity(String appIdentity, String userIdentity)
       throws IFlowStorageException;
 
-  List<UserDashboardMenuEdo> toUserDashboardMenuEdoList(final List<UserDashboardMenuEntity> modelList);
+  List<UserDashboardMenuEntity> saveUserDashboardMenuListByUserIdentity(String appIdentity, String userIdentity,
+      List<UserDashboardMenuEntity> list)
+      throws IFlowStorageException;
 
-  List<UserDashboardMenuEntity> fromUserDashboardMenuEdoList(final List<UserDashboardMenuEdo> edoList)
+  List<UserDashboardMenuEdo> toUserDashboardMenuEdoList(List<UserDashboardMenuEntity> modelList);
+
+  List<UserDashboardMenuEntity> fromUserDashboardMenuEdoList(List<UserDashboardMenuEdo> edoList)
       throws IFlowMessageConversionFailureException;
 
 }

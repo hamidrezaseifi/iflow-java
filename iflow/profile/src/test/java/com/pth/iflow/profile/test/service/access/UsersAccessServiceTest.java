@@ -136,7 +136,7 @@ public class UsersAccessServiceTest extends TestDataProducer {
     when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(UserDashboardMenuListEdo.class), any(boolean.class)))
         .thenReturn(listEdo);
 
-    final List<UserDashboardMenu> resList = this.usersService.getUserDashboardMenuListByUserIdentity("userIdentity");
+    final List<UserDashboardMenu> resList = this.usersService.getUserDashboardMenuListByUserIdentity("appIdentity", "userIdentity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + edoList.size() + " items.", edoList.size(), resList.size());
@@ -154,7 +154,7 @@ public class UsersAccessServiceTest extends TestDataProducer {
             any(boolean.class)))
                 .thenReturn(listEdo);
 
-    final List<UserDashboardMenu> resList = this.usersService.saveUserDashboardMenuListByUserIdentity("userIdentity", list);
+    final List<UserDashboardMenu> resList = this.usersService.saveUserDashboardMenuListByUserIdentity("appIdentity", "userIdentity", list);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", list.size(), resList.size());

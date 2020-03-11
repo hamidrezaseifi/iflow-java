@@ -102,17 +102,17 @@ public class UsersHandlerService implements IUsersHandlerService {
   }
 
   @Override
-  public List<UserDashboardMenu> getUserDashboardMenuListByUserIdentity(final String identity)
+  public List<UserDashboardMenu> getUserDashboardMenuListByUserIdentity(final String appIdentity, final String userIdentity)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    return this.usersService.getUserDashboardMenuListByUserIdentity(identity);
+    return this.usersService.getUserDashboardMenuListByUserIdentity(appIdentity, userIdentity);
   }
 
   @Override
-  public List<UserDashboardMenu> saveUserDashboardMenuListByUserIdentity(final String identity,
+  public List<UserDashboardMenu> saveUserDashboardMenuListByUserIdentity(final String appIdentity, final String userIdentity,
       final List<UserDashboardMenu> requestedModelList) throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    return this.usersService.saveUserDashboardMenuListByUserIdentity(identity, requestedModelList);
+    return this.usersService.saveUserDashboardMenuListByUserIdentity(appIdentity, userIdentity, requestedModelList);
   }
 
   private void verifyDepartmentDeputy(final User user) throws MalformedURLException, IFlowMessageConversionFailureException {

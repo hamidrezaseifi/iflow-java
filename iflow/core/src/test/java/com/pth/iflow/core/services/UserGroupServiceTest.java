@@ -4,17 +4,19 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 import java.util.List;
 import java.util.Set;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.impl.UserGroupService;
@@ -22,7 +24,6 @@ import com.pth.iflow.core.service.interfaces.IUserGroupService;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
 @AutoConfigureMockMvc
 public class UserGroupServiceTest extends TestDataProducer {
 
@@ -33,11 +34,13 @@ public class UserGroupServiceTest extends TestDataProducer {
 
   @Before
   public void setUp() throws Exception {
+
     this.userGroupService = new UserGroupService(userGroupDao);
   }
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -94,9 +97,10 @@ public class UserGroupServiceTest extends TestDataProducer {
     final UserGroupEntity result = this.userGroupService.save(usergroup);
 
     Assert.assertNotNull("Result user group is not null!", result);
-    Assert.assertEquals("Result user group has title '" + savedUsergroup.getTitle() + "'!",
-                        result.getTitle(),
-                        savedUsergroup.getTitle());
+    Assert
+        .assertEquals("Result user group has title '" + savedUsergroup.getTitle() + "'!",
+            result.getTitle(),
+            savedUsergroup.getTitle());
     Assert.assertEquals("Result user group has status 1!", result.getStatus(), savedUsergroup.getStatus());
 
     verify(this.userGroupDao, times(1)).create(any(UserGroupEntity.class));
@@ -116,9 +120,10 @@ public class UserGroupServiceTest extends TestDataProducer {
     final UserGroupEntity result = this.userGroupService.save(usergroup);
 
     Assert.assertNotNull("Result user group is not null!", result);
-    Assert.assertEquals("Result user group has title '" + savedUsergroup.getTitle() + "'!",
-                        result.getTitle(),
-                        savedUsergroup.getTitle());
+    Assert
+        .assertEquals("Result user group has title '" + savedUsergroup.getTitle() + "'!",
+            result.getTitle(),
+            savedUsergroup.getTitle());
     Assert.assertEquals("Result user group has status 1!", result.getStatus(), savedUsergroup.getStatus());
 
     verify(this.userGroupDao, times(0)).create(any(UserGroupEntity.class));

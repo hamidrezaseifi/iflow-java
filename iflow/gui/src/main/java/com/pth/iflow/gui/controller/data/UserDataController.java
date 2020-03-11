@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.models.User;
+import com.pth.iflow.gui.models.UserDashboardMenu;
 import com.pth.iflow.gui.services.IUserHandler;
 
 @Controller
@@ -69,6 +70,17 @@ public class UserDataController extends GuiDataControllerBase {
 
     final User changedUser = this.userHandler.saveUserPassword(user, true);
     return changedUser;
+  }
+
+  @ResponseStatus(HttpStatus.CREATED)
+  @PostMapping(path = { "/saveuserdashboardmenu" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @ResponseBody
+  public List<UserDashboardMenu> saveUserDashboardMenus(@RequestBody final List<UserDashboardMenu> userDashboardMenuList)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    final List<
+        UserDashboardMenu> resultList = this.userHandler.saveUserDashboardMenus(userDashboardMenuList, this.getLoggedUser().getIdentity());
+    return resultList;
   }
 
 }

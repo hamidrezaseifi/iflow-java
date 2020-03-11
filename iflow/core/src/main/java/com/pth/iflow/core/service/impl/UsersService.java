@@ -324,17 +324,18 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   }
 
   @Override
-  public List<UserDashboardMenuEntity> getUserDashboardMenuListByUserIdentity(final String identity) throws IFlowStorageException {
+  public List<UserDashboardMenuEntity> getUserDashboardMenuListByUserIdentity(final String appIdentity, final String userIdentity)
+      throws IFlowStorageException {
 
-    return userDao.getUserDashboardMenuListByUserIdentity(identity);
+    return userDao.getUserDashboardMenuListByUserIdentity(appIdentity, userIdentity);
   }
 
   @Override
-  public List<UserDashboardMenuEntity> saveUserDashboardMenuListByUserIdentity(final String identity,
+  public List<UserDashboardMenuEntity> saveUserDashboardMenuListByUserIdentity(final String appIdentity, final String userIdentity,
       final List<UserDashboardMenuEntity> list)
       throws IFlowStorageException {
 
-    return userDao.saveUserDashboardMenuListByUserId(userDao.getByIdentity(identity).getId(), list);
+    return userDao.saveUserDashboardMenuListByUserIdentity(appIdentity, userIdentity, list);
   }
 
 }

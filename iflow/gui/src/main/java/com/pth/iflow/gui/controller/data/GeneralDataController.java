@@ -248,6 +248,7 @@ public class GeneralDataController extends GuiLogedControllerBase {
 
       childsMap = new HashMap<>();
       childsMap.put("menus", this.getMenus());
+      childsMap.put("dashboardMenus", this.getSessionUserInfo().getUserDashboardMenus());
       map.put("app", childsMap);
 
       map.put("isLogged", "true");

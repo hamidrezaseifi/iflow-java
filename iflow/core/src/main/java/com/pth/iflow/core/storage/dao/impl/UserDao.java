@@ -137,32 +137,8 @@ public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
   }
 
   @Override
-  public List<UserDashboardMenuEntity> getUserDashboardMenuListByUserId(final Long id) throws IFlowStorageException {
-
-    final Session session = this.createSession();
-
-    final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-    final CriteriaQuery<UserDashboardMenuEntity> query = criteriaBuilder.createQuery(UserDashboardMenuEntity.class);
-    final Root<UserDashboardMenuEntity> root = query.from(UserDashboardMenuEntity.class);
-    query.select(root);
-
-    final Path<String> userIdPath = root.get("userId");
-    final Predicate predicate = criteriaBuilder.equal(userIdPath, id);
-    query.where(predicate);
-
-    final TypedQuery<UserDashboardMenuEntity> typedQuery = session.createQuery(query);
-
-    // final String qr =
-    // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
-    // System.out.println("search workflow query: " + qr);
-
-    final List<UserDashboardMenuEntity> list = typedQuery.getResultList();
-    session.close();
-    return list;
-  }
-
-  @Override
-  public List<UserDashboardMenuEntity> getUserDashboardMenuListByUserIdentity(final String identity) throws IFlowStorageException {
+  public List<UserDashboardMenuEntity> getUserDashboardMenuListByUserIdentity(final String appIdentity, final String userIdentity)
+      throws IFlowStorageException {
 
     final Session session = this.createSession();
 
@@ -172,8 +148,10 @@ public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
     query.select(root);
 
     final Path<String> userIdentityPath = root.get("user").get("identity");
-    final Predicate predicate = criteriaBuilder.equal(userIdentityPath, identity);
-    query.where(predicate);
+    final Predicate userPredicate = criteriaBuilder.equal(userIdentityPath, userIdentity);
+    final Path<String> appIdentityPath = root.get("appId");
+    final Predicate appPredicate = criteriaBuilder.equal(appIdentityPath, appIdentity);
+    query.where(criteriaBuilder.and(userPredicate, appPredicate));
 
     final TypedQuery<UserDashboardMenuEntity> typedQuery = session.createQuery(query);
 
@@ -187,34 +165,38 @@ public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
   }
 
   @Override
-  public List<UserDashboardMenuEntity> saveUserDashboardMenuListByUserId(final Long id, final List<UserDashboardMenuEntity> list)
+  public List<UserDashboardMenuEntity> saveUserDashboardMenuListByUserIdentity(final String appIdentity, final String userIdentity,
+      final List<UserDashboardMenuEntity> list)
       throws IFlowStorageException {
 
-    deleteAllUserDashboardMenuListByUserId(id);
+    final UserEntity user = getByIdentity(userIdentity);
+
+    deleteAllUserDashboardMenuListByUserId(appIdentity, user.getId());
 
     final Session session = this.createSession();
     final Transaction transaction = session.beginTransaction();
 
     for (final UserDashboardMenuEntity userDashboardMenu : list) {
-      userDashboardMenu.setUserId(id);
+      userDashboardMenu.setUserId(user.getId());
       userDashboardMenu.setVersion(1);
       session.persist(userDashboardMenu);
     }
     transaction.commit();
     session.close();
 
-    return getUserDashboardMenuListByUserId(id);
+    return getUserDashboardMenuListByUserIdentity(appIdentity, userIdentity);
   }
 
   @Transactional
-  private void deleteAllUserDashboardMenuListByUserId(final Long id) {
+  private void deleteAllUserDashboardMenuListByUserId(final String appIdentity, final Long userId) {
 
     final Session session = this.createSession();
 
     final Transaction transaction = session.beginTransaction();
     session
-        .createQuery("delete UserDashboardMenuEntity where userId= :userid")
-        .setParameter("userid", id)
+        .createQuery("delete UserDashboardMenuEntity where appId= :appidentity and userId= :userid")
+        .setParameter("userid", userId)
+        .setParameter("appidentity", appIdentity)
         .executeUpdate();
 
     transaction.commit();

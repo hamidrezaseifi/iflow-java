@@ -21,13 +21,16 @@ import org.springframework.web.context.annotation.SessionScope;
 import com.pth.iflow.common.enums.EUserDepartmentMemberType;
 import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.gui.authentication.GuiAuthenticationToken;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.Company;
 import com.pth.iflow.gui.models.CompanyProfile;
 import com.pth.iflow.gui.models.CompanyWorkflowTypeController;
 import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSettingPreset;
 import com.pth.iflow.gui.models.Department;
+import com.pth.iflow.gui.models.ProfileResponse;
 import com.pth.iflow.gui.models.User;
+import com.pth.iflow.gui.models.UserDashboardMenu;
 import com.pth.iflow.gui.models.UserDepartment;
 import com.pth.iflow.gui.models.UserGroup;
 import com.pth.iflow.gui.models.WorkflowType;
@@ -59,6 +62,8 @@ public class SessionUserInfo {
   private Map<String, List<CompanyWorkflowTypeController>> workflowTypeControllers;
 
   private List<CompanyWorkflowtypeItemOcrSettingPreset> workflowtypeItemOcrSettings = null;
+
+  private final List<UserDashboardMenu> userDashboardMenus = new ArrayList<>();
 
   @Value("${server.session.timeout}")
   private int sessionTimeOut;
@@ -93,12 +98,14 @@ public class SessionUserInfo {
     this.loginTime = new Date();
   }
 
-  public SessionUserInfo(final User user, final CompanyProfile companyProfile) {
+  public void setFromProfileResponse(final GuiAuthenticationToken token, final ProfileResponse profile) {
 
-    this.user = user;
-    this.companyProfile = companyProfile;
+    this.setToken(token.getToken());
+    this.user = profile.getUser();
+    this.companyProfile = profile.getCompanyProfile();
+    this.setSessionId(profile.getSessionid());
     this.loginTime = new Date();
-
+    this.setUserDashboardMenus(profile.getUserDashboardMenus());
   }
 
   public Date getLoginTime() {
@@ -380,4 +387,16 @@ public class SessionUserInfo {
 
   }
 
+  public List<UserDashboardMenu> getUserDashboardMenus() {
+
+    return this.userDashboardMenus;
+  }
+
+  public void setUserDashboardMenus(final List<UserDashboardMenu> userDashboardMenus) {
+
+    this.userDashboardMenus.clear();
+    if (userDashboardMenus != null) {
+      this.userDashboardMenus.addAll(userDashboardMenus);
+    }
+  }
 }

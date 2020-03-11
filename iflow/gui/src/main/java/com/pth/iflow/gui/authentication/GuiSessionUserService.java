@@ -7,8 +7,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.gui.models.CompanyProfile;
-import com.pth.iflow.gui.models.User;
+import com.pth.iflow.gui.models.ProfileResponse;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 
 /**
@@ -23,8 +22,8 @@ public class GuiSessionUserService {
   @Autowired
   private SessionUserInfo sessionUserInfo;
 
-  public SessionUserInfo authorizeUser(final GuiAuthenticationToken token, final User user,
-      final CompanyProfile companyProfile, final HttpSession session, final boolean setContext) {
+  public SessionUserInfo authorizeUser(final GuiAuthenticationToken token, final ProfileResponse profile, final HttpSession session,
+      final boolean setContext) {
 
     if (setContext) {
       SecurityContext ctx = SecurityContextHolder.getContext();
@@ -33,25 +32,20 @@ public class GuiSessionUserService {
       }
       ctx.setAuthentication(token);
     }
-    return this.setLoggedInUserInfo(token, user, companyProfile, session);
+    return this.setLoggedInUserInfo(token, profile, session);
 
   }
 
-  public SessionUserInfo setLoggedInUserInfo(final GuiAuthenticationToken token, final User user,
-      final CompanyProfile companyProfile, final HttpSession session) {
+  public SessionUserInfo setLoggedInUserInfo(final GuiAuthenticationToken token, final ProfileResponse profile, final HttpSession session) {
 
-    this.reloadSessionData(token, user, companyProfile);
+    this.reloadSessionData(token, profile);
 
     return this.sessionUserInfo;
   }
 
-  public void reloadSessionData(final GuiAuthenticationToken token, final User user,
-      final CompanyProfile companyProfile) {
+  public void reloadSessionData(final GuiAuthenticationToken token, final ProfileResponse profile) {
 
-    this.sessionUserInfo.setCompanyProfile(companyProfile);
-    this.sessionUserInfo.setUser(user);
-    this.sessionUserInfo.setToken(token.getToken());
-    this.sessionUserInfo.setSessionId(token.getSessionId());
+    this.sessionUserInfo.setFromProfileResponse(token, profile);
     this.sessionUserInfo.update();
 
   }

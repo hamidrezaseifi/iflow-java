@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.configurations.GuiSecurityConfigurations;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.CompanyProfile;
 import com.pth.iflow.gui.models.ProfileResponse;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.services.IProfileAccess;
@@ -62,7 +61,6 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
       else {
 
         final User user = profileResponse.getUser();
-        final CompanyProfile companyProfile = profileResponse.getCompanyProfile();
 
         final GuiAuthenticationToken newToken = new GuiAuthenticationToken(tbToken.getIdentity(), tbToken.getCompanyId(),
             tbToken.getToken(), tbToken.getSessionId(), user.getAuthorities());
@@ -76,7 +74,7 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
         }
         else {
 
-          if (this.sessionUserService.authorizeUser(newToken, user, companyProfile, request.getSession(), true) == null) {
+          if (this.sessionUserService.authorizeUser(newToken, profileResponse, request.getSession(), true) == null) {
 
             url = GuiAuthenticationErrorUrlCreator
                 .getErrorUrl("access",

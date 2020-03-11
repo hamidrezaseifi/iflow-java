@@ -14,7 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -26,29 +25,31 @@ import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.IInvoiceWorkflowDao;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
 @AutoConfigureMockMvc
 public class InvoiceWorkflowServiceTest extends TestDataProducer {
 
   private IInvoiceWorkflowService invoiceWorkflowService;
 
   @MockBean
-  private IInvoiceWorkflowDao     workflowDao;
+  private IInvoiceWorkflowDao workflowDao;
 
   @MockBean
-  private IWorkflowService        workflowService;
+  private IWorkflowService workflowService;
 
   @Before
   public void setUp() throws Exception {
+
     this.invoiceWorkflowService = new InvoiceWorkflowService(this.workflowDao, this.workflowService);
   }
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
   public void testSaveCreate() {
+
     final InvoiceWorkflowEntity model = getTestNewInvoiceWorkflow();
 
     final InvoiceWorkflowEntity savedModel = getTestInvoiceWorkflow(1L);
@@ -67,6 +68,7 @@ public class InvoiceWorkflowServiceTest extends TestDataProducer {
 
   @Test
   public void testSaveUpdate() {
+
     final InvoiceWorkflowEntity model = getTestInvoiceWorkflow(1L);
 
     final InvoiceWorkflowEntity savedModel = getTestInvoiceWorkflow(1L);
@@ -85,6 +87,7 @@ public class InvoiceWorkflowServiceTest extends TestDataProducer {
 
   @Test
   public void testGetByIdentity() {
+
     final InvoiceWorkflowEntity model = getTestInvoiceWorkflow(1L);
 
     when(this.workflowDao.getByIdentity(any(String.class))).thenReturn(model);
@@ -99,6 +102,7 @@ public class InvoiceWorkflowServiceTest extends TestDataProducer {
 
   @Test
   public void testGetListForUser() {
+
     final List<InvoiceWorkflowEntity> modelList = getTestInvoiceWorkflowList();
 
     when(this.workflowDao.getListForUserIdentity(any(String.class), any(Integer.class))).thenReturn(modelList);
@@ -113,6 +117,7 @@ public class InvoiceWorkflowServiceTest extends TestDataProducer {
 
   @Test
   public void testGetListByIdentityList() {
+
     final Set<String> idList = getTestWorkflowIdentityList();
     final List<InvoiceWorkflowEntity> modelList = getTestInvoiceWorkflowList();
 
@@ -127,14 +132,19 @@ public class InvoiceWorkflowServiceTest extends TestDataProducer {
   }
 
   private void assetWorkflow(final InvoiceWorkflowEntity savedModel, final InvoiceWorkflowEntity result) {
+
     Assert.assertNotNull("Result is not null!", result);
-    Assert.assertEquals("Result has " + result.getWorkflow().getIdentity() + " identity.", result.getWorkflow().getIdentity(),
-        savedModel.getWorkflow().getIdentity());
-    Assert.assertEquals("Result has " + result.getWorkflow().getControllerId() + " controller.", result.getWorkflow().getControllerId(),
-        savedModel.getWorkflow().getControllerId());
-    Assert.assertEquals("Result has " + result.getWorkflow().getCurrentStepId() + " step.", result.getWorkflow().getCurrentStepId(),
-        savedModel.getWorkflow().getCurrentStepId());
-    Assert.assertEquals("Result has " + result.getWorkflow().getWorkflowTypeId() + " workflow-type.",
-        result.getWorkflow().getWorkflowTypeId(), savedModel.getWorkflow().getWorkflowTypeId());
+    Assert
+        .assertEquals("Result has " + result.getWorkflow().getIdentity() + " identity.", result.getWorkflow().getIdentity(),
+            savedModel.getWorkflow().getIdentity());
+    Assert
+        .assertEquals("Result has " + result.getWorkflow().getControllerId() + " controller.", result.getWorkflow().getControllerId(),
+            savedModel.getWorkflow().getControllerId());
+    Assert
+        .assertEquals("Result has " + result.getWorkflow().getCurrentStepId() + " step.", result.getWorkflow().getCurrentStepId(),
+            savedModel.getWorkflow().getCurrentStepId());
+    Assert
+        .assertEquals("Result has " + result.getWorkflow().getWorkflowTypeId() + " workflow-type.",
+            result.getWorkflow().getWorkflowTypeId(), savedModel.getWorkflow().getWorkflowTypeId());
   }
 }

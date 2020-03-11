@@ -6,9 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.enums.EApplication;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.User;
+import com.pth.iflow.gui.models.UserDashboardMenu;
 import com.pth.iflow.gui.services.IUserAccess;
 import com.pth.iflow.gui.services.IUserHandler;
 
@@ -64,6 +66,22 @@ public class UserHandler implements IUserHandler {
 
     final String preparedText = res.substring(0, 1).toUpperCase() + res.substring(1, res.length());
     return preparedText;
+  }
+
+  @Override
+  public List<UserDashboardMenu> saveUserDashboardMenus(final List<UserDashboardMenu> userDashboardMenuList, final String userIdentity)
+      throws GuiCustomizedException, MalformedURLException {
+
+    for (final UserDashboardMenu item : userDashboardMenuList) {
+      item.setAppId(EApplication.IFLOW.getIdentity());
+      item.setUserIdentity(userIdentity);
+
+    }
+
+    final List<
+        UserDashboardMenu> resultList = this.userAccess.saveUserDashboardMenus(userDashboardMenuList, EApplication.IFLOW.getIdentity());
+
+    return resultList;
   }
 
 }
