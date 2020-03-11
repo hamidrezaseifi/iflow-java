@@ -18,7 +18,7 @@ public interface IUsersHandlerService {
   List<User> getUserListByCompanyIdentity(final String companyId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  ProfileResponse getUserProfileByIdentity(final String email)
+  ProfileResponse getUserProfileByIdentity(String appIdentity, final String email)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
   User saveUser(final User user) throws MalformedURLException, IFlowMessageConversionFailureException;

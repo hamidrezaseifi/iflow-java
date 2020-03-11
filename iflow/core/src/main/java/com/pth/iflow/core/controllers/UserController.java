@@ -136,20 +136,22 @@ public class UserController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USERPROFILE_READ_BY_EMAIL)
-  public ResponseEntity<ProfileResponseEdo> readUserProfileByEmail(@PathVariable(name = "email") final String email,
+  public ResponseEntity<ProfileResponseEdo> readUserProfileByEmail(@PathVariable(name = "appIdentity") final String appIdentity,
+      @PathVariable(name = "email") final String email,
       final HttpServletRequest request) throws Exception {
 
-    final ProfileResponse profile = this.usersService.getProfileResponseByEmail(email);
+    final ProfileResponse profile = this.usersService.getProfileResponseByEmail(appIdentity, email);
 
     return ControllerHelper.createResponseEntity(request, this.usersService.toProfileResponseEdo(profile), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USERPROFILE_READ_BY_USERIDENTITY)
-  public ResponseEntity<ProfileResponseEdo> readUserProfileByIdentity(@PathVariable(name = "identity") final String identity,
+  public ResponseEntity<ProfileResponseEdo> readUserProfileByIdentity(@PathVariable(name = "appIdentity") final String appIdentity,
+      @PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final ProfileResponse profile = this.usersService.getProfileResponseByIdentity(identity);
+    final ProfileResponse profile = this.usersService.getProfileResponseByIdentity(appIdentity, identity);
 
     return ControllerHelper.createResponseEntity(request, this.usersService.toProfileResponseEdo(profile), HttpStatus.OK);
   }

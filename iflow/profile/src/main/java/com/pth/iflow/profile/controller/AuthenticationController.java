@@ -57,10 +57,10 @@ public class AuthenticationController {
     return ControllerHelper.createResponseEntity(request, this.authenticateUser(userEdo), HttpStatus.ACCEPTED);
   }
 
-  private UserAuthenticationResponseEdo authenticateUser(final UserAuthenticationRequestEdo userEdo)
+  private UserAuthenticationResponseEdo authenticateUser(final UserAuthenticationRequestEdo userAuthenticationRequest)
       throws URISyntaxException, ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final UserAuthenticationRequest authUser = this.authService.authenticate(ProfileModelEdoMapper.fromEdo(userEdo));
+    final UserAuthenticationRequest authUser = this.authService.authenticate(ProfileModelEdoMapper.fromEdo(userAuthenticationRequest));
     if (authUser == null) {
       throw new ProfileCustomizedException("Invalid Username or Password", "", EModule.PROFILE.getModuleName(),
           EIFlowErrorType.INVALID_USERNAMEPASSWORD);
@@ -70,7 +70,8 @@ public class AuthenticationController {
         .findValidateByUserIdentity(authUser.getUserIdentity(),
             authUser.getCompanyIdentity(), true);
     if (session == null) {
-      final ProfileResponse profile = this.usersService.getUserProfileByEmail(authUser.getUserIdentity());
+      final ProfileResponse profile = this.usersService
+          .getUserProfileByEmail(userAuthenticationRequest.getAppId(), authUser.getUserIdentity());
       if (profile.getCompanyProfile().getCompany().hasSameIdentity(authUser.getCompanyIdentity()) == false) {
         throw new ProfileCustomizedException("Invalid company-identity!", "", EModule.PROFILE.getModuleName(),
             EIFlowErrorType.COMPANY_NOTFOUND);

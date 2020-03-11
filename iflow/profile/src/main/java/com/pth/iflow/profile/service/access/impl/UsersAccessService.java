@@ -68,28 +68,29 @@ public class UsersAccessService implements IUsersAccessService {
   }
 
   @Override
-  public ProfileResponse getUserProfileByIdentity(final String identity)
+  public ProfileResponse getUserProfileByIdentity(final String appIdentity, final String userIdentity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    logger.debug("Request user data for useridentity {}", identity);
+    logger.debug("Request user data for useridentity {}", userIdentity);
 
     final ProfileResponseEdo edo = this.restTemplate
         .callRestGet(
-            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USERPROFILE_BY_IDENTITY(identity)), EModule.CORE,
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USERPROFILE_BY_IDENTITY(appIdentity, userIdentity)),
+            EModule.CORE,
             ProfileResponseEdo.class, true);
 
     return ProfileModelEdoMapper.fromEdo(edo);
   }
 
   @Override
-  public ProfileResponse getUserProfileByEmail(final String email)
+  public ProfileResponse getUserProfileByEmail(final String appIdentity, final String email)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Request user data for user email {}", email);
 
     final ProfileResponseEdo edo = this.restTemplate
         .callRestGet(
-            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USERPROFILE_BY_EMAIL(email)), EModule.CORE,
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USERPROFILE_BY_EMAIL(appIdentity, email)), EModule.CORE,
             ProfileResponseEdo.class, true);
 
     return ProfileModelEdoMapper.fromEdo(edo);

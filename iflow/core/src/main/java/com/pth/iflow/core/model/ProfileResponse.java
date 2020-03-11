@@ -33,11 +33,13 @@ public class ProfileResponse {
 
   public ProfileResponse(final UserEntity user, final CompanyEntity company, final List<DepartmentEntity> departments,
       final List<UserGroupEntity> userGroups, final List<CompanyWorkflowTypeOcrSettingPresetEntity> ocrPresetSettings,
+      final List<UserDashboardMenuEntity> userDashboardMenus,
       final String sessionid) {
 
     this.user = user;
     this.companyProfile = new CompanyProfile(company, departments, userGroups, ocrPresetSettings);
     this.sessionid = sessionid;
+    setUserDashboardMenus(userDashboardMenus);
   }
 
   public UserEntity getUser() {

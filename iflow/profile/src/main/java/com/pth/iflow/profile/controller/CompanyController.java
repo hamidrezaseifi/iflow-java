@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.enums.EModule;
-import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
@@ -68,15 +66,9 @@ public class CompanyController {
       ) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(headerTokenId);
+    final Company company = this.companiesHandlerService.getCompanyByIdentity(companyidentity);
 
-    if (profile.getCompanyProfile().getCompany().hasNotSameIdentity(companyidentity)) {
-      throw new ProfileCustomizedException("Invalid Company!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_COMPANY);
-    }
-
-    return ControllerHelper
-        .createResponseEntity(request, ProfileModelEdoMapper.toEdo(profile.getCompanyProfile().getCompany()),
-            HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(company), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
@@ -150,14 +142,15 @@ public class CompanyController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_READ_PROFILE)
   @ResponseBody
-  public ResponseEntity<CompanyProfileEdo> readProfile(@PathVariable(name = "companyidentity") final String companyidentity,
+  public ResponseEntity<CompanyProfileEdo> readProfile(@PathVariable(name = "appIdentity") final String appIdentity,
+      @PathVariable(name = "companyidentity") final String companyidentity,
       final HttpServletRequest request,
       @RequestHeader(
         TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
       ) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(headerTokenId);
+    final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(appIdentity, headerTokenId);
 
     return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(profile.getCompanyProfile()), HttpStatus.OK);
   }

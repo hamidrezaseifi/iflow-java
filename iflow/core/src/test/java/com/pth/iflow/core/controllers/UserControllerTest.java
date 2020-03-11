@@ -254,20 +254,43 @@ public class UserControllerTest extends TestDataProducer {
     final ProfileResponse profile = this.getTestProfileResponse();
     final ProfileResponseEdo edo = getTestProfileResponseEdo();
 
-    when(this.usersService.getProfileResponseByEmail(any(String.class))).thenReturn(profile);
+    when(this.usersService.getProfileResponseByEmail(any(String.class), any(String.class))).thenReturn(profile);
     when(this.usersService.toProfileResponseEdo(any(ProfileResponse.class))).thenReturn(edo);
 
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edo);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders
-            .get(IflowRestPaths.CoreModule.USERPROFILE_READ_BY_EMAIL, "identity")
+            .get(IflowRestPaths.CoreModule.USERPROFILE_READ_BY_EMAIL, "appIdentity", "userIdentity")
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(resultAsXmlString));
 
-    verify(this.usersService, times(1)).getProfileResponseByEmail(any(String.class));
+    verify(this.usersService, times(1)).getProfileResponseByEmail(any(String.class), any(String.class));
+
+  }
+
+  @Test
+  public void testReadUserProfileByIdentity() throws Exception {
+
+    final ProfileResponse profile = this.getTestProfileResponse();
+    final ProfileResponseEdo edo = getTestProfileResponseEdo();
+
+    when(this.usersService.getProfileResponseByIdentity(any(String.class), any(String.class))).thenReturn(profile);
+    when(this.usersService.toProfileResponseEdo(any(ProfileResponse.class))).thenReturn(edo);
+
+    final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edo);
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.USERPROFILE_READ_BY_USERIDENTITY, "appIdentity", "userIdentity")
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(resultAsXmlString));
+
+    verify(this.usersService, times(1)).getProfileResponseByIdentity(any(String.class), any(String.class));
 
   }
 

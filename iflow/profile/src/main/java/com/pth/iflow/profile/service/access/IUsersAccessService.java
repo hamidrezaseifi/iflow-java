@@ -11,26 +11,26 @@ import com.pth.iflow.profile.model.UserDashboardMenu;
 
 public interface IUsersAccessService {
 
-  User getUserByIdentity(final String identity)
+  User getUserByIdentity(String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<User> getUserListByCompanyIdentity(final String companyId)
+  List<User> getUserListByCompanyIdentity(String companyId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  ProfileResponse getUserProfileByEmail(final String email)
+  ProfileResponse getUserProfileByEmail(String appIdentity, String email)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  ProfileResponse getUserProfileByIdentity(final String identity)
+  ProfileResponse getUserProfileByIdentity(String appIdentity, String userIdentity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  User saveUser(final User user) throws MalformedURLException, IFlowMessageConversionFailureException;
+  User saveUser(User user) throws MalformedURLException, IFlowMessageConversionFailureException;
 
   void deleteUser(User user) throws MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<UserDashboardMenu> getUserDashboardMenuListByUserIdentity(final String appIdentity, final String userIdentity)
+  List<UserDashboardMenu> getUserDashboardMenuListByUserIdentity(String appIdentity, String userIdentity)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<UserDashboardMenu> saveUserDashboardMenuListByUserIdentity(final String appIdentity, final String userIdentity,
+  List<UserDashboardMenu> saveUserDashboardMenuListByUserIdentity(String appIdentity, String userIdentity,
       List<UserDashboardMenu> requestedModelList)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 

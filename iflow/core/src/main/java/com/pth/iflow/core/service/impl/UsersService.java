@@ -131,27 +131,34 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   }
 
   @Override
-  public ProfileResponse getProfileResponseByEmail(final String email) {
+  public ProfileResponse getProfileResponseByEmail(final String appIdentity, final String email) {
 
     final UserEntity user = this.getUserByEmail(email);
     final CompanyEntity company = companyDao.getByIdentity(user.getCompany().getIdentity());
     final List<CompanyWorkflowTypeOcrSettingPresetEntity> workflowtypeItemOcrSettings = companyDao
         .readCompanyWorkflowtypeItemOcrSettings(company.getId());
 
+    final List<
+        UserDashboardMenuEntity> userDashboardMenuList = userDao.getUserDashboardMenuListByUserIdentity(appIdentity, user.getIdentity());
+
     return new ProfileResponse(user, company, user.getDepartments().stream().collect(Collectors.toList()),
-        user.getGroups().stream().collect(Collectors.toList()), workflowtypeItemOcrSettings, "sot-set");
+        user.getGroups().stream().collect(Collectors.toList()), workflowtypeItemOcrSettings,
+        userDashboardMenuList, "sot-set");
   }
 
   @Override
-  public ProfileResponse getProfileResponseByIdentity(final String identity) {
+  public ProfileResponse getProfileResponseByIdentity(final String appIdentity, final String identity) {
 
     final UserEntity user = this.getUserByIdentity(identity);
     final CompanyEntity company = companyDao.getByIdentity(user.getCompany().getIdentity());
     final List<CompanyWorkflowTypeOcrSettingPresetEntity> workflowtypeItemOcrSettings = companyDao
         .readCompanyWorkflowtypeItemOcrSettings(company.getId());
 
+    final List<UserDashboardMenuEntity> userDashboardMenuList = userDao.getUserDashboardMenuListByUserIdentity(appIdentity, identity);
+
     return new ProfileResponse(user, company, user.getDepartments().stream().collect(Collectors.toList()),
-        user.getGroups().stream().collect(Collectors.toList()), workflowtypeItemOcrSettings, "sot-set");
+        user.getGroups().stream().collect(Collectors.toList()), workflowtypeItemOcrSettings,
+        userDashboardMenuList, "sot-set");
   }
 
   @Override

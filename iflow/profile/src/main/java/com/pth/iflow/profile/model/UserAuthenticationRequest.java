@@ -5,6 +5,7 @@ public class UserAuthenticationRequest {
   private String userIdentity;
   private String password;
   private String companyIdentity;
+  private String appId;
 
   public String getUserIdentity() {
 
@@ -34,6 +35,16 @@ public class UserAuthenticationRequest {
   public void setCompanyIdentity(final String companyIdentity) {
 
     this.companyIdentity = companyIdentity;
+  }
+
+  public String getAppId() {
+
+    return this.appId;
+  }
+
+  public void setAppId(final String appId) {
+
+    this.appId = appId;
   }
 
 }

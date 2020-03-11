@@ -37,8 +37,8 @@ public class IflowRestPaths {
     public static final String USER_DEPUTIES_LIST_BY_IDENTITY = "/users/user/deputies/{identity}";
     public static final String USER_USER_LIST_BY_COMPANYIDENTITY = "/users/company/users/{companyidentity}";
     public static final String USER_USER_LIST_BY_DEPARTMENTIDENTITY = "/users/department/users/{identity}";
-    public static final String USERPROFILE_READ_BY_EMAIL = "/users/readprofile/email/{email}";
-    public static final String USERPROFILE_READ_BY_USERIDENTITY = "/users/readprofile/identity/{identity}";
+    public static final String USERPROFILE_READ_BY_EMAIL = "/users/readprofile/email/{appIdentity}/{email}";
+    public static final String USERPROFILE_READ_BY_USERIDENTITY = "/users/readprofile/identity/{appIdentity}/{identity}";
     public static final String USERDASHBOARDMENU_READ_BY_USERIDENTITY = "/users/dashboardmenu/read/{appIdentity}/{userIdentity}";
     public static final String USERDASHBOARDMENU_SAVE_BY_USERIDENTITY = "/users/dashboardmenu/svae/{appIdentity}/{userIdentity}";
 
@@ -142,16 +142,16 @@ public class IflowRestPaths {
       return builder.build(companyidentity);
     }
 
-    public static URI READ_USERPROFILE_BY_EMAIL(final String email) {
+    public static URI READ_USERPROFILE_BY_EMAIL(final String appIdentity, final String email) {
 
       final IflowUriBuilder builder = new IflowUriBuilder(USERPROFILE_READ_BY_EMAIL);
-      return builder.build(email);
+      return builder.build(appIdentity, email);
     }
 
-    public static URI READ_USERPROFILE_BY_IDENTITY(final String identity) {
+    public static URI READ_USERPROFILE_BY_IDENTITY(final String appIdentity, final String identity) {
 
       final IflowUriBuilder builder = new IflowUriBuilder(USERPROFILE_READ_BY_USERIDENTITY);
-      return builder.build(identity);
+      return builder.build(appIdentity, identity);
     }
 
     public static URI READ_USERDASHBOARDMENU_BY_IDENTITY(final String appIdentity, final String userIdentity) {
@@ -621,7 +621,7 @@ public class IflowRestPaths {
     public static final String COMPANY_READ_USER_LIST = "/company/read/user/{companyidentity}";
     public static final String COMPANY_READ_USERGROUP_LIST = "/company/read/usergroup/{companyidentity}";
     public static final String COMPANY_READ_DEPARTMENT_LIST = "/company/read/department/{companyidentity}";
-    public static final String COMPANY_READ_PROFILE = "/company/read/profile/{companyidentity}";
+    public static final String COMPANY_READ_PROFILE = "/company/read/profile/{appIdentity}/{companyidentity}";
     public static final String COMPANY_SAVE = "/company/save";
     public static final String COMPANY_READ_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_BY_IDENTITY = "/company/readwtoctsettings/{companyidentity}";
     public static final String COMPANY_SAVE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS = "/company/savewtoctsettings";
@@ -688,10 +688,10 @@ public class IflowRestPaths {
       return builder.build(companyidentity);
     }
 
-    public static URI READ_PROFILE_BY_COMPANYID_URIBUILDER(final String companyidentity) {
+    public static URI READ_PROFILE_BY_COMPANYID_URIBUILDER(final String appIdentity, final String companyidentity) {
 
       final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_READ_PROFILE);
-      return builder.build(companyidentity);
+      return builder.build(appIdentity, companyidentity);
     }
 
     public static URI READ_DEPARTMENT_BY_ID_URIBUILDER(final String identity) {
@@ -721,6 +721,12 @@ public class IflowRestPaths {
     public static URI READ_PROFILE_TOKENINFO_URIBUILDER() {
 
       final IflowUriBuilder builder = new IflowUriBuilder(PROFILE_READ_TOKENINFO);
+      return builder.build();
+    }
+
+    public static URI VALIDATE_TOKENINFO_URIBUILDER() {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(PROFILE_VALIDATE_TOKEN);
       return builder.build();
     }
 

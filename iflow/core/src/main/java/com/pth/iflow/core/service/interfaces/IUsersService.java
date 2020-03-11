@@ -25,9 +25,9 @@ public interface IUsersService extends ICoreModelEdoMapperService<UserEntity, Us
 
   UserEntity getUserByEmail(String email);
 
-  ProfileResponse getProfileResponseByEmail(String email);
+  ProfileResponse getProfileResponseByEmail(String appIdentity, String email);
 
-  ProfileResponse getProfileResponseByIdentity(String identity);
+  ProfileResponse getProfileResponseByIdentity(String appIdentity, String identity);
 
   List<UserGroupEntity> getUserGroups(String identity);
 

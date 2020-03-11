@@ -162,7 +162,39 @@ public class UserServiceTest extends TestDataProducer {
     when(this.userGroupDao.getListByIdList(any(Set.class))).thenReturn(grouplist);
     when(this.companyDao.getByIdentity(any(String.class))).thenReturn(company);
 
-    final ProfileResponse result = this.userService.getProfileResponseByEmail("identity");
+    final ProfileResponse result = this.userService.getProfileResponseByEmail("appIdentity", "userIdentity");
+
+    Assert.assertNotNull("Result not null!", result);
+    Assert
+        .assertEquals("Result company has title '" + company.getCompanyName() + "'", company.getCompanyName(),
+            result.getCompanyProfile().getCompany().getCompanyName());
+    Assert.assertEquals("Result user has fname '" + user.getFirstName() + "'", user.getFirstName(), result.getUser().getFirstName());
+    Assert.assertEquals("Result user has lname '" + user.getLastName() + "'", user.getLastName(), result.getUser().getLastName());
+    Assert
+        .assertEquals("Result user has '" + grouplist.size() + "' usergroups", grouplist.size(),
+            result.getCompanyProfile().getUserGroups().size());
+    Assert
+        .assertEquals("Result user has '" + deplist.size() + "' departments", deplist.size(),
+            result.getCompanyProfile().getDepartments().size());
+
+  }
+
+  @Test
+  public void testGetProfileResponseByIdentity() throws Exception {
+
+    final UserEntity user = getTestUser();
+    final CompanyEntity company = this.getTestCompany();
+    final List<UserGroupEntity> grouplist = getTestUserGroupList();
+    final List<DepartmentEntity> deplist = getTestDepartmentList();
+
+    user.setGroups(grouplist);
+
+    when(this.userDao.getByIdentity(any(String.class))).thenReturn(user);
+    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
+    when(this.userGroupDao.getListByIdList(any(Set.class))).thenReturn(grouplist);
+    when(this.companyDao.getByIdentity(any(String.class))).thenReturn(company);
+
+    final ProfileResponse result = this.userService.getProfileResponseByIdentity("appIdentity", "userIdentity");
 
     Assert.assertNotNull("Result not null!", result);
     Assert

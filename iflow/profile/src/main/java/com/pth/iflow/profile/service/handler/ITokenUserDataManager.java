@@ -14,18 +14,19 @@ import com.pth.iflow.profile.model.UserGroup;
 
 public interface ITokenUserDataManager {
 
-  ProfileResponse getProfileByToken(String token)
+  ProfileResponse getProfileByToken(String appIdentity, String token)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
 
-  UserAuthenticationSession validateToken(String token) throws ProfileCustomizedException, IFlowMessageConversionFailureException;
+  UserAuthenticationSession validateToken(String token)
+      throws ProfileCustomizedException, IFlowMessageConversionFailureException;
 
   void validateTokenAndCompany(String token, String companyIdentity)
       throws ProfileCustomizedException, IFlowMessageConversionFailureException;
 
-  ProfileResponse getProfileByTokenAndCheckCompany(String token, String companyIdentity)
+  ProfileResponse getProfileByTokenAndCheckCompany(String appIdentity, String token, String companyIdentity)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
 
-  ProfileResponse getProfileByTokenUserIdentity(String userIdentity, String token)
+  ProfileResponse getProfileByTokenUserIdentity(String appIdentity, String userIdentity, String token)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
 
   List<User> getUserListByToken(String token, String companyIdentity)

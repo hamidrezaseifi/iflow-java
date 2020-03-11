@@ -54,10 +54,10 @@ public class UsersHandlerService implements IUsersHandlerService {
   }
 
   @Override
-  public ProfileResponse getUserProfileByIdentity(final String email)
+  public ProfileResponse getUserProfileByIdentity(final String appIdentity, final String email)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    return this.usersService.getUserProfileByIdentity(email);
+    return this.usersService.getUserProfileByIdentity(appIdentity, email);
   }
 
   @Override

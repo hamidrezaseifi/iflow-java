@@ -97,7 +97,7 @@ public class TestDataProducer {
     final UserEntity user = getTestUser();
 
     return new ProfileResponse(user, company, getTestDepartmentList(), getTestUserGroupList(),
-        getTestCompanyWorkflowtypeItemOcrSettingPresetEntityList(),
+        getTestCompanyWorkflowtypeItemOcrSettingPresetEntityList(), getTestUserDashboardMenuEntityList(1L),
         "not-set");
   }
 

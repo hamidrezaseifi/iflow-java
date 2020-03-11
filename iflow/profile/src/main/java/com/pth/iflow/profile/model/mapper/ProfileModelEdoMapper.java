@@ -169,19 +169,21 @@ public class ProfileModelEdoMapper {
     edo.setCompanyIdentity(model.getCompanyIdentity());
     edo.setUserIdentity(model.getUserIdentity());
     edo.setPassword(model.getPassword());
+    edo.setAppId(model.getAppId());
 
     return edo;
   }
 
   public static UserAuthenticationRequest fromEdo(final UserAuthenticationRequestEdo edo) {
 
-    final UserAuthenticationRequest user = new UserAuthenticationRequest();
+    final UserAuthenticationRequest request = new UserAuthenticationRequest();
 
-    user.setCompanyIdentity(edo.getCompanyIdentity());
-    user.setUserIdentity(edo.getUserIdentity());
-    user.setPassword(edo.getPassword());
+    request.setCompanyIdentity(edo.getCompanyIdentity());
+    request.setUserIdentity(edo.getUserIdentity());
+    request.setPassword(edo.getPassword());
+    request.setAppId(edo.getAppId());
 
-    return user;
+    return request;
   }
 
   public static UserEdo toEdo(final User model) {

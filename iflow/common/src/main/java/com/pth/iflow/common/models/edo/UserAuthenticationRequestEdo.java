@@ -7,7 +7,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.pth.iflow.common.enums.EApplication;
 import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
+import com.pth.iflow.common.models.validation.AEnumNameValidator;
 
 @XmlRootElement(name = "UserAuthenticationRequest", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -25,6 +27,11 @@ public class UserAuthenticationRequestEdo {
   @NotNull(message = "CompanyIdentity must not be null")
   @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String companyIdentity;
+
+  @AEnumNameValidator(enumClazz = EApplication.class)
+  @NotNull(message = "AppId must not be null")
+  @XmlElement(name = "AppId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String appId;
 
   public String getUserIdentity() {
 
@@ -54,6 +61,16 @@ public class UserAuthenticationRequestEdo {
   public void setCompanyIdentity(final String companyIdentity) {
 
     this.companyIdentity = companyIdentity;
+  }
+
+  public String getAppId() {
+
+    return this.appId;
+  }
+
+  public void setAppId(final String appId) {
+
+    this.appId = appId;
   }
 
 }

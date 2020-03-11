@@ -51,12 +51,12 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public ProfileResponse getProfileByToken(final String token)
+  public ProfileResponse getProfileByToken(final String appIdentity, final String token)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     final UserAuthenticationSession session = this.validateToken(token);
 
-    final ProfileResponse profile = this.usersService.getUserProfileByIdentity(session.getUserIdentity());
+    final ProfileResponse profile = this.usersService.getUserProfileByIdentity(appIdentity, session.getUserIdentity());
     if (profile == null) {
       throw new ProfileCustomizedException("Profile not found!",
           "",
@@ -69,10 +69,10 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public ProfileResponse getProfileByTokenAndCheckCompany(final String token, final String companyIdentity)
+  public ProfileResponse getProfileByTokenAndCheckCompany(final String appIdentity, final String token, final String companyIdentity)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
-    final ProfileResponse profile = this.getProfileByToken(token);
+    final ProfileResponse profile = this.getProfileByToken(appIdentity, token);
 
     if (profile.getCompanyProfile().getCompany().hasSameIdentity(companyIdentity) == false) {
       throw new ProfileCustomizedException("Invalid Company!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_COMPANY);
@@ -82,7 +82,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public ProfileResponse getProfileByTokenUserIdentity(final String userIdentity, final String token)
+  public ProfileResponse getProfileByTokenUserIdentity(final String appIdentity, final String userIdentity, final String token)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     if (StringUtils.isEmpty(token)) {
@@ -95,7 +95,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
       throw new ProfileCustomizedException("Invalid session!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.NO_SESSION_FOUND);
     }
 
-    final ProfileResponse profile = this.usersService.getUserProfileByIdentity(session.getUserIdentity());
+    final ProfileResponse profile = this.usersService.getUserProfileByIdentity(appIdentity, session.getUserIdentity());
     if (profile == null) {
       throw new ProfileCustomizedException("Profile not found!",
           "",

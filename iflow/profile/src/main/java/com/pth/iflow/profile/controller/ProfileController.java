@@ -66,7 +66,7 @@ public class ProfileController {
     }
 
     final ProfileResponse profile = this.tokenUserDataManager
-        .getProfileByTokenUserIdentity(requestEdo.getUserIdentity(),
+        .getProfileByTokenUserIdentity(requestEdo.getAppId(), requestEdo.getUserIdentity(),
             requestEdo.getToken());
 
     return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(profile), HttpStatus.OK);
@@ -87,7 +87,7 @@ public class ProfileController {
       throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
     }
 
-    final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(requestEdo.getToken());
+    final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(requestEdo.getAppId(), requestEdo.getToken());
 
     return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(profile), HttpStatus.OK);
   }
@@ -95,7 +95,7 @@ public class ProfileController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.PROFILE_VALIDATE_TOKEN)
   @ResponseBody
-  public ResponseEntity<ProfileResponseEdo> validateToken(@PathVariable final String requestToken, final HttpServletRequest request,
+  public void validateToken(@PathVariable final String requestToken, final HttpServletRequest request,
       @RequestHeader(
         TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
       ) final String headerTokenId)
@@ -105,9 +105,6 @@ public class ProfileController {
       throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
     }
 
-    final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(requestToken);
-
-    return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(profile), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -124,7 +121,7 @@ public class ProfileController {
       throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
     }
 
-    this.tokenUserDataManager.getProfileByToken(headerTokenId);
+    this.tokenUserDataManager.validateToken(headerTokenId);
 
     final UserAuthenticationRequest auth = this.authenticationService.setAuthentication(ProfileModelEdoMapper.fromEdo(userEdo));
 
