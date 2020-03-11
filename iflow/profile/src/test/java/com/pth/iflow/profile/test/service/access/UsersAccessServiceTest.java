@@ -60,7 +60,7 @@ public class UsersAccessServiceTest extends TestDataProducer {
   }
 
   @Test
-  public void testGetUserByEmail() throws Exception {
+  public void testGetUserByIdentity() throws Exception {
 
     final User user = this.getTestUser();
     final UserEdo userEdo = ProfileModelEdoMapper.toEdo(user);

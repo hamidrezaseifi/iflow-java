@@ -25,9 +25,9 @@ public interface IUsersHandlerService {
 
   void deleteUser(User user) throws MalformedURLException, IFlowMessageConversionFailureException;
 
-  void resetUserPassword(UserPasswordChangeRequest fromEdo);
+  void resetUserPassword(UserPasswordChangeRequest request);
 
-  void deleteUserAuthentication(UserPasswordChangeRequest fromEdo);
+  void deleteUserAuthentication(UserPasswordChangeRequest request);
 
   List<UserDashboardMenu> getUserDashboardMenuListByUserIdentity(String identity)
       throws MalformedURLException, IFlowMessageConversionFailureException;

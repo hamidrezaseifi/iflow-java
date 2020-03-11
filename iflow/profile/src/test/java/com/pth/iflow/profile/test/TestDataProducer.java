@@ -33,6 +33,7 @@ import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserDashboardMenu;
 import com.pth.iflow.profile.model.UserDepartment;
 import com.pth.iflow.profile.model.UserGroup;
+import com.pth.iflow.profile.model.UserPasswordChangeRequest;
 import com.pth.iflow.profile.model.WorkflowMessage;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 
@@ -282,6 +283,17 @@ public class TestDataProducer {
 
     final AuthenticatedProfileRequestEdo model = new AuthenticatedProfileRequestEdo();
     model.setUserIdentity("");
+    model.setToken("token");
+
+    return model;
+  }
+
+  protected UserPasswordChangeRequest getTestUserPasswordChangeRequest() {
+
+    final UserPasswordChangeRequest model = new UserPasswordChangeRequest();
+    model.setCompanyIdentity("companyIdentity");
+    model.setIdentity("identity");
+    model.setPassword("password");
     model.setToken("token");
 
     return model;

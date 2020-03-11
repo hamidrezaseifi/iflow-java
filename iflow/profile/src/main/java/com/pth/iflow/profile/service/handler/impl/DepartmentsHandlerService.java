@@ -10,20 +10,16 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.service.access.IDepartmentAccessService;
-import com.pth.iflow.profile.service.handler.IAuthenticationService;
 import com.pth.iflow.profile.service.handler.IDepartmentsHandlerService;
 
 @Service
 public class DepartmentsHandlerService implements IDepartmentsHandlerService {
 
   private final IDepartmentAccessService departmentAccessService;
-  private final IAuthenticationService authenticationService;
 
-  public DepartmentsHandlerService(@Autowired final IDepartmentAccessService departmentAccessService,
-      @Autowired final IAuthenticationService authenticationService) {
+  public DepartmentsHandlerService(@Autowired final IDepartmentAccessService departmentAccessService) {
 
     this.departmentAccessService = departmentAccessService;
-    this.authenticationService = authenticationService;
   }
 
   @Override

@@ -1,7 +1,6 @@
 package com.pth.iflow.profile.test.service.handler;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import java.net.URI;
@@ -17,27 +16,22 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.enums.EModule;
-import com.pth.iflow.common.models.edo.CompanyEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetListEdo;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSettingPreset;
-import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.access.ICompanyAccessService;
-import com.pth.iflow.profile.service.access.impl.CompanyAccessService;
-import com.pth.iflow.profile.service.handler.IProfileRestTemplateCall;
+import com.pth.iflow.profile.service.handler.ICompaniesHandlerService;
+import com.pth.iflow.profile.service.handler.impl.CompaniesHandlerService;
 import com.pth.iflow.profile.test.TestDataProducer;
 
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 public class CompaniesHandlerServiceTest extends TestDataProducer {
 
-  private ICompanyAccessService companyService;
+  private ICompaniesHandlerService companiesHandler;
 
   @Mock
-  private IProfileRestTemplateCall restTemplate;
+  private ICompanyAccessService companyAccessService;
 
   @MockBean
   private ProfileConfiguration.CoreAccessConfig coreAccessConfig;
@@ -45,7 +39,7 @@ public class CompaniesHandlerServiceTest extends TestDataProducer {
   @Before
   public void setUp() throws Exception {
 
-    this.companyService = new CompanyAccessService(this.restTemplate, this.coreAccessConfig);
+    this.companiesHandler = new CompaniesHandlerService(this.companyAccessService);
 
     when(this.coreAccessConfig.prepareCoreUrl(any(URI.class))).thenReturn(new URI("http://any-string"));
 
@@ -60,12 +54,10 @@ public class CompaniesHandlerServiceTest extends TestDataProducer {
   public void testGetCompanyById() throws Exception {
 
     final Company company = this.getTestCompany();
-    final CompanyEdo companyEdo = ProfileModelEdoMapper.toEdo(company);
 
-    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), any(Class.class), any(boolean.class)))
-        .thenReturn(companyEdo);
+    when(this.companyAccessService.getByIdentity(any(String.class))).thenReturn(company);
 
-    final Company resCompany = this.companyService.getByIdentity(company.getIdentity());
+    final Company resCompany = this.companiesHandler.getCompanyByIdentity(company.getIdentity());
 
     Assert.assertNotNull("Result company is not null!", resCompany);
     Assert.assertEquals("Result company has id 1!", resCompany.getIdentity(), company.getIdentity());
@@ -80,13 +72,10 @@ public class CompaniesHandlerServiceTest extends TestDataProducer {
   public void testSaveCompany() throws Exception {
 
     final Company company = this.getTestCompany();
-    final CompanyEdo companyEdo = ProfileModelEdoMapper.toEdo(company);
 
-    when(this.restTemplate
-        .callRestPost(any(URI.class), eq(EModule.CORE), any(CompanyEdo.class), eq(CompanyEdo.class), any(boolean.class)))
-            .thenReturn(companyEdo);
+    when(this.companyAccessService.saveCompany(any(Company.class))).thenReturn(company);
 
-    final Company resCompany = this.companyService.saveCompany(company);
+    final Company resCompany = this.companiesHandler.saveCompany(company);
 
     Assert.assertNotNull("Result company is not null!", resCompany);
     Assert.assertEquals("Result company has the same identity as source!", company.getIdentity(), resCompany.getIdentity());
@@ -100,23 +89,18 @@ public class CompaniesHandlerServiceTest extends TestDataProducer {
   public void testReadCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity() throws Exception {
 
     final List<
-        CompanyWorkflowtypeItemOcrSettingPresetEdo> listEdoSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetEdoList();
+        CompanyWorkflowtypeItemOcrSettingPreset> listSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetList();
 
-    final CompanyWorkflowtypeItemOcrSettingPresetListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(
-        listEdoSettings);
+    when(this.companyAccessService.readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(any(String.class))).thenReturn(listSettings);
 
-    when(this.restTemplate
-        .callRestGet(any(URI.class), any(EModule.class), eq(CompanyWorkflowtypeItemOcrSettingPresetListEdo.class), any(boolean.class)))
-            .thenReturn(edoListSettings);
-
-    final List<CompanyWorkflowtypeItemOcrSettingPreset> resList = this.companyService
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> resList = this.companiesHandler
         .readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity("identity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has size 3!", 3, resList.size());
     Assert
-        .assertEquals("The third item from result list has " + listEdoSettings.get(2).getItems().size() + " items!",
-            listEdoSettings.get(2).getItems().size(), resList.get(2).getItems().size());
+        .assertEquals("The third item from result list has " + listSettings.get(2).getItems().size() + " items!",
+            listSettings.get(2).getItems().size(), resList.get(2).getItems().size());
 
   }
 
@@ -125,14 +109,10 @@ public class CompaniesHandlerServiceTest extends TestDataProducer {
 
     final CompanyWorkflowtypeItemOcrSettingPreset preset = this.getTestCompanyWorkflowtypeItemOcrSettingPreset("presetName");
 
-    final CompanyWorkflowtypeItemOcrSettingPresetEdo edoSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetEdo("presetName");
+    when(this.companyAccessService.saveCompanyWorkflowtypeItemOcrSettings(any(CompanyWorkflowtypeItemOcrSettingPreset.class)))
+        .thenReturn(preset);
 
-    when(this.restTemplate
-        .callRestPost(any(URI.class), eq(EModule.CORE), any(CompanyWorkflowtypeItemOcrSettingPresetEdo.class),
-            eq(CompanyWorkflowtypeItemOcrSettingPresetEdo.class), any(boolean.class)))
-                .thenReturn(edoSettings);
-
-    final CompanyWorkflowtypeItemOcrSettingPreset resultPreset = this.companyService.saveCompanyWorkflowtypeItemOcrSettings(preset);
+    final CompanyWorkflowtypeItemOcrSettingPreset resultPreset = this.companiesHandler.saveCompanyWorkflowtypeItemOcrSettings(preset);
 
     Assert.assertNotNull("Result company is not null!", resultPreset);
     Assert
