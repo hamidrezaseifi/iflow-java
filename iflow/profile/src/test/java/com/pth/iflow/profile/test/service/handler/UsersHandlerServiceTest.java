@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.pth.iflow.common.enums.EApplication;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
@@ -91,9 +92,9 @@ public class UsersHandlerServiceTest extends TestDataProducer {
 
     final ProfileResponse profile = this.getTestProfileResponse("sessionid");
 
-    when(this.usersAccessService.getUserProfileByIdentity(any(String.class))).thenReturn(profile);
+    when(this.usersAccessService.getUserProfileByIdentity(any(String.class), any(String.class))).thenReturn(profile);
 
-    final ProfileResponse resProfile = this.usersHandlerService.getUserProfileByIdentity("userIdentity");
+    final ProfileResponse resProfile = this.usersHandlerService.getUserProfileByIdentity(EApplication.IFLOW.getIdentity(), "userIdentity");
 
     Assert.assertNotNull("Result profile is not null!", resProfile);
     Assert.assertEquals("Result profile has the same sessionid as source!", profile.getSessionid(), resProfile.getSessionid());

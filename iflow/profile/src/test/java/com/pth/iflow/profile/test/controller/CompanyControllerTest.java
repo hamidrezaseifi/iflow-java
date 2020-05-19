@@ -35,7 +35,6 @@ import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSettingPreset;
 import com.pth.iflow.profile.model.Department;
-import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserGroup;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
@@ -60,8 +59,6 @@ public class CompanyControllerTest extends TestDataProducer {
   @MockBean
   private ICompaniesHandlerService companiesHandlerService;
 
-  private User user;
-
   private Company company;
 
   String TestToken = "test-roken";
@@ -69,7 +66,6 @@ public class CompanyControllerTest extends TestDataProducer {
   @Before
   public void setUp() throws Exception {
 
-    this.user = this.getTestUser();
     this.company = this.getTestCompany();
 
   }
@@ -84,20 +80,19 @@ public class CompanyControllerTest extends TestDataProducer {
 
     final CompanyEdo companyEdo = ProfileModelEdoMapper.toEdo(this.company);
 
-    final ProfileResponse profile = this.getTestProfileResponse("sessionid", this.user);
-    when(this.tokenUserDataManager.getProfileByToken(any(String.class))).thenReturn(profile);
+    when(this.companiesHandlerService.getCompanyByIdentity(any(String.class))).thenReturn(this.company);
 
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders
-            .get(IflowRestPaths.ProfileModule.COMPANY_READ_BY_IDENTITY, profile.getCompanyProfile().getCompany().getIdentity())
+            .get(IflowRestPaths.ProfileModule.COMPANY_READ_BY_IDENTITY, this.company.getIdentity())
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.tokenUserDataManager, times(1)).getProfileByToken(any(String.class));
+    verify(this.companiesHandlerService, times(1)).getCompanyByIdentity(any(String.class));
   }
 
   @Test

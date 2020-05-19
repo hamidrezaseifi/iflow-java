@@ -31,7 +31,6 @@ import com.pth.iflow.workflow.bl.impl.workflowservice.invoice.InvoiceWorkflowPro
 import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
 import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategyFactory;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.ProfileResponse;
 import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflowSaveRequest;
 
@@ -43,41 +42,32 @@ public class InvoiceWorkflowProcessServiceTest extends TestDataProducer {
   private IWorkflowProcessService<InvoiceWorkflow> workflowProcessService;
 
   @Mock
-  private IWorkflowDataService<InvoiceWorkflow>    workflowDataService;
+  private IWorkflowDataService<InvoiceWorkflow> workflowDataService;
 
   @Mock
-  private IWorkflowPrepare<InvoiceWorkflow>        workflowPrepare;
+  private IWorkflowPrepare<InvoiceWorkflow> workflowPrepare;
 
   @Mock
-  private ITokenValidator                          tokenValidator;
+  private ITokenValidator tokenValidator;
 
   @Mock
-  IWorkflowSaveStrategyFactory<InvoiceWorkflow>    workStrategyFactory;
+  IWorkflowSaveStrategyFactory<InvoiceWorkflow> workStrategyFactory;
 
   @Mock
-  private IWorkflowSaveStrategy<InvoiceWorkflow>   saveStrategy;
+  private IWorkflowSaveStrategy<InvoiceWorkflow> saveStrategy;
 
   @Mock
-  private IWorkflowSaveStrategy<InvoiceWorkflow>   validateStrategy;
+  private IWorkflowSaveStrategy<InvoiceWorkflow> validateStrategy;
 
-  private String                                   validTocken;
-
-  private String                                   validSession;
-
-  private ProfileResponse                          profileResponse;
+  private String validTocken;
 
   @Before
   public void setUp() throws Exception {
+
     this.workflowProcessService = new InvoiceWorkflowProcessService(this.workflowDataService, this.tokenValidator,
         this.workStrategyFactory, this.workflowPrepare);
 
     this.validTocken = "validTocken";
-
-    this.validSession = "validSession";
-
-    this.profileResponse = new ProfileResponse(this.getTestUser(), this.getTestCompanyProfile(), this.validSession);
-
-    when(this.tokenValidator.isTokenValid(this.validTocken)).thenReturn(this.profileResponse);
 
     when(this.workStrategyFactory.selectSaveWorkStrategy(any(InvoiceWorkflowSaveRequest.class), any(String.class)))
         .thenReturn(this.saveStrategy);
@@ -89,6 +79,7 @@ public class InvoiceWorkflowProcessServiceTest extends TestDataProducer {
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -143,8 +134,9 @@ public class InvoiceWorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), workflowSaveResult.getIdentity());
-    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
-        workflowSaveResult.getStatus());
+    Assert
+        .assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
+            workflowSaveResult.getStatus());
 
   }
 
@@ -167,8 +159,9 @@ public class InvoiceWorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), workflowSaveResult.getIdentity());
-    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
-        workflowSaveResult.getStatus());
+    Assert
+        .assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
+            workflowSaveResult.getStatus());
 
   }
 
@@ -191,8 +184,9 @@ public class InvoiceWorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), workflowSaveResult.getIdentity());
-    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
-        workflowSaveResult.getStatus());
+    Assert
+        .assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
+            workflowSaveResult.getStatus());
 
   }
 

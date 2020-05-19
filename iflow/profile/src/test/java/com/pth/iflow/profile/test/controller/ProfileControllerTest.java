@@ -92,7 +92,7 @@ public class ProfileControllerTest extends TestDataProducer {
     this.validProfileResponse = this.getTestProfileResponse(this.authenticatedSession.getSessionid());
 
     when(this.usersService.getUserByIdentity(any(String.class))).thenReturn(this.user);
-    when(this.usersService.getUserProfileByIdentity(any(String.class))).thenReturn(this.validProfileResponse);
+    when(this.usersService.getUserProfileByIdentity(any(String.class), any(String.class))).thenReturn(this.validProfileResponse);
     when(this.companyService.getByIdentity(any(String.class))).thenReturn(this.company);
     when(this.departmentService.getListByCompanyIdentity(any(String.class))).thenReturn(this.departmentList);
     when(this.userGroupService.getListByCompanyIdentity(any(String.class))).thenReturn(this.groupList);
@@ -126,7 +126,7 @@ public class ProfileControllerTest extends TestDataProducer {
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.usersService, times(1)).getUserProfileByIdentity(any(String.class));
+    verify(this.usersService, times(1)).getUserProfileByIdentity(any(String.class), any(String.class));
 
   }
 
@@ -152,7 +152,7 @@ public class ProfileControllerTest extends TestDataProducer {
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.usersService, times(1)).getUserProfileByIdentity(any(String.class));
+    verify(this.usersService, times(1)).getUserProfileByIdentity(any(String.class), any(String.class));
 
   }
 

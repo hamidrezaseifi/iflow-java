@@ -2,8 +2,10 @@ package com.pth.iflow.workflow.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+
 import java.util.List;
 import java.util.Set;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,12 +15,12 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeProcessService;
 import com.pth.iflow.workflow.bl.impl.WorkflowTypeProcessService;
-import com.pth.iflow.workflow.models.ProfileResponse;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
 
@@ -39,23 +41,20 @@ public class WorkflowTypeProcessServiceTest extends TestDataProducer {
 
   private String validSession;
 
-  private ProfileResponse profileResponse;
-
   @Before
   public void setUp() throws Exception {
+
     this.workflowTypeProcessService = new WorkflowTypeProcessService(this.workflowTypeDataService, this.tokenValidator);
 
     this.validTocken = "validTocken";
 
     this.validSession = "validSession";
 
-    this.profileResponse = new ProfileResponse(this.getTestUser(), this.getTestCompanyProfile(), this.validSession);
-
-    when(this.tokenValidator.isTokenValid(this.validTocken)).thenReturn(this.profileResponse);
   }
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -69,9 +68,10 @@ public class WorkflowTypeProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflowType);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflowType.getIdentity(), workflowType.getIdentity());
-    Assert.assertEquals("Result workflow-type has title '" + workflowType.getTitle() + "'!",
-                        resWorkflowType.getTitle(),
-                        workflowType.getTitle());
+    Assert
+        .assertEquals("Result workflow-type has title '" + workflowType.getTitle() + "'!",
+            resWorkflowType.getTitle(),
+            workflowType.getTitle());
     Assert.assertEquals("Result workflow-type has status 1!", resWorkflowType.getStatus(), workflowType.getStatus());
 
   }
@@ -79,7 +79,8 @@ public class WorkflowTypeProcessServiceTest extends TestDataProducer {
   @Test
   public void testGetListByIdList() throws Exception {
 
-    final Set<String> idList = this.getTestWorkflowTypeIdSet();;
+    final Set<String> idList = this.getTestWorkflowTypeIdSet();
+    ;
     final List<WorkflowType> list = this.getTestWorkflowTypeList();
 
     when(this.workflowTypeDataService.getListByIdentityList(any(Set.class), any(String.class))).thenReturn(list);

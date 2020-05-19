@@ -830,8 +830,10 @@ public class TestDataProducer {
 
   protected SessionUserInfo createGuiSessionUserInfo() {
 
-    final SessionUserInfo info = new SessionUserInfo(this.createUiUser("admin", "", "", Arrays.asList(EUiUserRole.ADMIN)),
-        this.getTestCompanyProfile());
+    final SessionUserInfo info = new SessionUserInfo();
+    info.setUser(this.createUiUser("admin", "", "", Arrays.asList(EUiUserRole.ADMIN)));
+    info.setCompanyProfile(this.getTestCompanyProfile());
+
     info.setToken("test-token");
     info.setSessionId("test-sessionId");
     info.update();

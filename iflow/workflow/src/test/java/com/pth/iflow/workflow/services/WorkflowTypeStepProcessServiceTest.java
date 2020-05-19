@@ -22,7 +22,6 @@ import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowTypeStepDataService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeStepProcessService;
 import com.pth.iflow.workflow.bl.impl.WorkflowTypeStepProcessService;
-import com.pth.iflow.workflow.models.ProfileResponse;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
 
 @RunWith(SpringRunner.class)
@@ -33,32 +32,29 @@ public class WorkflowTypeStepProcessServiceTest extends TestDataProducer {
   private IWorkflowTypeStepProcessService workflowTypeStepProcessService;
 
   @MockBean
-  private IWorkflowTypeStepDataService    workflowTypeStepDataService;
+  private IWorkflowTypeStepDataService workflowTypeStepDataService;
 
   @Mock
-  private ITokenValidator                 tokenValidator;
+  private ITokenValidator tokenValidator;
 
-  private String                          validTocken;
+  private String validTocken;
 
-  private String                          validSession;
-
-  private ProfileResponse                 profileResponse;
+  private String validSession;
 
   @Before
   public void setUp() throws Exception {
+
     this.workflowTypeStepProcessService = new WorkflowTypeStepProcessService(this.workflowTypeStepDataService, this.tokenValidator);
 
     this.validTocken = "validTocken";
 
     this.validSession = "validSession";
 
-    this.profileResponse = new ProfileResponse(this.getTestUser(), this.getTestCompanyProfile(), this.validSession);
-
-    when(this.tokenValidator.isTokenValid(this.validTocken)).thenReturn(this.profileResponse);
   }
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -68,13 +64,15 @@ public class WorkflowTypeStepProcessServiceTest extends TestDataProducer {
 
     when(this.workflowTypeStepDataService.getByIdentity(any(String.class), any(String.class))).thenReturn(workflowStepType);
 
-    final WorkflowTypeStep resWorkflowType = this.workflowTypeStepProcessService.getByIdentity(workflowStepType.getIdentity(),
-        this.validTocken);
+    final WorkflowTypeStep resWorkflowType = this.workflowTypeStepProcessService
+        .getByIdentity(workflowStepType.getIdentity(),
+            this.validTocken);
 
     Assert.assertNotNull("Result workflow-type-step is not null!", resWorkflowType);
     Assert.assertEquals("Result workflow-type-step has id 1!", resWorkflowType.getIdentity(), workflowStepType.getIdentity());
-    Assert.assertEquals("Result workflow-type-step has title '" + workflowStepType.getTitle() + "'!", resWorkflowType.getTitle(),
-        workflowStepType.getTitle());
+    Assert
+        .assertEquals("Result workflow-type-step has title '" + workflowStepType.getTitle() + "'!", resWorkflowType.getTitle(),
+            workflowStepType.getTitle());
     Assert.assertEquals("Result workflow-type-step has status 1!", resWorkflowType.getStatus(), workflowStepType.getStatus());
 
   }
@@ -101,8 +99,9 @@ public class WorkflowTypeStepProcessServiceTest extends TestDataProducer {
 
     when(this.workflowTypeStepDataService.getListByWorkflowIdentity(any(String.class), any(String.class))).thenReturn(list);
 
-    final List<WorkflowTypeStep> resList = this.workflowTypeStepProcessService.getListByWorkflowIdentity("identity1",
-        this.validTocken);
+    final List<WorkflowTypeStep> resList = this.workflowTypeStepProcessService
+        .getListByWorkflowIdentity("identity1",
+            this.validTocken);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

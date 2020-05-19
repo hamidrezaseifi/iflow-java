@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.pth.iflow.common.enums.EApplication;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.Department;
@@ -90,14 +91,14 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   @Test(expected = ProfileCustomizedException.class)
   public void testGetProfileByTokenEmptyToken() throws Exception {
 
-    this.tokenUserDataManager.getProfileByToken("");
+    this.tokenUserDataManager.getProfileByToken(EApplication.IFLOW.getIdentity(), "");
 
   }
 
   @Test(expected = ProfileCustomizedException.class)
   public void testGetProfileByTokenInvalidToken() throws Exception {
 
-    this.tokenUserDataManager.getProfileByToken(this.inValidToken);
+    this.tokenUserDataManager.getProfileByToken(EApplication.IFLOW.getIdentity(), this.inValidToken);
 
   }
 
@@ -106,11 +107,11 @@ public class TokenUserDataManagerTest extends TestDataProducer {
 
     final ProfileResponse profile = this.getTestProfileResponse(this.validSession.getSessionid());
 
-    when(this.usersService.getUserProfileByIdentity(any(String.class))).thenReturn(profile);
+    when(this.usersService.getUserProfileByIdentity(any(String.class), any(String.class))).thenReturn(profile);
 
-    final ProfileResponse response = this.tokenUserDataManager.getProfileByToken(this.validToken);
+    final ProfileResponse response = this.tokenUserDataManager.getProfileByToken(EApplication.IFLOW.getIdentity(), this.validToken);
 
-    verify(this.usersService, times(1)).getUserProfileByIdentity(any(String.class));
+    verify(this.usersService, times(1)).getUserProfileByIdentity(any(String.class), any(String.class));
 
     Assert.assertNotNull("Result response is not null!", response);
     Assert.assertNotNull("Result user is not null!", response.getUser());
