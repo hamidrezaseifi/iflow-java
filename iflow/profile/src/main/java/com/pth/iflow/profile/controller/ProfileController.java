@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,15 +94,18 @@ public class ProfileController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.PROFILE_VALIDATE_TOKEN)
   @ResponseBody
-  public void validateToken(@PathVariable final String requestToken, final HttpServletRequest request,
+  public void validateToken(final HttpServletRequest request,
       @RequestHeader(
         TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
       ) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    if (StringUtils.isEmpty(requestToken) || StringUtils.isEmpty(headerTokenId) || (requestToken.equals(headerTokenId) == false)) {
-      throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
-    }
+    /*
+     * if (StringUtils.isEmpty(requestToken) || StringUtils.isEmpty(headerTokenId) || (requestToken.equals(headerTokenId) == false)) { throw
+     * new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN); }
+     */
+
+    this.tokenUserDataManager.validateToken(headerTokenId);
 
   }
 

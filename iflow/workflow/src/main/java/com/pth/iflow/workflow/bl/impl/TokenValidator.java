@@ -41,10 +41,13 @@ public class TokenValidator implements ITokenValidator {
     profileRequest.setToken(token);
 
     this.restTemplate
-        .callRestPost(
-            this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.VALIDATE_TOKENINFO_URIBUILDER()), token,
-            EModule.PROFILE,
-            profileRequest, Void.class, true);
+        .callRestGet(this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.VALIDATE_TOKENINFO_URIBUILDER()), token,
+            EModule.PROFILE, Void.class, true);
+    /*
+     * this.restTemplate .callRestPost(
+     * this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.VALIDATE_TOKENINFO_URIBUILDER()), token, EModule.PROFILE,
+     * profileRequest, Void.class, true);
+     */
 
   }
 
