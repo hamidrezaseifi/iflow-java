@@ -9,5 +9,8 @@ export class DashboardCube {
   status: number = 0;
   version: number = 0;
   	
+	hasImage() : boolean{
+	  return this.image != null && this.image != '';
+	}
 }
 

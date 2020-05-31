@@ -5,11 +5,14 @@
 
 	<div class="cubes-container">
 		<div class="cubes-container-toolbar">
-			<i class="material-icons cubes-container-toolbar-button" (click)="startEditCubes()">build</i>
+			<i class="material-icons cubes-container-toolbar-button" [ngClass]="{'editmode': isEditMode, 'noeditmode': isEditMode === false }" (click)="startEditCubes()">build</i>
+			
+			<i class="material-icons cubes-container-toolbar-button apply-button" *ngIf="menusIsChanged" (click)="applyEditCubes()">done</i>
 		</div>
 		<div *ngFor="let cubeRow of cubes; let row = index">
 		
-			<a *ngFor="let cube of cubeRow; let col = index" class="cube" (click)="selectMenuItem(cube)">
+			<a *ngFor="let cube of cubeRow; let col = index" class="cube" [ngClass]="{'editmode': isEditMode, 'noeditmode': isEditMode === false }" (click)="selectMenuItem(cube)">
+				<img class="menu-icon" src="{{ cube.image }}">
 				<span class="cube-text">
 					{{ cube.text }}
 				</span>

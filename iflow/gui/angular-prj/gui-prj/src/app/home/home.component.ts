@@ -1,4 +1,5 @@
-﻿import { Component, OnInit, Input } from '@angular/core';
+﻿import { Component, OnInit, Input} from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import $ from "jquery";
 
@@ -28,9 +29,14 @@ export class HomeComponent implements OnInit {
 		showSelectMenuDialog : boolean = false;
 		showedSubMenu : any[] = [];
 		selectedCube :DashboardCube = null;
+		
+		isEditMode = false;
+		menusIsChanged = false;
 	
-    constructor(private global: GlobalService,) {
-      this.isPresentObs = this.global.presensSubject.asObservable();
+    constructor(private global: GlobalService, 
+        private route: ActivatedRoute,
+        private router: Router ) {
+      		this.isPresentObs = this.global.presensSubject.asObservable();
     }
 
     ngOnInit() {
@@ -51,6 +57,7 @@ export class HomeComponent implements OnInit {
         	cube.url = "/#" + r + "-" + c;
         	cube.row = r;
         	cube.column = c;
+        	cube.image = "/assets/images/no-image.png";
         
           cubelist.push(cube);
         }
@@ -66,6 +73,16 @@ export class HomeComponent implements OnInit {
     
     
     selectMenuItem(cube:DashboardCube){
+      
+      if(this.isEditMode === false){
+        
+        if(cube.url != null && cube.url != ''){
+          this.router.navigate([cube.url]);  
+        }
+        
+        
+        return;
+      }
       
       this.selectedCube = cube;
       this.showSelectMenuDialog = true;
@@ -95,6 +112,7 @@ export class HomeComponent implements OnInit {
     
     toggleSubMenuShowed(id: string):boolean{
       
+      
       for(var index in this.showedSubMenu){
         if(this.showedSubMenu[index].id === id){
                  
@@ -109,11 +127,24 @@ export class HomeComponent implements OnInit {
     
     selectMenuItemForCube(menu){
       
+      this.selectedCube.text = menu.label;
+      this.selectedCube.image = menu.image;
+      this.selectedCube.url = menu.url;
+      
+      this.menusIsChanged = true;
+      
       this.hideMenuDialog();
     }
     
     startEditCubes(){
+      this.isEditMode = this.isEditMode === false ? true : false;
+    }
+    
+    applyEditCubes(){
       
+      
+      this.menusIsChanged = false;
+      this.isEditMode = false;
     }
     
     
