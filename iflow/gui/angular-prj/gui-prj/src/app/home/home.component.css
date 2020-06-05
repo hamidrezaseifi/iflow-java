@@ -14,7 +14,7 @@
 a.cube{
 	display: inline-block;
 	border: 2px solid #f4f4f4;
-	background-color: #0169be;
+	/*background-color: #0169be;*/
 	margin: 2px;
 	width: 100px;
 	height: 100px;

@@ -1,15 +1,23 @@
 ﻿
 import { WorkflowType } from '../wf-models/workflowtype';
 import { Company } from './company';
-import { Department, MenuItem, User } from '../ui-models';
+import { Department, MenuItem, User, DashboardCube } from '../ui-models';
  
 export interface UserGeneralData {
 	currentUser: User;
 	
 }
 
+export interface DashboardGeneralData {
+  totalColumns: number;
+	totalRows: number;
+	dashboardMenus: DashboardCube[][];
+	
+}
+
 export interface AppGeneralData {
 	menus: MenuItem[];
+	dashboard: DashboardGeneralData;
 	
 }
 

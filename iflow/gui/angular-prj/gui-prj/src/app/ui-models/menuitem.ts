@@ -5,5 +5,8 @@
 	public children: MenuItem[] = [];
 	public id: string;
 	public status: number;
+  public backColor: string;
+  public foreColor: string;
+
 }
 

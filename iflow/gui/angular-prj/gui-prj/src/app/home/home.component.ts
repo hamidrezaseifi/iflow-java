@@ -47,9 +47,12 @@ export class HomeComponent implements OnInit {
       
       this.global.currentSessionDataSubject.asObservable().subscribe((res: GeneralData) => {
       	this.menus = res.app.menus;
+      	this.cubes = res.app.dashboard.dashboardMenus;
+      	this.totalColumns = res.app.dashboard.totalColumns;
+      	this.totalRows = res.app.dashboard.totalRows;
       });
       
-      for(var r = 0; r < this.totalRows; r ++){
+      /*for(var r = 0; r < this.totalRows; r ++){
         var cubelist : DashboardCube[] = [];
         for(var c = 0; c < this.totalColumns; c ++){
           var cube : DashboardCube = new DashboardCube();
@@ -63,7 +66,7 @@ export class HomeComponent implements OnInit {
         }
         
         this.cubes.push(cubelist);
-      }
+      }*/
       
     }
     

@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,6 +34,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.controller.GuiLogedControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
+import com.pth.iflow.gui.models.UserDashboardMenu;
 import com.pth.iflow.gui.models.WorkflowMessage;
 import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.models.ui.GuiSocketMessage;
@@ -228,6 +230,20 @@ public class GeneralDataController extends GuiLogedControllerBase {
     return res;
   }
 
+  @ResponseStatus(HttpStatus.OK)
+  @PostMapping(path = { "/userdashboard/dashboardmenu/update" })
+  @ResponseBody
+  public Map<String, Object> setUserDashboardMenus(@RequestBody final List<List<UserDashboardMenu>> userDashboardMenus)
+      throws GuiCustomizedException, IFlowMessageConversionFailureException, IOException {
+
+    final Map<String, Object> dashboardMap = new HashMap<>();
+    dashboardMap.put("totalColumns", this.getSessionUserInfo().getDashboarTotalColumns());
+    dashboardMap.put("totalRows", this.getSessionUserInfo().getDashboarTotalRows());
+    dashboardMap.put("dashboardMenus", this.getSessionUserInfo().getPreparedUserDashboardMenus(this.getMenus()));
+
+    return dashboardMap;
+  }
+
   private void generateGeneralData(final Map<String, Object> map) throws IFlowMessageConversionFailureException {
 
     if (this.isSessionValidAndLoggedIn()) {
@@ -248,7 +264,13 @@ public class GeneralDataController extends GuiLogedControllerBase {
 
       childsMap = new HashMap<>();
       childsMap.put("menus", this.getMenus());
-      childsMap.put("dashboardMenus", this.getSessionUserInfo().getUserDashboardMenus());
+
+      final Map<String, Object> dashboardMap = new HashMap<>();
+      dashboardMap.put("totalColumns", this.getSessionUserInfo().getDashboarTotalColumns());
+      dashboardMap.put("totalRows", this.getSessionUserInfo().getDashboarTotalRows());
+      dashboardMap.put("dashboardMenus", this.getSessionUserInfo().getPreparedUserDashboardMenus(this.getMenus()));
+      childsMap.put("dashboard", dashboardMap);
+
       map.put("app", childsMap);
 
       map.put("isLogged", "true");

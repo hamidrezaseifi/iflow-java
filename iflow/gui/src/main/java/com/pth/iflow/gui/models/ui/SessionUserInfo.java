@@ -47,6 +47,9 @@ public class SessionUserInfo {
 
   public static String SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
 
+  private static final int DASHBOARD_TOTAL_COLUMNS = 10;
+  private static final int DASHBOARD_TOTAL_ROWS = 6;
+
   private Date loginTime;
   private User user;
   private CompanyProfile companyProfile;
@@ -390,6 +393,70 @@ public class SessionUserInfo {
   public List<UserDashboardMenu> getUserDashboardMenus() {
 
     return this.userDashboardMenus;
+  }
+
+  public List<List<UserDashboardMenu>> getPreparedUserDashboardMenus(final List<UiMenuItem> menuList) {
+
+    final List<List<UserDashboardMenu>> dashboardMenus = new ArrayList<>();
+
+    for (int r = 1; r <= DASHBOARD_TOTAL_ROWS; r++) {
+      final List<UserDashboardMenu> row = new ArrayList<>();
+
+      for (int c = 1; c <= DASHBOARD_TOTAL_COLUMNS; c++) {
+
+        UserDashboardMenu item = this.findUserDashboardMen(menuList, r, c);
+
+        if (item == null) {
+          item = this.initializeUserDashboardMenu(r, c);
+        }
+
+        row.add(item);
+      }
+
+      dashboardMenus.add(row);
+    }
+
+    return dashboardMenus;
+  }
+
+  private UserDashboardMenu initializeUserDashboardMenu(final int r, final int c) {
+
+    UserDashboardMenu item;
+    item = new UserDashboardMenu();
+    item.setMenu(null);
+
+    item.setRowIndex(r);
+    item.setColumnIndex(c);
+    return item;
+  }
+
+  private UserDashboardMenu findUserDashboardMen(final List<UiMenuItem> menuList, final int r, final int c) {
+
+    UserDashboardMenu item = null;
+    for (final UserDashboardMenu searchItem : this.userDashboardMenus) {
+      if (searchItem.getRowIndex() == r && searchItem.getColumnIndex() == c) {
+        item = searchItem;
+
+        for (final UiMenuItem menuItem : menuList) {
+          if (menuItem.getId().equals(item.getMenuId())) {
+            item.setMenu(menuItem);
+          }
+        }
+
+        break;
+      }
+    }
+    return item;
+  }
+
+  public int getDashboarTotalColumns() {
+
+    return SessionUserInfo.DASHBOARD_TOTAL_COLUMNS;
+  }
+
+  public int getDashboarTotalRows() {
+
+    return SessionUserInfo.DASHBOARD_TOTAL_ROWS;
   }
 
   public void setUserDashboardMenus(final List<UserDashboardMenu> userDashboardMenus) {

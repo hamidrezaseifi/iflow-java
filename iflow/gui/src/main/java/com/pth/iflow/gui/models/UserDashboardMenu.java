@@ -1,20 +1,25 @@
 package com.pth.iflow.gui.models;
 
+import com.pth.iflow.common.enums.EApplication;
+import com.pth.iflow.gui.models.ui.UiMenuItem;
+
 public class UserDashboardMenu {
 
   private String userIdentity;
 
-  private String appId;
+  private String appId = EApplication.IFLOW.getIdentity();
 
-  private String menuId;
+  private UiMenuItem menu = null;
+
+  private String menuId = "";
 
   private Integer rowIndex;
 
   private Integer columnIndex;
 
-  private Integer status;
+  private Integer status = 1;
 
-  private Integer version;
+  private Integer version = 1;
 
   public String getUserIdentity() {
 
@@ -24,6 +29,48 @@ public class UserDashboardMenu {
   public void setUserIdentity(final String userIdentity) {
 
     this.userIdentity = userIdentity;
+  }
+
+  public UiMenuItem getMenu() {
+
+    return this.menu;
+  }
+
+  public void setMenu(final UiMenuItem menu) {
+
+    this.menu = menu;
+  }
+
+  public String getText() {
+
+    return this.menu != null ? this.menu.getLabel() : "Cube " + this.rowIndex + "-" + this.columnIndex;
+  }
+
+  public String getUrl() {
+
+    return this.menu != null ? this.menu.getUrl() : "#";
+  }
+
+  public String getImage() {
+
+    return this.menu != null ? this.menu.getImage() : "/assets/images/no-image.png";
+  }
+
+  public String getBackColor() {
+
+    return this.menu != null ? this.menu.getBackColor() : "#ffffff";
+  }
+
+  public String getForeColor() {
+
+    return this.menu != null ? this.menu.getForeColor() : "#000000";
+  }
+
+  public String getStyle() {
+
+    String style = "background-color:" + this.getBackColor() + ";";
+    style += "color:" + this.getForeColor() + ";";
+    return style;
   }
 
   public String getAppId() {

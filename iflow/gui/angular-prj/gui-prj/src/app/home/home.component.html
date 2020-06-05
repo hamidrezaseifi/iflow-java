@@ -11,7 +11,8 @@
 		</div>
 		<div *ngFor="let cubeRow of cubes; let row = index">
 		
-			<a *ngFor="let cube of cubeRow; let col = index" class="cube" [ngClass]="{'editmode': isEditMode, 'noeditmode': isEditMode === false }" (click)="selectMenuItem(cube)">
+			<a *ngFor="let cube of cubeRow; let col = index" class="cube" [ngClass]="{'editmode': isEditMode, 'noeditmode': isEditMode === false }" 
+				(click)="selectMenuItem(cube)" [style.background-color] = "cube.backColor" [style.color] = "cube.foreColor" >
 				<img class="menu-icon" src="{{ cube.image }}">
 				<span class="cube-text">
 					{{ cube.text }}

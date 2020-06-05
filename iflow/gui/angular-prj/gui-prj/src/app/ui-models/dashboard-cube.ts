@@ -1,8 +1,13 @@
 
 export class DashboardCube {
-  menuId: string = "";
+  appId: string = "";
+	menuId: string = "";
 	text: string = "";
 	image: string = "";
+  backColor: string = "";
+  foreColor: string = "";
+	style: string = "";
+
 	url: string = "";
   row: number = 0;
   column: number = 0;
