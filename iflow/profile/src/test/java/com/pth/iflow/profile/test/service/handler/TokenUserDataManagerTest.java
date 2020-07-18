@@ -5,7 +5,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -19,7 +21,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.common.enums.EApplication;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
-import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
@@ -63,9 +64,7 @@ public class TokenUserDataManagerTest extends TestDataProducer {
 
   private UserAuthenticationSession validSession;
 
-  private Company validCompany;
-
-  private User validUser;
+  private final Set<Integer> initalUserRoles = new HashSet<>();
 
   private final String inValidToken = "invalid-token";
 
@@ -75,11 +74,10 @@ public class TokenUserDataManagerTest extends TestDataProducer {
     this.tokenUserDataManager = new TokenUserDataManager(this.sessionManager, this.usersService, this.companyService,
         this.userGroupService, this.departmentService);
 
-    this.validSession = this.sessionManager.addSession(this.validEmail, this.validCompanyIdentity);
-    this.validToken = this.validSession.getToken();
+    this.initalUserRoles.add(1);
 
-    this.validCompany = this.getTestCompany();
-    this.validUser = this.getTestUser("userfn", "userln", this.validEmail);
+    this.validSession = this.sessionManager.addSession(this.validEmail, this.validCompanyIdentity, this.initalUserRoles);
+    this.validToken = this.validSession.getToken();
 
   }
 

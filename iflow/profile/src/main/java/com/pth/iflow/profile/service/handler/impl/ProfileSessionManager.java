@@ -1,7 +1,5 @@
 package com.pth.iflow.profile.service.handler.impl;
 
-import java.nio.charset.Charset;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -13,31 +11,30 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.profile.helper.JwtTokenProvider;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.service.handler.ISessionManager;
 
 @Service
 public class ProfileSessionManager implements ISessionManager {
 
-  @Value("${iflow.backend.valid-email}")
-  private String                         backendValidUserIdentity;
-
   @Value("${iflow.profile.session-maxage:7200}")
-  private int                            sessionMaxAge;
+  private int sessionMaxAge;
 
-  private UserAuthenticationSession      backendValidSession = null;
+  @Autowired
+  private JwtTokenProvider jwtTokenProvider;
 
-  private static final Logger            logger              = LoggerFactory.getLogger(ProfileSessionManager.class);
+  private static final Logger logger = LoggerFactory.getLogger(ProfileSessionManager.class);
 
-  Map<String, UserAuthenticationSession> sessions            = new HashMap<>();
+  Map<String, UserAuthenticationSession> sessions = new HashMap<>();
 
   @PostConstruct
   public void init() {
-    this.backendValidSession = this.addSession(this.backendValidUserIdentity, "iflow");
-    this.backendValidSession.setFixedSession(true);
+
   }
 
   @Override
@@ -57,6 +54,7 @@ public class ProfileSessionManager implements ISessionManager {
 
   @Override
   public UserAuthenticationSession findBySessionId(final String sessionId) {
+
     return this.sessions.keySet().contains(sessionId) ? this.sessions.get(sessionId) : null;
   }
 
@@ -74,6 +72,7 @@ public class ProfileSessionManager implements ISessionManager {
 
   @Override
   public UserAuthenticationSession findByToken(final String token) {
+
     for (final String sessionId : this.sessions.keySet()) {
       final UserAuthenticationSession session = this.sessions.get(sessionId);
       if (session.getToken().equals(token)) {
@@ -86,7 +85,8 @@ public class ProfileSessionManager implements ISessionManager {
   }
 
   @Override
-  public UserAuthenticationSession addSession(final String userIdentity, final String companyIdentity) {
+  public UserAuthenticationSession addSession(final String userIdentity, final String companyIdentity, final Set<Integer> roles) {
+
     UserAuthenticationSession session = this.findByUserIdentity(userIdentity);
 
     if (session != null) {
@@ -99,7 +99,7 @@ public class ProfileSessionManager implements ISessionManager {
 
     session = new UserAuthenticationSession(userIdentity, companyIdentity, this.sessionMaxAge);
     session.setSessionid(sessionid);
-    session.setToken(this.generateToken(userIdentity));
+    session.setToken(this.generateToken(userIdentity, roles));
     session.update();
 
     this.sessions.put(sessionid, session);
@@ -111,20 +111,19 @@ public class ProfileSessionManager implements ISessionManager {
 
   @Override
   public UserAuthenticationSession updateUser(final String userIdentity, final String sessionId) {
+
     this.findBySessionId(sessionId).setUserIdentity(userIdentity).update();
 
     return this.findBySessionId(sessionId);
   }
 
-  private String generateToken(final String userIdentity) {
+  private String generateToken(final String userIdentity, final Set<Integer> roles) {
 
-    final String token = "PFTKS{" + this.encodeBase64(userIdentity + "-" + System.currentTimeMillis()) + "}PFTKE";
+    final String token = this.jwtTokenProvider.createToken(userIdentity, roles);
+
+    // final String token = "PFTKS{" + this.encodeBase64(userIdentity + "-" + System.currentTimeMillis()) + "}PFTKE";
 
     return token;
-  }
-
-  private String encodeBase64(final String text) {
-    return Base64.getEncoder().encodeToString(text.getBytes(Charset.forName("UTF-8")));
   }
 
   @Override
@@ -135,28 +134,13 @@ public class ProfileSessionManager implements ISessionManager {
     if (session != null && session.hasCompanyIdentity(companyIdentity)) {
       if (session.isValid()) {
         return session;
-      } else {
+      }
+      else {
         this.sessions.remove(session.getSessionid());
       }
     }
 
     return null;
-  }
-
-  /**
-   * @return the backendValidEMail
-   */
-  @Override
-  public String getBackendValidUserIdentity() {
-    return this.backendValidUserIdentity;
-  }
-
-  /**
-   * @return the backendValidSession
-   */
-  @Override
-  public UserAuthenticationSession getBackendValidSession() {
-    return this.backendValidSession;
   }
 
   @Override
@@ -179,12 +163,14 @@ public class ProfileSessionManager implements ISessionManager {
 
   @Override
   public void removeExpiredSession(final UserAuthenticationSession session) {
+
     this.sessions.remove(session.getSessionid());
 
   }
 
   @Override
   public void removeExpiredSession(final String sessionId) {
+
     this.sessions.remove(sessionId);
 
   }
@@ -194,6 +180,7 @@ public class ProfileSessionManager implements ISessionManager {
    */
   @Override
   public int getSessionMaxAge() {
+
     return this.sessionMaxAge;
   }
 
@@ -202,6 +189,7 @@ public class ProfileSessionManager implements ISessionManager {
    */
   @Override
   public void setSessionMaxAge(final int sessionMaxAge) {
+
     this.sessionMaxAge = sessionMaxAge;
   }
 

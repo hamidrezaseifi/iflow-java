@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.junit.After;
@@ -83,7 +84,7 @@ public class ProfileControllerTest extends TestDataProducer {
   @Before
   public void setUp() throws Exception {
 
-    this.authenticatedSession = this.sessionManager.addSession("email@test.de", "valid-company");
+    this.authenticatedSession = this.sessionManager.addSession("email@test.de", "valid-company", new HashSet<>());
 
     this.user = this.getTestUser();
     this.company = this.getTestCompany();

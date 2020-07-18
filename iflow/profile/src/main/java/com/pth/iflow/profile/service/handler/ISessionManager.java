@@ -1,10 +1,12 @@
 package com.pth.iflow.profile.service.handler;
 
+import java.util.Set;
+
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 
 public interface ISessionManager {
 
-  UserAuthenticationSession addSession(String userIdentity, String companyIdentity);
+  UserAuthenticationSession addSession(String userIdentity, String companyIdentity, final Set<Integer> roles);
 
   UserAuthenticationSession findByUserIdentity(String userIdentity);
 
@@ -17,10 +19,6 @@ public interface ISessionManager {
   UserAuthenticationSession updateByToken(String token);
 
   UserAuthenticationSession updateUser(String userIdentity, String sessionId);
-
-  String getBackendValidUserIdentity();
-
-  UserAuthenticationSession getBackendValidSession();
 
   void removeAllExpiredSessions();
 

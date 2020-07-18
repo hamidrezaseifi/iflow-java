@@ -77,7 +77,8 @@ public class AuthenticationController {
             EIFlowErrorType.COMPANY_NOTFOUND);
       }
 
-      session = this.sessionManager.addSession(profile.getUser().getIdentity(), authUser.getCompanyIdentity());
+      session = this.sessionManager
+          .addSession(profile.getUser().getIdentity(), authUser.getCompanyIdentity(), profile.getUser().getRoles());
     }
 
     this.sessionManager.updateUser(session.getUserIdentity(), session.getSessionid());
