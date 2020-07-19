@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.helper;
+package com.pth.iflow.profile.service.handler.impl;
 
 import java.util.Base64;
 import java.util.Date;
@@ -18,7 +18,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.pth.iflow.profile.exceptions.InvalidJwtAuthenticationException;
+import com.pth.iflow.common.moduls.security.IJwtTokenProvider;
+import com.pth.iflow.common.moduls.security.InvalidJwtAuthenticationException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -27,7 +28,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
-public class JwtTokenProvider {
+public class JwtTokenProvider implements IJwtTokenProvider {
 
   @Value("${jwt.token.secretKey}")
   private String secretKey;
@@ -47,6 +48,12 @@ public class JwtTokenProvider {
     this.secretKeyEncoded = Base64.getEncoder().encodeToString(this.secretKey.getBytes());
   }
 
+  /*
+   * (non-Javadoc)
+   *
+   * @see moduls.security.IJwtTokenProvider#createToken(java.lang.String, java.util.Set)
+   */
+  @Override
   public String createToken(final String username, final Set<Integer> roles) {
 
     final Claims claims = Jwts.claims().setSubject(username);
@@ -65,6 +72,12 @@ public class JwtTokenProvider {
         .compact();
   }
 
+  /*
+   * (non-Javadoc)
+   *
+   * @see moduls.security.IJwtTokenProvider#getAuthentication(java.lang.String)
+   */
+  @Override
   public UsernamePasswordAuthenticationToken getAuthentication(final String token) {
 
     final String userName = this.getUsername(token);
@@ -87,6 +100,12 @@ public class JwtTokenProvider {
     return usernamePasswordAuthenticationToken;
   }
 
+  /*
+   * (non-Javadoc)
+   *
+   * @see moduls.security.IJwtTokenProvider#getUsername(java.lang.String)
+   */
+  @Override
   public String getUsername(final String token) {
 
     return Jwts.parser().setSigningKey(this.secretKeyEncoded).parseClaimsJws(token).getBody().getSubject();
@@ -108,6 +127,7 @@ public class JwtTokenProvider {
     return null;
   }
 
+  @Override
   public boolean validateToken(final String token) {
 
     try {
@@ -124,11 +144,23 @@ public class JwtTokenProvider {
     }
   }
 
+  /*
+   * (non-Javadoc)
+   *
+   * @see moduls.security.IJwtTokenProvider#getTokenExpireDate(java.lang.String)
+   */
+  @Override
   public Date getTokenExpireDate(final String token) {
 
     return Jwts.parser().setSigningKey(this.secretKeyEncoded).parseClaimsJws(token).getBody().getExpiration();
   }
 
+  /*
+   * (non-Javadoc)
+   *
+   * @see moduls.security.IJwtTokenProvider#getTokenIssuedDate(java.lang.String)
+   */
+  @Override
   public Date getTokenIssuedDate(final String token) {
 
     return Jwts.parser().setSigningKey(this.secretKeyEncoded).parseClaimsJws(token).getBody().getIssuedAt();

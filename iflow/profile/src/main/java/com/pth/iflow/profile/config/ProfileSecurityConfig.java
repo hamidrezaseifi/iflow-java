@@ -1,16 +1,31 @@
 package com.pth.iflow.profile.config;
 
+import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
+import com.pth.iflow.common.moduls.security.JwtRestRemoteAuthenticationManager;
+import com.pth.iflow.common.moduls.security.JwtSecurityConfigurer;
+
 @Configuration
 public class ProfileSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  public ProfileSecurityConfig() {
+  @Autowired
+  JwtRestRemoteAuthenticationManager jwtRemoteAuthenticationManager;
 
-    // TODO Auto-generated constructor stub
+  @Override
+  @Bean
+  public AuthenticationManager authenticationManager() throws Exception {
+
+    final AuthenticationManager authenticationManager = new ProviderManager(Arrays.asList(this.jwtRemoteAuthenticationManager));
+    return authenticationManager;
   }
 
   @Override
@@ -31,7 +46,9 @@ public class ProfileSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/auth/authenticate")
         .anonymous()
         .anyRequest()
-        .authenticated();
+        .authenticated()
+        .and()
+        .apply(new JwtSecurityConfigurer());
     // @formatter:on
   }
 

@@ -20,13 +20,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.common.enums.EApplication;
+import com.pth.iflow.common.moduls.security.IJwtTokenProvider;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
-import com.pth.iflow.profile.service.access.ICompanyAccessService;
 import com.pth.iflow.profile.service.access.IDepartmentAccessService;
 import com.pth.iflow.profile.service.access.IUserGroupAccessService;
 import com.pth.iflow.profile.service.access.IUsersAccessService;
@@ -48,13 +48,13 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   private IUsersAccessService usersService;
 
   @Mock
-  private ICompanyAccessService companyService;
-
-  @Mock
   private IUserGroupAccessService userGroupService;
 
   @Mock
   private IDepartmentAccessService departmentService;
+
+  @Mock
+  private IJwtTokenProvider jwtTokenProvider;
 
   private String validToken;
 
@@ -71,8 +71,8 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   @Before
   public void setUp() throws Exception {
 
-    this.tokenUserDataManager = new TokenUserDataManager(this.sessionManager, this.usersService, this.companyService,
-        this.userGroupService, this.departmentService);
+    this.tokenUserDataManager = new TokenUserDataManager(this.sessionManager, this.usersService, this.userGroupService,
+        this.departmentService, this.jwtTokenProvider);
 
     this.initalUserRoles.add(1);
 

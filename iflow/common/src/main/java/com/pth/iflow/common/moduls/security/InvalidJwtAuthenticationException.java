@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.exceptions;
+package com.pth.iflow.common.moduls.security;
 
 import org.springframework.security.core.AuthenticationException;
 

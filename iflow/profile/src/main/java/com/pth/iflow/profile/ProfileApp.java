@@ -8,7 +8,10 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.stereotype.Component;
+
 import com.pth.iflow.common.controllers.helper.IflowSpringProfiles;
+import com.pth.iflow.common.moduls.security.JwtRestRemoteAuthenticationManager;
 import com.pth.iflow.common.rest.XmlRestConfig;
 
 @SpringBootApplication(scanBasePackageClasses = { IflowSpringProfiles.class, ProfileApp.class })
@@ -19,6 +22,12 @@ public class ProfileApp implements ApplicationListener<ApplicationReadyEvent> {
   @Configuration
   @Import(XmlRestConfig.class)
   static class Config {
+
+  }
+
+  @Component
+  @Import(JwtRestRemoteAuthenticationManager.class)
+  static class restRemoteAuthenticationManager {
 
   }
 

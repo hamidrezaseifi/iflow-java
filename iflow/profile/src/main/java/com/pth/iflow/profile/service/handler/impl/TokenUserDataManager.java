@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.moduls.security.IJwtTokenProvider;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
-import com.pth.iflow.profile.service.access.ICompanyAccessService;
 import com.pth.iflow.profile.service.access.IDepartmentAccessService;
 import com.pth.iflow.profile.service.access.IUserGroupAccessService;
 import com.pth.iflow.profile.service.access.IUsersAccessService;
@@ -31,23 +31,23 @@ public class TokenUserDataManager implements ITokenUserDataManager {
 
   private final IUsersAccessService usersService;
 
-  private final ICompanyAccessService companyService;
-
   private final IUserGroupAccessService userGroupService;
 
   private final IDepartmentAccessService departmentService;
 
+  private final IJwtTokenProvider jwtTokenProvider;
+
   public TokenUserDataManager(@Autowired final ISessionManager sessionManager,
       @Autowired final IUsersAccessService usersService,
-      @Autowired final ICompanyAccessService companyService,
       @Autowired final IUserGroupAccessService userGroupService,
-      @Autowired final IDepartmentAccessService departmentService) {
+      @Autowired final IDepartmentAccessService departmentService,
+      @Autowired final IJwtTokenProvider jwtTokenProvider) {
 
     this.sessionManager = sessionManager;
     this.usersService = usersService;
-    this.companyService = companyService;
     this.userGroupService = userGroupService;
     this.departmentService = departmentService;
+    this.jwtTokenProvider = jwtTokenProvider;
   }
 
   @Override
@@ -146,8 +146,9 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   @Override
   public UserAuthenticationSession validateToken(final String token) throws ProfileCustomizedException {
 
-    if (StringUtils.isEmpty(token)) {
+    if (this.jwtTokenProvider.validateToken(token) == false) {
       throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
+
     }
 
     final UserAuthenticationSession session = this.sessionManager.findByToken(token);

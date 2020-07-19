@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.profile.helper.JwtTokenProvider;
+import com.pth.iflow.common.moduls.security.IJwtTokenProvider;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.service.handler.ISessionManager;
 
@@ -26,7 +26,7 @@ public class ProfileSessionManager implements ISessionManager {
   private int sessionMaxAge;
 
   @Autowired
-  private JwtTokenProvider jwtTokenProvider;
+  private IJwtTokenProvider jwtTokenProvider;
 
   private static final Logger logger = LoggerFactory.getLogger(ProfileSessionManager.class);
 
@@ -120,8 +120,6 @@ public class ProfileSessionManager implements ISessionManager {
   private String generateToken(final String userIdentity, final Set<Integer> roles) {
 
     final String token = this.jwtTokenProvider.createToken(userIdentity, roles);
-
-    // final String token = "PFTKS{" + this.encodeBase64(userIdentity + "-" + System.currentTimeMillis()) + "}PFTKE";
 
     return token;
   }
