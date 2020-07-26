@@ -18,15 +18,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.pth.iflow.common.models.edo.UserEdo;
+import com.pth.iflow.common.moduls.security.RestAccessRoles;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
-import com.pth.iflow.profile.model.Company;
-import com.pth.iflow.profile.model.CompanyProfile;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.access.IUsersAccessService;
@@ -52,20 +51,12 @@ public class UserControllerTest extends TestDataProducer {
 
   private User user;
 
-  private Company company;
-
-  private CompanyProfile companyProfile;
-
   String TestToken = "test-roken";
 
   @Before
   public void setUp() throws Exception {
 
     this.user = this.getTestUser();
-    this.company = this.getTestCompany();
-    this.companyProfile = this.getTestCompanyProfile();
-
-    // doNothing().when(this.tokenUserDataManager).validateToken(any(String.class));
 
   }
 
@@ -75,6 +66,7 @@ public class UserControllerTest extends TestDataProducer {
   }
 
   @Test
+  @WithMockUser(username = "user1", password = "pwd", roles = RestAccessRoles.General.USER_ROLE)
   public void testReadUserByIdentity() throws Exception {
 
     final UserEdo userEdo = ProfileModelEdoMapper.toEdo(this.user);
@@ -85,17 +77,16 @@ public class UserControllerTest extends TestDataProducer {
 
     this.mockMvc
         .perform(MockMvcRequestBuilders
-            .get(IflowRestPaths.ProfileModule.READ_USER_BY_IDENTITY_URIBUILDER("identity"))
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
+            .get(IflowRestPaths.ProfileModule.READ_USER_BY_IDENTITY_URIBUILDER("identity")))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
     verify(this.usersAccessService, times(1)).getUserByIdentity(any(String.class));
   }
 
   @Test
+  @WithMockUser(username = "user1", password = "pwd", roles = RestAccessRoles.Users.HAS_ROLE_USERS_SAVE)
   public void testSaveUser() throws Exception {
 
     final UserEdo userEdo = ProfileModelEdoMapper.toEdo(this.user);
@@ -109,18 +100,18 @@ public class UserControllerTest extends TestDataProducer {
     this.mockMvc
         .perform(MockMvcRequestBuilders
             .post(IflowRestPaths.ProfileModule.SAVE_USER_URIBUILDER())
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken)
+
             .content(requestAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(status().isCreated())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
     verify(this.usersAccessService, times(1)).saveUser(any(User.class));
   }
 
   @Test
+  @WithMockUser(username = "user1", password = "pwd", roles = RestAccessRoles.Users.HAS_ROLE_USERS_DELETE)
   public void testDeleteUser() throws Exception {
 
     final UserEdo userEdo = ProfileModelEdoMapper.toEdo(this.user);
@@ -131,12 +122,11 @@ public class UserControllerTest extends TestDataProducer {
     this.mockMvc
         .perform(MockMvcRequestBuilders
             .post(IflowRestPaths.ProfileModule.DELETE_USER_URIBUILDER())
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken)
+
             .content(requestAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(status().isAccepted());
 
-    verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
     verify(this.usersAccessService, times(1)).deleteUser(any(User.class));
   }
 

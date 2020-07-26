@@ -10,11 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +36,7 @@ public class JwtTokenProvider implements IJwtTokenProvider {
   private long validityInMs; // 1h
 
   @Autowired
-  PasswordEncoder passwordEncoder;
+  private PasswordEncoder passwordEncoder;
 
   private String secretKeyEncoded;
 
@@ -54,7 +52,7 @@ public class JwtTokenProvider implements IJwtTokenProvider {
    * @see moduls.security.IJwtTokenProvider#createToken(java.lang.String, java.util.Set)
    */
   @Override
-  public String createToken(final String username, final Set<Integer> roles) {
+  public String createToken(final String username, final Set<String> roles) {
 
     final Claims claims = Jwts.claims().setSubject(username);
     claims.put("roles", roles);
@@ -93,8 +91,8 @@ public class JwtTokenProvider implements IJwtTokenProvider {
 
     final UserDetails userDetails = builder.build();
 
-    final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails,
-        "");
+    final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, "",
+        userDetails.getAuthorities());
     usernamePasswordAuthenticationToken.setDetails(token);
 
     return usernamePasswordAuthenticationToken;
@@ -184,12 +182,6 @@ public class JwtTokenProvider implements IJwtTokenProvider {
   public void setValidityInMs(final long validityInMs) {
 
     this.validityInMs = validityInMs;
-  }
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-
-    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
 
 }

@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
 import com.pth.iflow.common.enums.EApplication;
 import com.pth.iflow.common.enums.ECompanyType;
 import com.pth.iflow.common.enums.EOcrType;
@@ -38,6 +40,13 @@ import com.pth.iflow.profile.model.WorkflowMessage;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 
 public class TestDataProducer {
+
+  protected UsernamePasswordAuthenticationToken getValidAuthentiocation(final String token) {
+
+    final UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken("user@company.com", "password");
+    authentication.setDetails(token);
+    return authentication;
+  }
 
   protected Company getTestCompany() {
 

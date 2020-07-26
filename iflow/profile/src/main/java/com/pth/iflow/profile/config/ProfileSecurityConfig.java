@@ -46,6 +46,7 @@ public class ProfileSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/auth/authenticate")
         .anonymous()
         .anyRequest()
+        // .hasAnyRole("USER")
         .authenticated()
         .and()
         .apply(new JwtSecurityConfigurer());

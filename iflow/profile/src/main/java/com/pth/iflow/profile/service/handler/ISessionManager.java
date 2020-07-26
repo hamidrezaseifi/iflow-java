@@ -6,7 +6,7 @@ import com.pth.iflow.profile.model.UserAuthenticationSession;
 
 public interface ISessionManager {
 
-  UserAuthenticationSession addSession(String userIdentity, String companyIdentity, final Set<Integer> roles);
+  UserAuthenticationSession addSession(String userIdentity, String companyIdentity, final Set<String> roles);
 
   UserAuthenticationSession findByUserIdentity(String userIdentity);
 

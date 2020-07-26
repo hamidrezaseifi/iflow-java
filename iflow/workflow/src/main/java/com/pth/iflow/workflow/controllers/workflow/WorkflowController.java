@@ -22,6 +22,7 @@ import com.pth.iflow.common.models.edo.IdentityListEdo;
 import com.pth.iflow.common.models.edo.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.models.edo.workflow.WorkflowEdo;
 import com.pth.iflow.common.models.edo.workflow.WorkflowListEdo;
+import com.pth.iflow.common.moduls.security.RestAccessRoles;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.bl.IWorkflowSearchService;
@@ -44,7 +45,7 @@ public class WorkflowController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOW_SEARCH)
-  @PreAuthorize("hasRole('WORKFLOW_READ')")
+  @PreAuthorize(RestAccessRoles.Workflow.HAS_ROLE_WORKFLOW_READ)
   public ResponseEntity<WorkflowListEdo> searchWorkflow(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo,
       final HttpServletRequest request, final Authentication authentication) throws Exception {
 
@@ -58,7 +59,7 @@ public class WorkflowController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOW_READLISTBY_IDENTITYLIST)
-  @PreAuthorize("hasRole('WORKFLOW_READ')")
+  @PreAuthorize(RestAccessRoles.Workflow.HAS_ROLE_WORKFLOW_READ)
   public ResponseEntity<WorkflowListEdo> readWorkflowList(@RequestBody final IdentityListEdo identityList, final HttpServletRequest request,
       final Authentication authentication) throws Exception {
 
@@ -72,7 +73,7 @@ public class WorkflowController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOW_READ_BY_IDENTITY)
-  @PreAuthorize("hasRole('WORKFLOW_READ')")
+  @PreAuthorize(RestAccessRoles.Workflow.HAS_ROLE_WORKFLOW_READ)
   public ResponseEntity<WorkflowEdo> readWorkflow(@PathVariable final String identity, final HttpServletRequest request,
       final Authentication authentication) throws Exception {
 

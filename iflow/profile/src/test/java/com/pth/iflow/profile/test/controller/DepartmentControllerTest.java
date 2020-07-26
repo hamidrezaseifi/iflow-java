@@ -20,14 +20,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
+import com.pth.iflow.common.moduls.security.RestAccessRoles;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
@@ -65,6 +66,7 @@ public class DepartmentControllerTest extends TestDataProducer {
   }
 
   @Test
+  @WithMockUser(username = "user1", password = "pwd", roles = RestAccessRoles.General.USER_ROLE)
   public void testReadById() throws Exception {
 
     final Department department = this.getTestDepartment("dep1", "department 1");
@@ -76,38 +78,38 @@ public class DepartmentControllerTest extends TestDataProducer {
 
     this.mockMvc
         .perform(MockMvcRequestBuilders
-            .get(IflowRestPaths.ProfileModule.READ_DEPARTMENT_BY_ID_URIBUILDER("ident1"))
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
+            .get(IflowRestPaths.ProfileModule.READ_DEPARTMENT_BY_ID_URIBUILDER("ident1")))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
     verify(this.departmentsHandlerService, times(1)).getDepartmentByIdentity(any(String.class));
-    verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
+
   }
 
   @Test
+  @WithMockUser(username = "user1", password = "pwd", roles = RestAccessRoles.General.USER_ROLE)
   public void testReadUserList() throws Exception {
 
     final List<User> userList = this.getTestUserList();
     final UserListEdo userEdoList = new UserListEdo(ProfileModelEdoMapper.toUserEdoList(userList));
 
-    when(this.tokenUserDataManager.getAllUserListByDepartmentId(any(String.class), any(String.class))).thenReturn(userList);
+    when(this.tokenUserDataManager.getAllUserListByDepartmentId(any(), any(String.class))).thenReturn(userList);
 
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(userEdoList);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders
-            .get(IflowRestPaths.ProfileModule.READ_ALLUSERS_BY_DEPARTMENTID_URIBUILDER("identity2"))
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
+            .get(IflowRestPaths.ProfileModule.READ_ALLUSERS_BY_DEPARTMENTID_URIBUILDER("identity2")))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.tokenUserDataManager, times(1)).getAllUserListByDepartmentId(any(String.class), any(String.class));
+    verify(this.tokenUserDataManager, times(1)).getAllUserListByDepartmentId(any(), any(String.class));
   }
 
   @Test
+  @WithMockUser(username = "user1", password = "pwd", roles = RestAccessRoles.Departments.DEPARTMENTS_SAVE)
   public void testSaveDepartment() throws Exception {
 
     final Department department = this.getTestDepartment("dep1", "department 1");
@@ -122,18 +124,18 @@ public class DepartmentControllerTest extends TestDataProducer {
     this.mockMvc
         .perform(MockMvcRequestBuilders
             .post(IflowRestPaths.ProfileModule.SAVE_DEPARTMENT_URIBUILDER())
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken)
+
             .content(requestAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(status().isCreated())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
     verify(this.departmentsHandlerService, times(1)).saveDepartment(any(Department.class));
   }
 
   @Test
+  @WithMockUser(username = "user1", password = "pwd", roles = RestAccessRoles.Departments.DEPARTMENTS_DELETE)
   public void testDeleteDepartment() throws Exception {
 
     final Department department = this.getTestDepartment("dep1", "department 1");
@@ -145,12 +147,11 @@ public class DepartmentControllerTest extends TestDataProducer {
     this.mockMvc
         .perform(MockMvcRequestBuilders
             .post(IflowRestPaths.ProfileModule.DELETE_DEPARTMENT_URIBUILDER())
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken)
+
             .content(requestAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(status().isAccepted());
 
-    verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
     verify(this.departmentsHandlerService, times(1)).deleteDepartment(any(Department.class));
   }
 

@@ -83,7 +83,7 @@ public class UserEdo {
   @NotNull(message = "RoleList must not be null")
   @XmlElementWrapper(name = "RoleList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Role", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final Set<Integer> roles = new HashSet<>();
+  private final Set<String> roles = new HashSet<>();
 
   public String getCompanyIdentity() {
 
@@ -227,13 +227,13 @@ public class UserEdo {
     this.deputies.add(deputyId);
   }
 
-  public Set<Integer> getRoles() {
+  public Set<String> getRoles() {
 
     return this.roles;
   }
 
   @JsonSetter
-  public void setRoles(final Set<Integer> roles) {
+  public void setRoles(final Set<String> roles) {
 
     this.roles.clear();
     if (roles != null) {
@@ -241,7 +241,7 @@ public class UserEdo {
     }
   }
 
-  public void addRole(final Integer role) {
+  public void addRole(final String role) {
 
     this.roles.add(role);
   }

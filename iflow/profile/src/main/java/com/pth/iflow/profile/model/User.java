@@ -23,7 +23,7 @@ public class User extends IdentityModel {
   private final Set<String> groups = new HashSet<>();
   private final List<UserDepartment> userDepartments = new ArrayList<>();
   private final Set<String> deputies = new HashSet<>();
-  private final Set<Integer> roles = new HashSet<>();
+  private final Set<String> roles = new HashSet<>();
 
   @Override
   public String getIdentity() {
@@ -203,12 +203,12 @@ public class User extends IdentityModel {
     this.deputies.add(deputyId);
   }
 
-  public Set<Integer> getRoles() {
+  public Set<String> getRoles() {
 
     return this.roles;
   }
 
-  public void setRoles(final Set<Integer> roles) {
+  public void setRoles(final Set<String> roles) {
 
     this.roles.clear();
     if (roles != null) {
@@ -216,7 +216,7 @@ public class User extends IdentityModel {
     }
   }
 
-  public void addRole(final Integer role) {
+  public void addRole(final String role) {
 
     this.roles.add(role);
   }

@@ -9,9 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,8 +29,8 @@ import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetLi
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.common.models.edo.UserGroupListEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
+import com.pth.iflow.common.moduls.security.RestAccessRoles;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSettingPreset;
@@ -57,13 +58,12 @@ public class CompanyController {
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @PreAuthorize(RestAccessRoles.General.HAS_ROLE_USER)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_READ_BY_IDENTITY)
   @ResponseBody
   public ResponseEntity<CompanyEdo> readById(@PathVariable(name = "companyidentity") final String companyidentity,
       final HttpServletRequest request,
-      @RequestHeader(
-        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
-      ) final String headerTokenId)
+      final Authentication authentication)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final Company company = this.companiesHandlerService.getCompanyByIdentity(companyidentity);
@@ -72,16 +72,13 @@ public class CompanyController {
   }
 
   @ResponseStatus(HttpStatus.CREATED)
+  @PreAuthorize(RestAccessRoles.Companies.COMPANIES_SAVE)
   @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_SAVE)
   @ResponseBody
   public ResponseEntity<CompanyEdo> saveCompany(@RequestBody final CompanyEdo companyEdo,
       final HttpServletRequest request,
-      @RequestHeader(
-        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
-      ) final String headerTokenId)
+      final Authentication authentication)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
-
-    this.tokenUserDataManager.validateToken(headerTokenId);
 
     final Company savedComapny = this.companiesHandlerService.saveCompany(ProfileModelEdoMapper.fromEdo(companyEdo));
 
@@ -89,16 +86,15 @@ public class CompanyController {
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @PreAuthorize(RestAccessRoles.General.HAS_ROLE_USER)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_READ_USER_LIST)
   @ResponseBody
   public ResponseEntity<UserListEdo> readUserList(@PathVariable(name = "companyidentity") final String companyidentity,
       final HttpServletRequest request,
-      @RequestHeader(
-        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
-      ) final String headerTokenId)
+      final Authentication authentication)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final List<User> list = this.tokenUserDataManager.getUserListByToken(headerTokenId, companyidentity);
+    final List<User> list = this.tokenUserDataManager.getUserListByToken(authentication, companyidentity);
 
     final UserListEdo edo = new UserListEdo(ProfileModelEdoMapper.toUserEdoList(list));
 
@@ -106,16 +102,15 @@ public class CompanyController {
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @PreAuthorize(RestAccessRoles.General.HAS_ROLE_USER)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_READ_USERGROUP_LIST)
   @ResponseBody
   public ResponseEntity<UserGroupListEdo> readUserGroupList(@PathVariable(name = "companyidentity") final String companyidentity,
       final HttpServletRequest request,
-      @RequestHeader(
-        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
-      ) final String headerTokenId)
+      final Authentication authentication)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final List<UserGroup> list = this.tokenUserDataManager.getUserGroupListByToken(headerTokenId, companyidentity);
+    final List<UserGroup> list = this.tokenUserDataManager.getUserGroupListByToken(authentication, companyidentity);
 
     final UserGroupListEdo edo = new UserGroupListEdo(ProfileModelEdoMapper.toUserGroupEdoList(list));
 
@@ -123,16 +118,15 @@ public class CompanyController {
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @PreAuthorize(RestAccessRoles.General.HAS_ROLE_USER)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_READ_DEPARTMENT_LIST)
   @ResponseBody
   public ResponseEntity<DepartmentListEdo> readDepartmentList(@PathVariable(name = "companyidentity") final String companyidentity,
       final HttpServletRequest request,
-      @RequestHeader(
-        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
-      ) final String headerTokenId)
+      final Authentication authentication)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final List<Department> list = this.tokenUserDataManager.getDepartmentListByToken(headerTokenId, companyidentity);
+    final List<Department> list = this.tokenUserDataManager.getDepartmentListByToken(authentication, companyidentity);
 
     final DepartmentListEdo edo = new DepartmentListEdo(ProfileModelEdoMapper.toDepartmentEdoList(list));
 
@@ -140,31 +134,27 @@ public class CompanyController {
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @PreAuthorize(RestAccessRoles.General.HAS_ROLE_USER)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_READ_PROFILE)
   @ResponseBody
   public ResponseEntity<CompanyProfileEdo> readProfile(@PathVariable(name = "appIdentity") final String appIdentity,
       @PathVariable(name = "companyidentity") final String companyidentity,
       final HttpServletRequest request,
-      @RequestHeader(
-        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
-      ) final String headerTokenId)
+      final Authentication authentication)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(appIdentity, headerTokenId);
+    final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(appIdentity, authentication);
 
     return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(profile.getCompanyProfile()), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @PreAuthorize(RestAccessRoles.General.HAS_ROLE_USER)
   @IflowGetRequestMapping(path = IflowRestPaths.ProfileModule.COMPANY_READ_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_BY_IDENTITY)
   public ResponseEntity<CompanyWorkflowtypeItemOcrSettingPresetListEdo>
       readCompanyWorkflowtypeItemOcrSettings(@PathVariable(name = "companyidentity") final String companyidentity,
           final HttpServletRequest request,
-          @RequestHeader(
-            TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
-          ) final String headerTokenId) throws Exception {
-
-    this.tokenUserDataManager.validateToken(headerTokenId);
+          final Authentication authentication) throws Exception {
 
     final List<CompanyWorkflowtypeItemOcrSettingPreset> modelList = this.companiesHandlerService
         .readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(companyidentity);
@@ -177,16 +167,13 @@ public class CompanyController {
   }
 
   @ResponseStatus(HttpStatus.CREATED)
+  @PreAuthorize(RestAccessRoles.Companies.COMPANIES_UPDATE)
   @IflowPostRequestMapping(path = IflowRestPaths.ProfileModule.COMPANY_SAVE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS)
   public ResponseEntity<CompanyWorkflowtypeItemOcrSettingPresetEdo>
       saveCompanyWorkflowtypeItemOcrSettings(
           @RequestBody final CompanyWorkflowtypeItemOcrSettingPresetEdo ocrSettingEdo,
           final HttpServletRequest request,
-          @RequestHeader(
-            TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
-          ) final String headerTokenId) throws Exception {
-
-    this.tokenUserDataManager.validateToken(headerTokenId);
+          final Authentication authentication) throws Exception {
 
     final CompanyWorkflowtypeItemOcrSettingPreset modelInput = ProfileModelEdoMapper
         .fromCompanyWorkflowtypeItemOcrSettingPresetEdo(ocrSettingEdo);
@@ -201,15 +188,12 @@ public class CompanyController {
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
+  @PreAuthorize(RestAccessRoles.Companies.COMPANIES_UPDATE)
   @IflowPostRequestMapping(path = IflowRestPaths.ProfileModule.COMPANY_DELETE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS)
   public void deleteCompanyWorkflowtypeItemOcrSettings(
       @RequestBody final CompanyWorkflowtypeItemOcrSettingPresetEdo ocrSettingEdo,
       final HttpServletRequest request,
-      @RequestHeader(
-        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
-      ) final String headerTokenId) throws Exception {
-
-    this.tokenUserDataManager.validateToken(headerTokenId);
+      final Authentication authentication) throws Exception {
 
     final CompanyWorkflowtypeItemOcrSettingPreset modelInput = ProfileModelEdoMapper
         .fromCompanyWorkflowtypeItemOcrSettingPresetEdo(ocrSettingEdo);

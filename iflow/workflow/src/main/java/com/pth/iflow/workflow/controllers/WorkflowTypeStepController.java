@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.models.edo.WorkflowTypeStepEdo;
 import com.pth.iflow.common.models.edo.WorkflowTypeStepListEdo;
+import com.pth.iflow.common.moduls.security.RestAccessRoles;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.workflow.bl.IWorkflowTypeStepProcessService;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
@@ -37,6 +39,7 @@ public class WorkflowTypeStepController {
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @PreAuthorize(RestAccessRoles.General.HAS_ROLE_USER)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_BY_IDENTITY)
   public ResponseEntity<WorkflowTypeStepEdo> readDepartmentGroup(@PathVariable final String identity, final HttpServletRequest request,
       final Authentication authentication) throws Exception {
@@ -47,6 +50,7 @@ public class WorkflowTypeStepController {
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @PreAuthorize(RestAccessRoles.General.HAS_ROLE_USER)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_LIST)
   public ResponseEntity<WorkflowTypeStepListEdo> readByList(@RequestBody final Set<String> idList, final HttpServletRequest request,
       final Authentication authentication) throws Exception {
@@ -59,6 +63,7 @@ public class WorkflowTypeStepController {
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @PreAuthorize(RestAccessRoles.General.HAS_ROLE_USER)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOWIDENTITY)
   public ResponseEntity<WorkflowTypeStepListEdo> readListByWorkflowId(@PathVariable final String identity,
       final HttpServletRequest request,

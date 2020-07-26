@@ -17,6 +17,9 @@ import org.springframework.web.filter.GenericFilterBean;
 
 public class JWTAuthorizationFilter extends GenericFilterBean {
 
+  public static final String AUTHORIZATION_PREFIX = "Bearer ";
+  public static final String AUTHORIZATION_HEADER_KEY = "Authorization";
+
   public JWTAuthorizationFilter() {
 
   }
@@ -38,8 +41,8 @@ public class JWTAuthorizationFilter extends GenericFilterBean {
 
   public String resolveToken(final HttpServletRequest req) {
 
-    final String bearerToken = req.getHeader("Authorization");
-    if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+    final String bearerToken = req.getHeader(AUTHORIZATION_HEADER_KEY);
+    if (bearerToken != null && bearerToken.startsWith(AUTHORIZATION_PREFIX)) {
       return bearerToken.substring(7, bearerToken.length());
     }
     return null;

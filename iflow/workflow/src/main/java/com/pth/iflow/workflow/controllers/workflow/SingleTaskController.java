@@ -22,6 +22,7 @@ import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowEdo;
 import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowListEdo;
 import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowSaveRequestEdo;
+import com.pth.iflow.common.moduls.security.RestAccessRoles;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
@@ -39,7 +40,7 @@ public class SingleTaskController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('SINGLETASK_READ')")
+  @PreAuthorize(RestAccessRoles.SingleTaskWorkflow.HAS_ROLE_SINGLETASK_READ)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_READ_BY_IDENTITY)
   public ResponseEntity<SingleTaskWorkflowEdo> readWorkflow(@PathVariable final String identity, final HttpServletRequest request,
       final Authentication authentication) throws Exception {
@@ -50,7 +51,7 @@ public class SingleTaskController {
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('SINGLETASK_CREATE')")
+  @PreAuthorize(RestAccessRoles.SingleTaskWorkflow.HAS_ROLE_SINGLETASK_CREATE)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_CREATE)
   public ResponseEntity<SingleTaskWorkflowListEdo> createWorkflow(
       @RequestBody final SingleTaskWorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request,
@@ -66,7 +67,7 @@ public class SingleTaskController {
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @PreAuthorize("hasRole('SINGLETASK_SAVE')")
+  @PreAuthorize(RestAccessRoles.SingleTaskWorkflow.HAS_ROLE_SINGLETASK_SAVE)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_SAVE)
   public ResponseEntity<SingleTaskWorkflowEdo> saveWorkflow(@RequestBody final SingleTaskWorkflowSaveRequestEdo requestEdo,
       final HttpServletRequest request,
@@ -78,7 +79,7 @@ public class SingleTaskController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('SINGLETASK_READ')")
+  @PreAuthorize(RestAccessRoles.SingleTaskWorkflow.HAS_ROLE_SINGLETASK_READ)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_READ_LIST)
   public ResponseEntity<SingleTaskWorkflowListEdo> readWorkflowList(@RequestBody final Set<String> idList,
       final HttpServletRequest request,
@@ -93,7 +94,7 @@ public class SingleTaskController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_READ_LIST_BY_USERIDENTITY)
-  @PreAuthorize("hasRole('SINGLETASK_READ')")
+  @PreAuthorize(RestAccessRoles.SingleTaskWorkflow.HAS_ROLE_SINGLETASK_READ)
   public ResponseEntity<SingleTaskWorkflowListEdo> readWorkflowListForUser(@PathVariable final String Identity,
       @PathVariable(required = false) final int status, final HttpServletRequest request,
       final Authentication authentication) throws Exception {
@@ -107,7 +108,7 @@ public class SingleTaskController {
 
   @ResponseStatus(HttpStatus.ACCEPTED)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_VALIDATE)
-  @PreAuthorize("hasRole('SINGLETASK_READ')")
+  @PreAuthorize(RestAccessRoles.SingleTaskWorkflow.HAS_ROLE_SINGLETASK_READ)
   public void validateWorkflowRequest(@RequestBody final SingleTaskWorkflowSaveRequestEdo workflowCreateRequestEdo,
       final HttpServletRequest request,
       final Authentication authentication) throws Exception {

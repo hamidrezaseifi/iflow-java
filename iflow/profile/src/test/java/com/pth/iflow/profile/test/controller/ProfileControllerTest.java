@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -27,20 +27,14 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.pth.iflow.common.models.edo.AuthenticatedProfileRequestEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.TokenProfileRequestEdo;
+import com.pth.iflow.common.moduls.security.IJwtTokenProvider;
+import com.pth.iflow.common.moduls.security.JWTAuthorizationFilter;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.model.Company;
-import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
-import com.pth.iflow.profile.model.UserAuthenticationSession;
-import com.pth.iflow.profile.model.UserGroup;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
-import com.pth.iflow.profile.service.access.ICompanyAccessService;
-import com.pth.iflow.profile.service.access.IDepartmentAccessService;
-import com.pth.iflow.profile.service.access.IUserGroupAccessService;
-import com.pth.iflow.profile.service.access.IUsersAccessService;
-import com.pth.iflow.profile.service.handler.ISessionManager;
+import com.pth.iflow.profile.service.handler.ITokenUserDataManager;
 import com.pth.iflow.profile.test.TestDataProducer;
 
 @RunWith(SpringRunner.class)
@@ -55,48 +49,34 @@ public class ProfileControllerTest extends TestDataProducer {
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @Autowired
-  private ISessionManager sessionManager;
+  private IJwtTokenProvider jwtTokenProvider;
 
   @MockBean
-  private IUsersAccessService usersService;
-
-  @MockBean
-  private ICompanyAccessService companyService;
-
-  @MockBean
-  private IUserGroupAccessService userGroupService;
-
-  @MockBean
-  private IDepartmentAccessService departmentService;
-
-  private UserAuthenticationSession authenticatedSession = null;
+  private ITokenUserDataManager tokenUserDataManager;
 
   private User user;
 
   private Company company;
 
-  private List<Department> departmentList;
-
-  private List<UserGroup> groupList;
-
   private ProfileResponse validProfileResponse;
+
+  private String validToken;
+
+  private final String validSession = "valid-session";
 
   @Before
   public void setUp() throws Exception {
 
-    this.authenticatedSession = this.sessionManager.addSession("email@test.de", "valid-company", new HashSet<>());
+    final Set<String> roles = new HashSet<>();
+    roles.add("USER");
+
+    this.validToken = this.jwtTokenProvider.createToken("user@company.com", roles);
 
     this.user = this.getTestUser();
     this.company = this.getTestCompany();
-    this.departmentList = this.getTestDepartmentList();
-    this.groupList = this.getTestUserGroupList();
-    this.validProfileResponse = this.getTestProfileResponse(this.authenticatedSession.getSessionid());
 
-    when(this.usersService.getUserByIdentity(any(String.class))).thenReturn(this.user);
-    when(this.usersService.getUserProfileByIdentity(any(String.class), any(String.class))).thenReturn(this.validProfileResponse);
-    when(this.companyService.getByIdentity(any(String.class))).thenReturn(this.company);
-    when(this.departmentService.getListByCompanyIdentity(any(String.class))).thenReturn(this.departmentList);
-    when(this.userGroupService.getListByCompanyIdentity(any(String.class))).thenReturn(this.groupList);
+    this.validProfileResponse = this.getTestProfileResponse(this.validSession);
+
   }
 
   @After
@@ -108,52 +88,58 @@ public class ProfileControllerTest extends TestDataProducer {
   public void testReadAuthenticatedInfo() throws Exception {
 
     final AuthenticatedProfileRequestEdo profReq = this
-        .getTestAuthenticatedProfileRequestEdo(this.authenticatedSession.getUserIdentity(), this.authenticatedSession.getToken());
+        .getTestAuthenticatedProfileRequestEdo("valid-user", this.validToken);
 
     final ProfileResponseEdo responseEdo = this
-        .getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
+        .getTestProfileResponseEdo(this.validSession,
             ProfileModelEdoMapper.toEdo(this.user), ProfileModelEdoMapper.toEdo(this.company));
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(profReq);
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(responseEdo);
+
+    when(this.tokenUserDataManager.getProfileByTokenUserIdentity(any(String.class), any(String.class), any()))
+        .thenReturn(this.validProfileResponse);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders
             .post(IflowRestPaths.ProfileModule.PROFILE_READ_AUTHENTOCATEDINFO)
             .content(modelAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE)
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.authenticatedSession.getToken()))
+            .header(JWTAuthorizationFilter.AUTHORIZATION_HEADER_KEY, JWTAuthorizationFilter.AUTHORIZATION_PREFIX + this.validToken))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.usersService, times(1)).getUserProfileByIdentity(any(String.class), any(String.class));
+    verify(this.tokenUserDataManager, times(1)).getProfileByTokenUserIdentity(any(String.class), any(String.class), any());
 
   }
 
   @Test
   public void testReadTokenInfo() throws Exception {
 
-    final TokenProfileRequestEdo tokenInoRequest = this.getTokenProfileRequestEdo(this.authenticatedSession.getToken());
+    final TokenProfileRequestEdo tokenInoRequest = this.getTokenProfileRequestEdo(this.validToken);
 
     final ProfileResponseEdo responseEdo = this
-        .getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
+        .getTestProfileResponseEdo(this.validSession,
             ProfileModelEdoMapper.toEdo(this.user), ProfileModelEdoMapper.toEdo(this.company));
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(tokenInoRequest);
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(responseEdo);
+
+    when(this.tokenUserDataManager.getProfileByToken(any(String.class), any()))
+        .thenReturn(this.validProfileResponse);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders
             .post(IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO)
             .content(modelAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE)
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.authenticatedSession.getToken()))
+            .header(JWTAuthorizationFilter.AUTHORIZATION_HEADER_KEY, JWTAuthorizationFilter.AUTHORIZATION_PREFIX + this.validToken))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.usersService, times(1)).getUserProfileByIdentity(any(String.class), any(String.class));
+    verify(this.tokenUserDataManager, times(1)).getProfileByToken(any(String.class), any());
 
   }
 

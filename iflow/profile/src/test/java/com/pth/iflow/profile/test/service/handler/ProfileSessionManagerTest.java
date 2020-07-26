@@ -29,12 +29,13 @@ public class ProfileSessionManagerTest extends TestDataProducer {
 
   private UserAuthenticationSession initialSession = null;
 
-  private final Set<Integer> initalUserRoles = new HashSet<>();
+  private final Set<String> initalUserRoles = new HashSet<>();
 
   @Before
   public void setUp() throws Exception {
 
-    this.initalUserRoles.add(1);
+    this.initalUserRoles.add("USER");
+    this.initalUserRoles.add("ADMIN");
 
     this.initialSession = this.sessionManager.addSession(this.initialEmail, this.validCompanyIdentity, this.initalUserRoles);
 

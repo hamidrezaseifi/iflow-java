@@ -85,7 +85,7 @@ public class ProfileSessionManager implements ISessionManager {
   }
 
   @Override
-  public UserAuthenticationSession addSession(final String userIdentity, final String companyIdentity, final Set<Integer> roles) {
+  public UserAuthenticationSession addSession(final String userIdentity, final String companyIdentity, final Set<String> roles) {
 
     UserAuthenticationSession session = this.findByUserIdentity(userIdentity);
 
@@ -117,7 +117,7 @@ public class ProfileSessionManager implements ISessionManager {
     return this.findBySessionId(sessionId);
   }
 
-  private String generateToken(final String userIdentity, final Set<Integer> roles) {
+  private String generateToken(final String userIdentity, final Set<String> roles) {
 
     final String token = this.jwtTokenProvider.createToken(userIdentity, roles);
 

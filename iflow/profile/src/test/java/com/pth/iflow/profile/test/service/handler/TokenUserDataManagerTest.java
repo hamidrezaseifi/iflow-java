@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.Authentication;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.common.enums.EApplication;
@@ -56,17 +57,17 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   @Mock
   private IJwtTokenProvider jwtTokenProvider;
 
-  private String validToken;
-
   private final String validEmail = "valid-email";
 
   private final String validCompanyIdentity = "valid-company";
 
   private UserAuthenticationSession validSession;
 
-  private final Set<Integer> initalUserRoles = new HashSet<>();
+  private final Set<String> initalUserRoles = new HashSet<>();
 
-  private final String inValidToken = "invalid-token";
+  private Authentication validAuthentication;
+
+  private Authentication inValidAuthentication;
 
   @Before
   public void setUp() throws Exception {
@@ -74,10 +75,14 @@ public class TokenUserDataManagerTest extends TestDataProducer {
     this.tokenUserDataManager = new TokenUserDataManager(this.sessionManager, this.usersService, this.userGroupService,
         this.departmentService, this.jwtTokenProvider);
 
-    this.initalUserRoles.add(1);
+    this.initalUserRoles.add("USER");
+    this.initalUserRoles.add("ADMIN");
 
     this.validSession = this.sessionManager.addSession(this.validEmail, this.validCompanyIdentity, this.initalUserRoles);
-    this.validToken = this.validSession.getToken();
+
+    this.validAuthentication = this.getValidAuthentiocation(this.validSession.getToken());
+
+    this.inValidAuthentication = this.getValidAuthentiocation("invalid-token");
 
   }
 
@@ -89,14 +94,14 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   @Test(expected = ProfileCustomizedException.class)
   public void testGetProfileByTokenEmptyToken() throws Exception {
 
-    this.tokenUserDataManager.getProfileByToken(EApplication.IFLOW.getIdentity(), "");
+    this.tokenUserDataManager.getProfileByToken(EApplication.IFLOW.getIdentity(), this.validAuthentication);
 
   }
 
   @Test(expected = ProfileCustomizedException.class)
   public void testGetProfileByTokenInvalidToken() throws Exception {
 
-    this.tokenUserDataManager.getProfileByToken(EApplication.IFLOW.getIdentity(), this.inValidToken);
+    this.tokenUserDataManager.getProfileByToken(EApplication.IFLOW.getIdentity(), this.inValidAuthentication);
 
   }
 
@@ -106,9 +111,12 @@ public class TokenUserDataManagerTest extends TestDataProducer {
     final ProfileResponse profile = this.getTestProfileResponse(this.validSession.getSessionid());
 
     when(this.usersService.getUserProfileByIdentity(any(String.class), any(String.class))).thenReturn(profile);
+    when(this.jwtTokenProvider.validateToken(any(String.class))).thenReturn(true);
 
-    final ProfileResponse response = this.tokenUserDataManager.getProfileByToken(EApplication.IFLOW.getIdentity(), this.validToken);
+    final ProfileResponse response = this.tokenUserDataManager
+        .getProfileByToken(EApplication.IFLOW.getIdentity(), this.validAuthentication);
 
+    verify(this.jwtTokenProvider, times(1)).validateToken(any(String.class));
     verify(this.usersService, times(1)).getUserProfileByIdentity(any(String.class), any(String.class));
 
     Assert.assertNotNull("Result response is not null!", response);
@@ -137,9 +145,11 @@ public class TokenUserDataManagerTest extends TestDataProducer {
     final List<User> users = this.getTestUserList();
 
     when(this.usersService.getUserListByCompanyIdentity(any(String.class))).thenReturn(users);
+    when(this.jwtTokenProvider.validateToken(any(String.class))).thenReturn(true);
 
-    final List<User> resultUsers = this.tokenUserDataManager.getUserListByToken(this.validToken, this.validCompanyIdentity);
+    final List<User> resultUsers = this.tokenUserDataManager.getUserListByToken(this.validAuthentication, this.validCompanyIdentity);
 
+    verify(this.jwtTokenProvider, times(1)).validateToken(any(String.class));
     verify(this.usersService, times(1)).getUserListByCompanyIdentity(any(String.class));
 
     Assert.assertNotNull("Result response list is not null!", resultUsers);
@@ -155,7 +165,7 @@ public class TokenUserDataManagerTest extends TestDataProducer {
     when(this.userGroupService.getListByCompanyIdentity(any(String.class))).thenReturn(userGroups);
 
     final List<UserGroup> resultUserGroups = this.tokenUserDataManager
-        .getUserGroupListByToken(this.validToken,
+        .getUserGroupListByToken(this.validAuthentication,
             this.validCompanyIdentity);
 
     verify(this.userGroupService, times(1)).getListByCompanyIdentity(any(String.class));
@@ -173,7 +183,7 @@ public class TokenUserDataManagerTest extends TestDataProducer {
     when(this.departmentService.getListByCompanyIdentity(any(String.class))).thenReturn(departments);
 
     final List<Department> resultDepartments = this.tokenUserDataManager
-        .getDepartmentListByToken(this.validToken,
+        .getDepartmentListByToken(this.validAuthentication,
             this.validCompanyIdentity);
 
     verify(this.departmentService, times(1)).getListByCompanyIdentity(any(String.class));

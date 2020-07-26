@@ -22,6 +22,7 @@ import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowEdo;
 import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
 import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowSaveRequestEdo;
+import com.pth.iflow.common.moduls.security.RestAccessRoles;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
@@ -40,7 +41,7 @@ public class TestThreeTaskController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_READ_BY_IDENTITY)
-  @PreAuthorize("hasRole('TESTTHREETASK_READ')")
+  @PreAuthorize(RestAccessRoles.TestThreeTaskWorkflow.HAS_ROLE_TESTTHREETASK_READ)
   public ResponseEntity<TestThreeTaskWorkflowEdo> readWorkflow(@PathVariable final String identity, final HttpServletRequest request,
       final Authentication authentication) throws Exception {
 
@@ -51,10 +52,11 @@ public class TestThreeTaskController {
 
   @ResponseStatus(HttpStatus.CREATED)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_CREATE)
-  @PreAuthorize("hasRole('TESTTHREETASK_CREATE')")
-  public ResponseEntity<TestThreeTaskWorkflowListEdo> createWorkflow(
-      @RequestBody final TestThreeTaskWorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request,
-      final Authentication authentication) throws Exception {
+  @PreAuthorize(RestAccessRoles.TestThreeTaskWorkflow.HAS_ROLE_TESTTHREETASK_CREATE)
+  public ResponseEntity<TestThreeTaskWorkflowListEdo>
+      createWorkflow(
+          @RequestBody final TestThreeTaskWorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request,
+          final Authentication authentication) throws Exception {
 
     final List<TestThreeTaskWorkflow> modelList = this.workflowService
         .create(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo),
@@ -67,8 +69,9 @@ public class TestThreeTaskController {
 
   @ResponseStatus(HttpStatus.ACCEPTED)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_SAVE)
-  @PreAuthorize("hasRole('TESTTHREETASK_SAVE')")
-  public ResponseEntity<TestThreeTaskWorkflowEdo> saveWorkflow(@RequestBody final TestThreeTaskWorkflowSaveRequestEdo requestEdo,
+  @PreAuthorize(RestAccessRoles.TestThreeTaskWorkflow.HAS_ROLE_TESTTHREETASK_SAVE)
+  public ResponseEntity<TestThreeTaskWorkflowEdo> saveWorkflow(
+      @RequestBody final TestThreeTaskWorkflowSaveRequestEdo requestEdo,
       final HttpServletRequest request,
       final Authentication authentication) throws Exception {
 
@@ -79,10 +82,11 @@ public class TestThreeTaskController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_READ_LIST)
-  @PreAuthorize("hasRole('TESTTHREETASK_READ')")
-  public ResponseEntity<TestThreeTaskWorkflowListEdo> readWorkflowList(@RequestBody final Set<String> idList,
-      final HttpServletRequest request,
-      final Authentication authentication) throws Exception {
+  @PreAuthorize(RestAccessRoles.TestThreeTaskWorkflow.HAS_ROLE_TESTTHREETASK_READ)
+  public ResponseEntity<TestThreeTaskWorkflowListEdo>
+      readWorkflowList(@RequestBody final Set<String> idList,
+          final HttpServletRequest request,
+          final Authentication authentication) throws Exception {
 
     final List<TestThreeTaskWorkflow> modelList = this.workflowService.getListByIdentityList(idList, authentication);
 
@@ -93,10 +97,11 @@ public class TestThreeTaskController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_READ_LIST_BY_USERIDENTITY)
-  @PreAuthorize("hasRole('TESTTHREETASK_READ')")
-  public ResponseEntity<TestThreeTaskWorkflowListEdo> readWorkflowListForUser(@PathVariable final String Identity,
-      @PathVariable(required = false) final int status, final HttpServletRequest request,
-      final Authentication authentication) throws Exception {
+  @PreAuthorize(RestAccessRoles.TestThreeTaskWorkflow.HAS_ROLE_TESTTHREETASK_READ)
+  public ResponseEntity<TestThreeTaskWorkflowListEdo>
+      readWorkflowListForUser(@PathVariable final String Identity,
+          @PathVariable(required = false) final int status, final HttpServletRequest request,
+          final Authentication authentication) throws Exception {
 
     final List<TestThreeTaskWorkflow> modelList = this.workflowService.getListForUser(Identity, status, authentication);
 
@@ -107,8 +112,9 @@ public class TestThreeTaskController {
 
   @ResponseStatus(HttpStatus.ACCEPTED)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_VALIDATE)
-  @PreAuthorize("hasRole('TESTTHREETASK_READ')")
-  public void validateWorkflowRequest(@RequestBody final TestThreeTaskWorkflowSaveRequestEdo workflowCreateRequestEdo,
+  @PreAuthorize(RestAccessRoles.TestThreeTaskWorkflow.HAS_ROLE_TESTTHREETASK_READ)
+  public void validateWorkflowRequest(
+      @RequestBody final TestThreeTaskWorkflowSaveRequestEdo workflowCreateRequestEdo,
       final HttpServletRequest request,
       final Authentication authentication) throws Exception {
 

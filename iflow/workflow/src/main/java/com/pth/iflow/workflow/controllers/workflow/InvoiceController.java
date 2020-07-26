@@ -22,6 +22,7 @@ import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.models.edo.workflow.invoice.InvoiceWorkflowEdo;
 import com.pth.iflow.common.models.edo.workflow.invoice.InvoiceWorkflowListEdo;
 import com.pth.iflow.common.models.edo.workflow.invoice.InvoiceWorkflowSaveRequestEdo;
+import com.pth.iflow.common.moduls.security.RestAccessRoles;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
@@ -39,7 +40,7 @@ public class InvoiceController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('INVOICE_READ')")
+  @PreAuthorize(RestAccessRoles.InvoiceWorkflow.HAS_ROLE_INVOICE_READ)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICEWORKFLOW_READ_BY_IDENTITY)
   public ResponseEntity<InvoiceWorkflowEdo> readInvoice(@PathVariable final String identity, final HttpServletRequest request,
       final Authentication authentication) throws Exception {
@@ -50,7 +51,7 @@ public class InvoiceController {
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('INVOICE_CREATE')")
+  @PreAuthorize(RestAccessRoles.InvoiceWorkflow.HAS_ROLE_INVOICE_CREATE)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICEWORKFLOW_CREATE)
   public ResponseEntity<InvoiceWorkflowListEdo> createInvoice(
       @RequestBody final InvoiceWorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request,
@@ -66,7 +67,7 @@ public class InvoiceController {
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @PreAuthorize("hasRole('INVOICE_SAVE')")
+  @PreAuthorize(RestAccessRoles.InvoiceWorkflow.HAS_ROLE_INVOICE_SAVE)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICEWORKFLOW_SAVE)
   public ResponseEntity<InvoiceWorkflowEdo> saveInvoice(@RequestBody final InvoiceWorkflowSaveRequestEdo requestEdo,
       final HttpServletRequest request,
@@ -78,7 +79,7 @@ public class InvoiceController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('INVOICE_READ')")
+  @PreAuthorize(RestAccessRoles.InvoiceWorkflow.HAS_ROLE_INVOICE_READ)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICEWORKFLOW_READ_LIST)
   public ResponseEntity<InvoiceWorkflowListEdo> readInvoiceList(@RequestBody final Set<String> idList,
       final HttpServletRequest request,
@@ -92,7 +93,7 @@ public class InvoiceController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('INVOICE_READ')")
+  @PreAuthorize(RestAccessRoles.InvoiceWorkflow.HAS_ROLE_INVOICE_READ)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICEWORKFLOW_READ_LIST_BY_USERIDENTITY)
   public ResponseEntity<InvoiceWorkflowListEdo> readInvoiceListForUser(@PathVariable final String Identity,
       @PathVariable(required = false) final int status, final HttpServletRequest request,
@@ -106,7 +107,7 @@ public class InvoiceController {
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @PreAuthorize("hasRole('INVOICE_READ')")
+  @PreAuthorize(RestAccessRoles.InvoiceWorkflow.HAS_ROLE_INVOICE_READ)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICEWORKFLOW_VALIDATE)
   public void validateInvoiceRequest(@RequestBody final InvoiceWorkflowSaveRequestEdo workflowCreateRequestEdo,
       final HttpServletRequest request,

@@ -7,7 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 public interface IJwtTokenProvider {
 
-  String createToken(String username, Set<Integer> roles);
+  String createToken(String username, Set<String> roles);
 
   UsernamePasswordAuthenticationToken getAuthentication(String token);
 
