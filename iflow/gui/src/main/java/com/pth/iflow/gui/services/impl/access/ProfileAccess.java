@@ -15,13 +15,13 @@ import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.TokenProfileRequestEdo;
 import com.pth.iflow.common.models.edo.UserAuthenticationRequestEdo;
 import com.pth.iflow.common.models.edo.UserAuthenticationResponseEdo;
+import com.pth.iflow.common.rest.IRestTemplateCall;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.ProfileResponse;
 import com.pth.iflow.gui.models.UserAuthenticationResponse;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.services.IProfileAccess;
-import com.pth.iflow.gui.services.IRestTemplateCall;
 
 @Service
 public class ProfileAccess implements IProfileAccess {

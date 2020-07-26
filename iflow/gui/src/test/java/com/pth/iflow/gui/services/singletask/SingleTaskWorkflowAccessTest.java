@@ -22,12 +22,12 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowEdo;
 import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowListEdo;
 import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowSaveRequestEdo;
+import com.pth.iflow.common.rest.IRestTemplateCall;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflow;
 import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflowSaveRequest;
-import com.pth.iflow.gui.services.IRestTemplateCall;
 import com.pth.iflow.gui.services.IWorkflowAccess;
 import com.pth.iflow.gui.services.impl.workflow.singletask.SingleTaskWorkflowAccess;
 
@@ -39,17 +39,17 @@ public class SingleTaskWorkflowAccessTest extends TestDataProducer {
   private IWorkflowAccess<SingleTaskWorkflow, SingleTaskWorkflowSaveRequest> workflowAccess;
 
   @MockBean
-  private IRestTemplateCall                                                  restTemplate;
+  private IRestTemplateCall restTemplate;
 
   @MockBean
-  private GuiConfiguration.WorkflowModuleAccessConfig                        workflowModuleAccessConfig;
+  private GuiConfiguration.WorkflowModuleAccessConfig workflowModuleAccessConfig;
 
   @MockBean
-  private GuiConfiguration.ProfileModuleAccessConfig                         profileModuleAccessConfig;
+  private GuiConfiguration.ProfileModuleAccessConfig profileModuleAccessConfig;
 
-  private URI                                                                testUri;
+  private URI testUri;
 
-  private final String                                                       testToken = "test-token";
+  private final String testToken = "test-token";
 
   @Before
   public void setUp() throws Exception {
@@ -70,6 +70,7 @@ public class SingleTaskWorkflowAccessTest extends TestDataProducer {
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -77,8 +78,9 @@ public class SingleTaskWorkflowAccessTest extends TestDataProducer {
 
     final SingleTaskWorkflow workflow = this.getTestSingleTaskWorkflow("identity1");
 
-    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(SingleTaskWorkflowEdo.class), any(String.class),
-        any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
+    when(this.restTemplate
+        .callRestGet(any(URI.class), any(EModule.class), eq(SingleTaskWorkflowEdo.class), any(String.class),
+            any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
 
     final SingleTaskWorkflow resWorkflow = this.workflowAccess.readWorkflow(workflow.getIdentity(), this.testToken);
 
@@ -95,9 +97,10 @@ public class SingleTaskWorkflowAccessTest extends TestDataProducer {
 
     final List<SingleTaskWorkflow> workflowList = this.getTestSingleTaskWorkflowList();
 
-    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(SingleTaskWorkflowSaveRequestEdo.class),
-        eq(SingleTaskWorkflowListEdo.class), any(String.class), any(boolean.class)))
-            .thenReturn(new SingleTaskWorkflowListEdo(GuiModelEdoMapper.toSingleTaskWorkflowEdoList(workflowList)));
+    when(this.restTemplate
+        .callRestPost(any(URI.class), any(EModule.class), any(SingleTaskWorkflowSaveRequestEdo.class),
+            eq(SingleTaskWorkflowListEdo.class), any(String.class), any(boolean.class)))
+                .thenReturn(new SingleTaskWorkflowListEdo(GuiModelEdoMapper.toSingleTaskWorkflowEdoList(workflowList)));
 
     final List<SingleTaskWorkflow> resWorkflowList = this.workflowAccess.createWorkflow(createRequest, this.testToken);
 
@@ -109,12 +112,14 @@ public class SingleTaskWorkflowAccessTest extends TestDataProducer {
   @Test
   @Ignore
   public void testSaveWorkflow() throws Exception {
+
     final SingleTaskWorkflow workflow = this.getTestSingleTaskWorkflow("identity1");
 
     final SingleTaskWorkflowSaveRequest request = this.getTestSingleTaskWorkflowSaveRequest(workflow);
 
-    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(SingleTaskWorkflowEdo.class),
-        eq(SingleTaskWorkflowEdo.class), any(String.class), any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
+    when(this.restTemplate
+        .callRestPost(any(URI.class), any(EModule.class), any(SingleTaskWorkflowEdo.class),
+            eq(SingleTaskWorkflowEdo.class), any(String.class), any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
 
     final SingleTaskWorkflow resWorkflow = this.workflowAccess.saveWorkflow(request, this.testToken);
 

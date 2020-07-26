@@ -3,18 +3,20 @@ package com.pth.iflow.workflow.bl;
 import java.net.MalformedURLException;
 import java.util.Set;
 
+import org.springframework.security.core.Authentication;
+
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 
 public interface IGuiCachDataDataService {
 
-  public void resetCachDataForUser(final String companyIdentity, final String userIdentity, String token)
+  public void resetCachDataForUser(String companyIdentity, String userIdentity, Authentication authentication)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public void resetCachDataForUserList(final String companyIdentity, final Set<String> userIdentityList, String token)
+  public void resetCachDataForUserList(String companyIdentity, Set<String> userIdentityList, Authentication authentication)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public void resetCachDataForWorkflow(final String companyIdentity, final String workflowIdentity, String token)
+  public void resetCachDataForWorkflow(String companyIdentity, String workflowIdentity, Authentication authentication)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }

@@ -20,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -28,11 +29,10 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import com.pth.iflow.common.models.edo.WorkflowTypeStepEdo;
 import com.pth.iflow.common.models.edo.WorkflowTypeStepListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
-import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IWorkflowTypeStepProcessService;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
+import com.pth.iflow.workflow.test.TestDataProducer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -40,13 +40,13 @@ import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 public class WorkflowTypeStepControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc                                mockMvc;
+  private MockMvc mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IWorkflowTypeStepProcessService        workflowStepProcessService;
+  private IWorkflowTypeStepProcessService workflowStepProcessService;
 
   @Before
   public void setUp() throws Exception {
@@ -58,13 +58,16 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
 
   @After
   public void tearDown() throws Exception {
+
   }
 
+//BearerTokenAuthenticationToken
   @Test
+  @WithMockUser(username = "user1", password = "pwd", roles = "USER")
   public void testReadWorkflowTypeStepById() throws Exception {
 
     final WorkflowTypeStep model = this.getTestWorkflowTypeStep();
-    when(this.workflowStepProcessService.getByIdentity(any(String.class), any(String.class))).thenReturn(model);
+    when(this.workflowStepProcessService.getByIdentity(any(String.class), any())).thenReturn(model);
 
     final WorkflowTypeStepEdo modelEdo = WorkflowModelEdoMapper.toEdo(model);
 
@@ -73,21 +76,26 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
     System.out.println("modelAsXmlString : " + modelAsXmlString);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_BY_IDENTITY, model.getIdentity())
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_BY_IDENTITY, model.getIdentity())
+            .principal(null)
+        // .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken")
+        )
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(modelAsXmlString));
 
-    verify(this.workflowStepProcessService, times(1)).getByIdentity(any(String.class), any(String.class));
+    verify(this.workflowStepProcessService, times(1)).getByIdentity(any(String.class), any());
 
   }
 
   @Test
+  @WithMockUser(username = "user1", password = "pwd", roles = "USER")
   public void testReadWorkflowTypeStepList() throws Exception {
 
     final Set<String> idList = this.getTestWorkflowTypeStepIdSet();
     final List<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
-    when(this.workflowStepProcessService.getListByIdentityList(any(Set.class), any(String.class))).thenReturn(list);
+    when(this.workflowStepProcessService.getListByIdentityList(any(Set.class), any())).thenReturn(list);
 
     final WorkflowTypeStepListEdo edoList = new WorkflowTypeStepListEdo(WorkflowModelEdoMapper.toWorkflowTypeStepEdoList(list));
 
@@ -95,33 +103,41 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList).replace("ArrayList", "List");
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_LIST).content(contentAsXmlString)
+        .perform(MockMvcRequestBuilders
+            .post(IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_LIST)
+            .content(contentAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE)
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        // .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken")
+        )
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
-    verify(this.workflowStepProcessService, times(1)).getListByIdentityList(any(Set.class), any(String.class));
+    verify(this.workflowStepProcessService, times(1)).getListByIdentityList(any(Set.class), any());
 
   }
 
   @Test
+  @WithMockUser(username = "user1", password = "pwd", roles = "USER")
   public void testReadWorkflowTypeStepListByWorkflow() throws Exception {
 
     final List<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
-    when(this.workflowStepProcessService.getListByWorkflowIdentity(any(String.class), any(String.class))).thenReturn(list);
+    when(this.workflowStepProcessService.getListByWorkflowIdentity(any(String.class), any())).thenReturn(list);
 
     final WorkflowTypeStepListEdo edoList = new WorkflowTypeStepListEdo(WorkflowModelEdoMapper.toWorkflowTypeStepEdoList(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList).replace("ArrayList", "List");
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOWIDENTITY, "identity")
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOWIDENTITY, "identity")
+        // .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken")
+        )
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
-    verify(this.workflowStepProcessService, times(1)).getListByWorkflowIdentity(any(String.class), any(String.class));
+    verify(this.workflowStepProcessService, times(1)).getListByWorkflowIdentity(any(String.class), any());
 
   }
 

@@ -12,12 +12,12 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
+import com.pth.iflow.common.rest.IRestTemplateCall;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.Department;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.IDepartmentAccess;
-import com.pth.iflow.gui.services.IRestTemplateCall;
 
 @Service
 public class DepartmentAccess implements IDepartmentAccess {

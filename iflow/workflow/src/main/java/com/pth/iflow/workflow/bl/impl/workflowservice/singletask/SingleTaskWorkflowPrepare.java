@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
@@ -21,12 +24,15 @@ public class SingleTaskWorkflowPrepare implements IWorkflowPrepare<SingleTaskWor
   private final IWorkflowTypeDataService workflowTypeDataService;
 
   public SingleTaskWorkflowPrepare(@Autowired final IWorkflowTypeDataService workflowTypeDataService) {
+
     this.workflowTypeDataService = workflowTypeDataService;
   }
 
   @Override
-  public SingleTaskWorkflow prepareWorkflow(final String token, final SingleTaskWorkflow workflow) throws MalformedURLException, IFlowMessageConversionFailureException {
-    final WorkflowType workflowType = this.workflowTypeDataService.getByIdentity(workflow.getWorkflowTypeIdentity(), token);
+  public SingleTaskWorkflow prepareWorkflow(final Authentication authentication, final SingleTaskWorkflow workflow)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    final WorkflowType workflowType = this.workflowTypeDataService.getByIdentity(workflow.getWorkflowTypeIdentity(), authentication);
 
     workflow.setWorkflowType(workflowType);
 
@@ -47,11 +53,13 @@ public class SingleTaskWorkflowPrepare implements IWorkflowPrepare<SingleTaskWor
   }
 
   @Override
-  public List<SingleTaskWorkflow> prepareWorkflowList(final String token, final List<SingleTaskWorkflow> workflowList) throws MalformedURLException, IFlowMessageConversionFailureException {
+  public List<SingleTaskWorkflow> prepareWorkflowList(final Authentication authentication, final List<SingleTaskWorkflow> workflowList)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
+
     final List<SingleTaskWorkflow> list = new ArrayList<>();
     if (workflowList != null) {
       for (final SingleTaskWorkflow workflow : workflowList) {
-        list.add(this.prepareWorkflow(token, workflow));
+        list.add(this.prepareWorkflow(authentication, workflow));
       }
 
     }
@@ -61,9 +69,10 @@ public class SingleTaskWorkflowPrepare implements IWorkflowPrepare<SingleTaskWor
 
   private Map<String, WorkflowTypeStep> getIdMapedSteps(final WorkflowType workflowType) {
 
-    final Map<String, WorkflowTypeStep> list = workflowType.getSteps()
-                                                           .stream()
-                                                           .collect(Collectors.toMap(s -> s.getIdentity(), s -> s));
+    final Map<String, WorkflowTypeStep> list = workflowType
+        .getSteps()
+        .stream()
+        .collect(Collectors.toMap(s -> s.getIdentity(), s -> s));
 
     return list;
   }

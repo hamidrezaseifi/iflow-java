@@ -1,6 +1,9 @@
 package com.pth.iflow.workflow.bl.strategy.strategies.validation;
 
 import java.net.MalformedURLException;
+
+import org.springframework.security.core.Authentication;
+
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IGuiCachDataDataService;
@@ -22,27 +25,29 @@ import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 public class CreateOfferlAssignWorkflowValidationStrategy<W extends IWorkflow> extends AbstractWorkflowSaveStrategy<W> {
 
   public CreateOfferlAssignWorkflowValidationStrategy(final IWorkflowSaveRequest<W> workflowCreateRequest,
-                                                      final String token,
-                                                      final IDepartmentDataService departmentDataService,
-                                                      final IWorkflowMessageDataService workflowMessageDataService,
-                                                      final IGuiCachDataDataService cachDataDataService,
-                                                      final IWorkflowDataService<W> workflowDataService,
-                                                      final IWorkflowPrepare<W> workflowPrepare)
-                                                                                                 throws WorkflowCustomizedException,
-                                                                                                 MalformedURLException,
-                                                                                                 IFlowMessageConversionFailureException {
+      final Authentication authentication,
+      final IDepartmentDataService departmentDataService,
+      final IWorkflowMessageDataService workflowMessageDataService,
+      final IGuiCachDataDataService cachDataDataService,
+      final IWorkflowDataService<W> workflowDataService,
+      final IWorkflowPrepare<W> workflowPrepare)
+      throws WorkflowCustomizedException,
+      MalformedURLException,
+      IFlowMessageConversionFailureException {
+
     super(workflowCreateRequest,
-          token,
-          departmentDataService,
-          workflowMessageDataService,
-          cachDataDataService,
-          workflowDataService,
-          workflowPrepare);
+        authentication,
+        departmentDataService,
+        workflowMessageDataService,
+        cachDataDataService,
+        workflowDataService,
+        workflowPrepare);
 
   }
 
   @Override
   public void setup() {
+
     steps.add(new ValidateWorkflowDetailStrategyStep<W>(this));
     steps.add(new ValidateAssignInSaveRequestStrategyStep<W>(this));
     steps.add(new InitializeWorkflowInitialActionStrategyStep<W>(this));

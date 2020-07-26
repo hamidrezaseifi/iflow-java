@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.models.edo.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.models.edo.workflow.WorkflowListEdo;
+import com.pth.iflow.common.rest.IRestTemplateCall;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.User;
@@ -40,32 +41,32 @@ import com.pth.iflow.gui.services.impl.workflow.testthree.TestThreeTaskWorkflowH
 @AutoConfigureMockMvc
 public class WorkflowSearchAccessTest extends TestDataProducer {
 
-  private IWorkflowSearchAccess                       workflowSearchAccess;
+  private IWorkflowSearchAccess workflowSearchAccess;
 
   @MockBean
-  private IRestTemplateCall                           restTemplate;
+  private IRestTemplateCall restTemplate;
 
   @MockBean
-  private SessionUserInfo                             sessionUserInfo;
+  private SessionUserInfo sessionUserInfo;
 
   @MockBean
   private GuiConfiguration.WorkflowModuleAccessConfig workflowModuleAccessConfig;
 
   @MockBean
-  private GuiConfiguration.ProfileModuleAccessConfig  profileModuleAccessConfig;
+  private GuiConfiguration.ProfileModuleAccessConfig profileModuleAccessConfig;
 
   @MockBean
-  private InvoiceWorkflowHandler                      invoiceWorkflowHandler;
+  private InvoiceWorkflowHandler invoiceWorkflowHandler;
 
   @MockBean
-  private SingleTaskWorkflowHandler                   singleTaskWorkflowHandler;
+  private SingleTaskWorkflowHandler singleTaskWorkflowHandler;
 
   @MockBean
-  private TestThreeTaskWorkflowHandler                testThreeTaskWorkflowHandler;
+  private TestThreeTaskWorkflowHandler testThreeTaskWorkflowHandler;
 
-  private URI                                         testUri;
+  private URI testUri;
 
-  private final String                                testToken = "test-token";
+  private final String testToken = "test-token";
 
   @Before
   public void setUp() throws Exception {
@@ -83,20 +84,23 @@ public class WorkflowSearchAccessTest extends TestDataProducer {
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
   public void testSearchWorkflow() throws Exception {
-    final WorkflowSearchFilter searchFilter           = this.getTestWorkflowSearchFilter();
-    final WorkflowType         testSingleTaskType     = this.getTestSingleTaskWorkflowType();
-    final WorkflowTypeStep     testWorkflowTypeStep   = this.getTestWorkflowTypeStep();
-    final User                 testUser               = this.getTestUser();
-    final SingleTaskWorkflow   testSingleTaskWorkflow = this.getTestSingleTaskWorkflow("identity");
 
-    final List<Workflow>       workflowList           = this.getTestWorkflowList();
+    final WorkflowSearchFilter searchFilter = this.getTestWorkflowSearchFilter();
+    final WorkflowType testSingleTaskType = this.getTestSingleTaskWorkflowType();
+    final WorkflowTypeStep testWorkflowTypeStep = this.getTestWorkflowTypeStep();
+    final User testUser = this.getTestUser();
+    final SingleTaskWorkflow testSingleTaskWorkflow = this.getTestSingleTaskWorkflow("identity");
 
-    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(WorkflowSearchFilterEdo.class), eq(WorkflowListEdo.class),
-        any(String.class), any(boolean.class))).thenReturn(new WorkflowListEdo(GuiModelEdoMapper.toWorkflowEdoList(workflowList)));
+    final List<Workflow> workflowList = this.getTestWorkflowList();
+
+    when(this.restTemplate
+        .callRestPost(any(URI.class), any(EModule.class), any(WorkflowSearchFilterEdo.class), eq(WorkflowListEdo.class),
+            any(String.class), any(boolean.class))).thenReturn(new WorkflowListEdo(GuiModelEdoMapper.toWorkflowEdoList(workflowList)));
 
     when(this.sessionUserInfo.getWorkflowTypeByIdentity(any(String.class))).thenReturn(testSingleTaskType);
     when(this.sessionUserInfo.getWorkflowStepTypeByIdentity(any(String.class), any(String.class))).thenReturn(testWorkflowTypeStep);

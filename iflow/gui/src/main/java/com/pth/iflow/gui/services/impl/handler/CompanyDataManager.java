@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -69,12 +70,13 @@ public class CompanyDataManager implements ICompanyCachDataManager {
   }
 
   @Override
-  public void resetUserData(final String companyId, final String userIdentity, final String token, final boolean fromController)
+  public void resetUserData(final String companyId, final String userIdentity, final Authentication authentication,
+      final boolean fromController)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final List<
         WorkflowMessage> messageList = this.workflowMessageService
-            .getWorkflowMessageListByUser(userIdentity, token);
+            .getWorkflowMessageListByUser(userIdentity, authentication);
 
     this.removeUserMessages(companyId, userIdentity);
     this.setUserWorkflowMessages(companyId, userIdentity, messageList);
@@ -86,11 +88,11 @@ public class CompanyDataManager implements ICompanyCachDataManager {
   }
 
   @Override
-  public void resetWorkflowStepData(final String compnayId, final String workflowId, final String token)
+  public void resetWorkflowStepData(final String compnayId, final String workflowId, final Authentication authentication)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final List<WorkflowMessage> messageList = this.workflowMessageService
-        .getWorkflowMessageListByWorkflow(workflowId, token);
+        .getWorkflowMessageListByWorkflow(workflowId, authentication);
 
     final List<String> userIdentityList = this.removeWorkflowMessages(compnayId, workflowId);
 
@@ -104,12 +106,12 @@ public class CompanyDataManager implements ICompanyCachDataManager {
   }
 
   @Override
-  public void resetUserListData(final String compnayId, final Collection<String> userIdList, final String token)
+  public void resetUserListData(final String compnayId, final Collection<String> userIdList, final Authentication authentication)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     for (final String userIdentity : userIdList) {
       final List<
-          WorkflowMessage> messageList = this.workflowMessageService.getWorkflowMessageListByUser(userIdentity, token);
+          WorkflowMessage> messageList = this.workflowMessageService.getWorkflowMessageListByUser(userIdentity, authentication);
 
       this.setUserWorkflowMessages(compnayId, userIdentity, messageList);
       this.sendResetMessageToSocket(userIdentity);

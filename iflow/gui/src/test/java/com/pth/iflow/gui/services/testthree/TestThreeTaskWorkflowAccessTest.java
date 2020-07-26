@@ -22,12 +22,12 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowEdo;
 import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
 import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowSaveRequestEdo;
+import com.pth.iflow.common.rest.IRestTemplateCall;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflow;
 import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflowSaveRequest;
-import com.pth.iflow.gui.services.IRestTemplateCall;
 import com.pth.iflow.gui.services.IWorkflowAccess;
 import com.pth.iflow.gui.services.impl.workflow.testthree.TestThreeTaskWorkflowAccess;
 
@@ -39,17 +39,17 @@ public class TestThreeTaskWorkflowAccessTest extends TestDataProducer {
   private IWorkflowAccess<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> workflowAccess;
 
   @MockBean
-  private IRestTemplateCall                                                        restTemplate;
+  private IRestTemplateCall restTemplate;
 
   @MockBean
-  private GuiConfiguration.WorkflowModuleAccessConfig                              workflowModuleAccessConfig;
+  private GuiConfiguration.WorkflowModuleAccessConfig workflowModuleAccessConfig;
 
   @MockBean
-  private GuiConfiguration.ProfileModuleAccessConfig                               profileModuleAccessConfig;
+  private GuiConfiguration.ProfileModuleAccessConfig profileModuleAccessConfig;
 
-  private URI                                                                      testUri;
+  private URI testUri;
 
-  private final String                                                             testToken = "test-token";
+  private final String testToken = "test-token";
 
   @Before
   public void setUp() throws Exception {
@@ -70,6 +70,7 @@ public class TestThreeTaskWorkflowAccessTest extends TestDataProducer {
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -77,8 +78,9 @@ public class TestThreeTaskWorkflowAccessTest extends TestDataProducer {
 
     final TestThreeTaskWorkflow workflow = this.getTestTestThreeTaskWorkflow("identity1");
 
-    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(TestThreeTaskWorkflowEdo.class), any(String.class),
-        any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
+    when(this.restTemplate
+        .callRestGet(any(URI.class), any(EModule.class), eq(TestThreeTaskWorkflowEdo.class), any(String.class),
+            any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
 
     final TestThreeTaskWorkflow resWorkflow = this.workflowAccess.readWorkflow(workflow.getIdentity(), this.testToken);
 
@@ -95,9 +97,10 @@ public class TestThreeTaskWorkflowAccessTest extends TestDataProducer {
 
     final List<TestThreeTaskWorkflow> workflowList = this.getTestTestThreeTaskWorkflowList();
 
-    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(TestThreeTaskWorkflowSaveRequestEdo.class),
-        eq(TestThreeTaskWorkflowListEdo.class), any(String.class), any(boolean.class)))
-            .thenReturn(new TestThreeTaskWorkflowListEdo(GuiModelEdoMapper.toTestThreeTaskWorkflowEdoList(workflowList)));
+    when(this.restTemplate
+        .callRestPost(any(URI.class), any(EModule.class), any(TestThreeTaskWorkflowSaveRequestEdo.class),
+            eq(TestThreeTaskWorkflowListEdo.class), any(String.class), any(boolean.class)))
+                .thenReturn(new TestThreeTaskWorkflowListEdo(GuiModelEdoMapper.toTestThreeTaskWorkflowEdoList(workflowList)));
 
     final List<TestThreeTaskWorkflow> resWorkflowList = this.workflowAccess.createWorkflow(createRequest, this.testToken);
 
@@ -109,12 +112,14 @@ public class TestThreeTaskWorkflowAccessTest extends TestDataProducer {
   @Test
   @Ignore
   public void testSaveWorkflow() throws Exception {
+
     final TestThreeTaskWorkflow workflow = this.getTestTestThreeTaskWorkflow("identity1");
 
     final TestThreeTaskWorkflowSaveRequest request = this.getTestTestThreeTaskWorkflowSaveRequest(workflow);
 
-    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(TestThreeTaskWorkflowEdo.class),
-        eq(TestThreeTaskWorkflowEdo.class), any(String.class), any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
+    when(this.restTemplate
+        .callRestPost(any(URI.class), any(EModule.class), any(TestThreeTaskWorkflowEdo.class),
+            eq(TestThreeTaskWorkflowEdo.class), any(String.class), any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
 
     final TestThreeTaskWorkflow resWorkflow = this.workflowAccess.saveWorkflow(request, this.testToken);
 

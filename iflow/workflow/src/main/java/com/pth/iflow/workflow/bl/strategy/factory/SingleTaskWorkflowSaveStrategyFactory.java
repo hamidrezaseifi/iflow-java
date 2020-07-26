@@ -1,10 +1,13 @@
 package com.pth.iflow.workflow.bl.strategy.factory;
 
 import java.net.MalformedURLException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
@@ -46,10 +49,11 @@ public class SingleTaskWorkflowSaveStrategyFactory implements IWorkflowSaveStrat
   private final IWorkflowPrepare<SingleTaskWorkflow> invoiceWorkflowPrepare;
 
   public SingleTaskWorkflowSaveStrategyFactory(@Autowired final IWorkflowDataService<SingleTaskWorkflow> workflowDataService,
-                                               @Autowired final IDepartmentDataService departmentDataService,
-                                               @Autowired final IWorkflowMessageDataService workflowMessageDataService,
-                                               @Autowired final IGuiCachDataDataService cachDataDataService,
-                                               @Autowired final IWorkflowPrepare<SingleTaskWorkflow> invoiceWorkflowPrepare) {
+      @Autowired final IDepartmentDataService departmentDataService,
+      @Autowired final IWorkflowMessageDataService workflowMessageDataService,
+      @Autowired final IGuiCachDataDataService cachDataDataService,
+      @Autowired final IWorkflowPrepare<SingleTaskWorkflow> invoiceWorkflowPrepare) {
+
     this.workflowDataService = workflowDataService;
     this.departmentDataService = departmentDataService;
     this.workflowMessageDataService = workflowMessageDataService;
@@ -59,7 +63,9 @@ public class SingleTaskWorkflowSaveStrategyFactory implements IWorkflowSaveStrat
   }
 
   @Override
-  public IWorkflowSaveStrategy<SingleTaskWorkflow> selectSaveWorkStrategy(final IWorkflowSaveRequest<SingleTaskWorkflow> workflowSaveRequest, final String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public IWorkflowSaveStrategy<SingleTaskWorkflow>
+      selectSaveWorkStrategy(final IWorkflowSaveRequest<SingleTaskWorkflow> workflowSaveRequest, final Authentication authentication)
+          throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("selecting save strategy for workflow");
 
@@ -67,75 +73,77 @@ public class SingleTaskWorkflowSaveStrategyFactory implements IWorkflowSaveStrat
       if (workflowSaveRequest.getWorkflow().getWorkflowType().isAssignTypeManual()) {
         logger.debug("The CreateManualAssignWorkflowStrategy is selected for workflow save");
         return new CreateManualAssignWorkflowStrategy<SingleTaskWorkflow>(workflowSaveRequest,
-                                                                          token,
-                                                                          departmentDataService,
-                                                                          workflowMessageDataService,
-                                                                          cachDataDataService,
-                                                                          workflowDataService,
-                                                                          invoiceWorkflowPrepare);
+            authentication,
+            departmentDataService,
+            workflowMessageDataService,
+            cachDataDataService,
+            workflowDataService,
+            invoiceWorkflowPrepare);
       }
 
       if (workflowSaveRequest.getWorkflow().getWorkflowType().isAssignTypeOffering()) {
         logger.debug("The CreateOfferlAssignWorkflowStrategy is selected for workflow save");
         return new CreateOfferlAssignWorkflowStrategy<SingleTaskWorkflow>(workflowSaveRequest,
-                                                                          token,
-                                                                          departmentDataService,
-                                                                          workflowMessageDataService,
-                                                                          cachDataDataService,
-                                                                          workflowDataService,
-                                                                          invoiceWorkflowPrepare);
+            authentication,
+            departmentDataService,
+            workflowMessageDataService,
+            cachDataDataService,
+            workflowDataService,
+            invoiceWorkflowPrepare);
       }
     }
 
     if (workflowSaveRequest.isArchiveCommand()) {
       logger.debug("The ArchivingWorkflowStrategy is selected for workflow save");
       return new ArchivingWorkflowStrategy<SingleTaskWorkflow>(workflowSaveRequest,
-                                                               token,
-                                                               departmentDataService,
-                                                               workflowMessageDataService,
-                                                               cachDataDataService,
-                                                               workflowDataService,
-                                                               invoiceWorkflowPrepare);
+          authentication,
+          departmentDataService,
+          workflowMessageDataService,
+          cachDataDataService,
+          workflowDataService,
+          invoiceWorkflowPrepare);
     }
 
     if (workflowSaveRequest.isSaveCommand()) {
       logger.debug("The SaveExistingWorkflowStrategy is selected for workflow save");
       return new SaveExistingWorkflowStrategy<SingleTaskWorkflow>(workflowSaveRequest,
-                                                                  token,
-                                                                  departmentDataService,
-                                                                  workflowMessageDataService,
-                                                                  cachDataDataService,
-                                                                  workflowDataService,
-                                                                  invoiceWorkflowPrepare);
+          authentication,
+          departmentDataService,
+          workflowMessageDataService,
+          cachDataDataService,
+          workflowDataService,
+          invoiceWorkflowPrepare);
     }
 
     if (workflowSaveRequest.isAssignCommand()) {
       logger.debug("The AssignWorkflowStrategy is selected for workflow save");
       return new AssignWorkflowStrategy<SingleTaskWorkflow>(workflowSaveRequest,
-                                                            token,
-                                                            departmentDataService,
-                                                            workflowMessageDataService,
-                                                            cachDataDataService,
-                                                            workflowDataService,
-                                                            invoiceWorkflowPrepare);
+          authentication,
+          departmentDataService,
+          workflowMessageDataService,
+          cachDataDataService,
+          workflowDataService,
+          invoiceWorkflowPrepare);
     }
 
     if (workflowSaveRequest.isDoneCommand()) {
       logger.debug("The DoneExistingWorkflowStrategy is selected for workflow save");
       return new DoneExistingWorkflowStrategy<SingleTaskWorkflow>(workflowSaveRequest,
-                                                                  token,
-                                                                  departmentDataService,
-                                                                  workflowMessageDataService,
-                                                                  cachDataDataService,
-                                                                  workflowDataService,
-                                                                  invoiceWorkflowPrepare);
+          authentication,
+          departmentDataService,
+          workflowMessageDataService,
+          cachDataDataService,
+          workflowDataService,
+          invoiceWorkflowPrepare);
     }
 
     throw new WorkflowCustomizedException("Unknown workflow save strategy ", EIFlowErrorType.UNKNOWN_WORKFLOW_STRATEGY);
   }
 
   @Override
-  public IWorkflowSaveStrategy<SingleTaskWorkflow> selectValidationWorkStrategy(final IWorkflowSaveRequest<SingleTaskWorkflow> workflowSaveRequest, final String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public IWorkflowSaveStrategy<SingleTaskWorkflow>
+      selectValidationWorkStrategy(final IWorkflowSaveRequest<SingleTaskWorkflow> workflowSaveRequest, final Authentication authentication)
+          throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("selecting validation strategy for workflow");
 
@@ -143,68 +151,68 @@ public class SingleTaskWorkflowSaveStrategyFactory implements IWorkflowSaveStrat
       if (workflowSaveRequest.getWorkflow().getWorkflowType().isAssignTypeManual()) {
         logger.debug("The CreateManualAssignWorkflowValidationStrategy is selected for workflow validation");
         return new CreateManualAssignWorkflowValidationStrategy<SingleTaskWorkflow>(workflowSaveRequest,
-                                                                                    token,
-                                                                                    departmentDataService,
-                                                                                    workflowMessageDataService,
-                                                                                    cachDataDataService,
-                                                                                    workflowDataService,
-                                                                                    invoiceWorkflowPrepare);
+            authentication,
+            departmentDataService,
+            workflowMessageDataService,
+            cachDataDataService,
+            workflowDataService,
+            invoiceWorkflowPrepare);
       }
 
       if (workflowSaveRequest.getWorkflow().getWorkflowType().isAssignTypeOffering()) {
         logger.debug("The CreateOfferlAssignWorkflowValidationStrategy is selected for workflow validation");
         return new CreateOfferlAssignWorkflowValidationStrategy<SingleTaskWorkflow>(workflowSaveRequest,
-                                                                                    token,
-                                                                                    departmentDataService,
-                                                                                    workflowMessageDataService,
-                                                                                    cachDataDataService,
-                                                                                    workflowDataService,
-                                                                                    invoiceWorkflowPrepare);
+            authentication,
+            departmentDataService,
+            workflowMessageDataService,
+            cachDataDataService,
+            workflowDataService,
+            invoiceWorkflowPrepare);
       }
     }
 
     if (workflowSaveRequest.isArchiveCommand()) {
       logger.debug("The ArchivingWorkflowValidationStrategy is selected for workflow validation");
       return new ArchivingWorkflowValidationStrategy<SingleTaskWorkflow>(workflowSaveRequest,
-                                                                         token,
-                                                                         departmentDataService,
-                                                                         workflowMessageDataService,
-                                                                         cachDataDataService,
-                                                                         workflowDataService,
-                                                                         invoiceWorkflowPrepare);
+          authentication,
+          departmentDataService,
+          workflowMessageDataService,
+          cachDataDataService,
+          workflowDataService,
+          invoiceWorkflowPrepare);
     }
 
     if (workflowSaveRequest.isSaveCommand()) {
       logger.debug("The SaveExistingWorkflowValidationStrategy is selected for workflow validation");
       return new SaveExistingWorkflowValidationStrategy<SingleTaskWorkflow>(workflowSaveRequest,
-                                                                            token,
-                                                                            departmentDataService,
-                                                                            workflowMessageDataService,
-                                                                            cachDataDataService,
-                                                                            workflowDataService,
-                                                                            invoiceWorkflowPrepare);
+          authentication,
+          departmentDataService,
+          workflowMessageDataService,
+          cachDataDataService,
+          workflowDataService,
+          invoiceWorkflowPrepare);
     }
 
     if (workflowSaveRequest.isAssignCommand()) {
       logger.debug("The AssignWorkflowValidationStrategy is selected for workflow validation");
       return new AssignWorkflowValidationStrategy<SingleTaskWorkflow>(workflowSaveRequest,
-                                                                      token,
-                                                                      departmentDataService,
-                                                                      workflowMessageDataService,
-                                                                      cachDataDataService,
-                                                                      workflowDataService,
-                                                                      invoiceWorkflowPrepare);
+          authentication,
+          departmentDataService,
+          workflowMessageDataService,
+          cachDataDataService,
+          workflowDataService,
+          invoiceWorkflowPrepare);
     }
 
     if (workflowSaveRequest.isDoneCommand()) {
       logger.debug("The DoneExistingWorkflowValidationStrategy is selected for workflow validation");
       return new DoneExistingWorkflowValidationStrategy<SingleTaskWorkflow>(workflowSaveRequest,
-                                                                            token,
-                                                                            departmentDataService,
-                                                                            workflowMessageDataService,
-                                                                            cachDataDataService,
-                                                                            workflowDataService,
-                                                                            invoiceWorkflowPrepare);
+          authentication,
+          departmentDataService,
+          workflowMessageDataService,
+          cachDataDataService,
+          workflowDataService,
+          invoiceWorkflowPrepare);
     }
 
     throw new WorkflowCustomizedException("Unknown workflow validation strategy ", EIFlowErrorType.UNKNOWN_WORKFLOW_STRATEGY);

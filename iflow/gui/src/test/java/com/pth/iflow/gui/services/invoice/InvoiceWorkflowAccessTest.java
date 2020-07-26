@@ -22,12 +22,12 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.models.edo.workflow.invoice.InvoiceWorkflowEdo;
 import com.pth.iflow.common.models.edo.workflow.invoice.InvoiceWorkflowListEdo;
 import com.pth.iflow.common.models.edo.workflow.invoice.InvoiceWorkflowSaveRequestEdo;
+import com.pth.iflow.common.rest.IRestTemplateCall;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflowSaveRequest;
-import com.pth.iflow.gui.services.IRestTemplateCall;
 import com.pth.iflow.gui.services.IWorkflowAccess;
 import com.pth.iflow.gui.services.impl.workflow.invoice.InvoiceWorkflowAccess;
 
@@ -39,17 +39,17 @@ public class InvoiceWorkflowAccessTest extends TestDataProducer {
   private IWorkflowAccess<InvoiceWorkflow, InvoiceWorkflowSaveRequest> workflowAccess;
 
   @MockBean
-  private IRestTemplateCall                                            restTemplate;
+  private IRestTemplateCall restTemplate;
 
   @MockBean
-  private GuiConfiguration.WorkflowModuleAccessConfig                  workflowModuleAccessConfig;
+  private GuiConfiguration.WorkflowModuleAccessConfig workflowModuleAccessConfig;
 
   @MockBean
-  private GuiConfiguration.ProfileModuleAccessConfig                   profileModuleAccessConfig;
+  private GuiConfiguration.ProfileModuleAccessConfig profileModuleAccessConfig;
 
-  private URI                                                          testUri;
+  private URI testUri;
 
-  private final String                                                 testToken = "test-token";
+  private final String testToken = "test-token";
 
   @Before
   public void setUp() throws Exception {
@@ -70,6 +70,7 @@ public class InvoiceWorkflowAccessTest extends TestDataProducer {
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -77,8 +78,9 @@ public class InvoiceWorkflowAccessTest extends TestDataProducer {
 
     final InvoiceWorkflow workflow = this.getTestInvoiceWorkflow("identity1");
 
-    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(InvoiceWorkflowEdo.class), any(String.class),
-        any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
+    when(this.restTemplate
+        .callRestGet(any(URI.class), any(EModule.class), eq(InvoiceWorkflowEdo.class), any(String.class),
+            any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
 
     final InvoiceWorkflow resWorkflow = this.workflowAccess.readWorkflow(workflow.getIdentity(), this.testToken);
 
@@ -95,9 +97,10 @@ public class InvoiceWorkflowAccessTest extends TestDataProducer {
 
     final List<InvoiceWorkflow> workflowList = this.getTestInvoiceWorkflowList();
 
-    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(InvoiceWorkflowSaveRequestEdo.class),
-        eq(InvoiceWorkflowListEdo.class), any(String.class), any(boolean.class)))
-            .thenReturn(new InvoiceWorkflowListEdo(GuiModelEdoMapper.toInvoiceWorkflowEdoList(workflowList)));
+    when(this.restTemplate
+        .callRestPost(any(URI.class), any(EModule.class), any(InvoiceWorkflowSaveRequestEdo.class),
+            eq(InvoiceWorkflowListEdo.class), any(String.class), any(boolean.class)))
+                .thenReturn(new InvoiceWorkflowListEdo(GuiModelEdoMapper.toInvoiceWorkflowEdoList(workflowList)));
 
     final List<InvoiceWorkflow> resWorkflowList = this.workflowAccess.createWorkflow(createRequest, this.testToken);
 
@@ -109,12 +112,14 @@ public class InvoiceWorkflowAccessTest extends TestDataProducer {
   @Test
   @Ignore
   public void testSaveWorkflow() throws Exception {
+
     final InvoiceWorkflow workflow = this.getTestInvoiceWorkflow("identity1");
 
     final InvoiceWorkflowSaveRequest request = this.getTestInvoiceWorkflowSaveRequest(workflow);
 
-    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(InvoiceWorkflowEdo.class),
-        eq(InvoiceWorkflowEdo.class), any(String.class), any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
+    when(this.restTemplate
+        .callRestPost(any(URI.class), any(EModule.class), any(InvoiceWorkflowEdo.class),
+            eq(InvoiceWorkflowEdo.class), any(String.class), any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
 
     final InvoiceWorkflow resWorkflow = this.workflowAccess.saveWorkflow(request, this.testToken);
 

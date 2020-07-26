@@ -17,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
-import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IGuiCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
@@ -28,6 +27,7 @@ import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.User;
 import com.pth.iflow.workflow.models.workflow.testthree.TestThreeTaskWorkflow;
 import com.pth.iflow.workflow.models.workflow.testthree.TestThreeTaskWorkflowSaveRequest;
+import com.pth.iflow.workflow.test.TestDataProducer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -51,15 +51,12 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
   @Mock
   private IWorkflowPrepare<TestThreeTaskWorkflow> workflowPrepare;
 
-  private String validTocken;
-
   @Before
   public void setUp() throws Exception {
 
     // when(this.workflowDataService.generateCoreUrl(any(String.class))).thenReturn(new
     // URL("http://any-string"));
 
-    this.validTocken = "validTocken";
   }
 
   @After
@@ -76,13 +73,13 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
 
     final List<User> userList = getTestUserList();
 
-    when(this.workflowDataService.save(any(TestThreeTaskWorkflow.class), any(String.class))).thenReturn(request.getWorkflow());
-    when(this.workflowPrepare.prepareWorkflow(any(String.class), any(TestThreeTaskWorkflow.class))).thenReturn(request.getWorkflow());
+    when(this.workflowDataService.save(any(TestThreeTaskWorkflow.class), any())).thenReturn(request.getWorkflow());
+    when(this.workflowPrepare.prepareWorkflow(any(), any(TestThreeTaskWorkflow.class))).thenReturn(request.getWorkflow());
 
-    when(this.departmentDataService.getUserListByDepartmentIdentity(any(String.class), any(String.class))).thenReturn(userList);
+    when(this.departmentDataService.getUserListByDepartmentIdentity(any(String.class), any())).thenReturn(userList);
 
     this.workflowStrategy = new CreateManualAssignWorkflowStrategy<TestThreeTaskWorkflow>(request,
-        this.validTocken,
+        this.getValidAuthentiocation(),
         this.departmentDataService,
         this.workflowMessageDataService,
         this.cachDataDataService,
@@ -107,10 +104,10 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
     request.setCommand(EWorkflowProcessCommand.CREATE);
     request.setAssigns(Arrays.asList());
 
-    when(this.workflowDataService.save(any(TestThreeTaskWorkflow.class), any(String.class))).thenReturn(request.getWorkflow());
+    when(this.workflowDataService.save(any(TestThreeTaskWorkflow.class), any())).thenReturn(request.getWorkflow());
 
     this.workflowStrategy = new CreateManualAssignWorkflowStrategy<TestThreeTaskWorkflow>(request,
-        this.validTocken,
+        this.getValidAuthentiocation(),
         this.departmentDataService,
         this.workflowMessageDataService,
         this.cachDataDataService,

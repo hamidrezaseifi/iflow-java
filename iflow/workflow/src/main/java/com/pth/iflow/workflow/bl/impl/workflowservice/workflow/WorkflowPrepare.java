@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -23,13 +24,15 @@ public class WorkflowPrepare implements IWorkflowPrepare<Workflow> {
   private final IWorkflowTypeDataService workflowTypeDataService;
 
   public WorkflowPrepare(@Autowired final IWorkflowTypeDataService workflowTypeDataService) {
+
     this.workflowTypeDataService = workflowTypeDataService;
   }
 
   @Override
-  public Workflow prepareWorkflow(final String token, final Workflow workflow)
+  public Workflow prepareWorkflow(final Authentication authentication, final Workflow workflow)
       throws MalformedURLException, IFlowMessageConversionFailureException {
-    final WorkflowType workflowType = this.workflowTypeDataService.getByIdentity(workflow.getWorkflowTypeIdentity(), token);
+
+    final WorkflowType workflowType = this.workflowTypeDataService.getByIdentity(workflow.getWorkflowTypeIdentity(), authentication);
 
     workflow.setWorkflowType(workflowType);
 
@@ -50,12 +53,13 @@ public class WorkflowPrepare implements IWorkflowPrepare<Workflow> {
   }
 
   @Override
-  public List<Workflow> prepareWorkflowList(final String token, final List<Workflow> workflowList)
+  public List<Workflow> prepareWorkflowList(final Authentication authentication, final List<Workflow> workflowList)
       throws MalformedURLException, IFlowMessageConversionFailureException {
+
     final List<Workflow> list = new ArrayList<>();
     if (workflowList != null) {
       for (final Workflow workflow : workflowList) {
-        list.add(this.prepareWorkflow(token, workflow));
+        list.add(this.prepareWorkflow(authentication, workflow));
       }
 
     }

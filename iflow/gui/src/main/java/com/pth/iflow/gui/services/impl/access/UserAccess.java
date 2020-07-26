@@ -13,13 +13,13 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
 import com.pth.iflow.common.models.edo.UserPasswordChangeRequestEdo;
+import com.pth.iflow.common.rest.IRestTemplateCall;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.UserDashboardMenu;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
-import com.pth.iflow.gui.services.IRestTemplateCall;
 import com.pth.iflow.gui.services.IUserAccess;
 
 @Service

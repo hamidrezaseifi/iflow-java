@@ -22,8 +22,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
-import com.pth.iflow.workflow.TestDataProducer;
-import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
@@ -33,6 +31,7 @@ import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategyFactory;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.workflow.testthree.TestThreeTaskWorkflow;
 import com.pth.iflow.workflow.models.workflow.testthree.TestThreeTaskWorkflowSaveRequest;
+import com.pth.iflow.workflow.test.TestDataProducer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -48,9 +47,6 @@ public class TestThreeTaskWorkflowProcessServiceTest extends TestDataProducer {
   private IWorkflowPrepare<TestThreeTaskWorkflow> workflowPrepare;
 
   @Mock
-  private ITokenValidator tokenValidator;
-
-  @Mock
   IWorkflowSaveStrategyFactory<TestThreeTaskWorkflow> workStrategyFactory;
 
   @Mock
@@ -59,20 +55,16 @@ public class TestThreeTaskWorkflowProcessServiceTest extends TestDataProducer {
   @Mock
   private IWorkflowSaveStrategy<TestThreeTaskWorkflow> validateStrategy;
 
-  private String validTocken;
-
   @Before
   public void setUp() throws Exception {
 
-    this.workflowProcessService = new TestThreeTaskWorkProcessService(this.workflowDataService, this.tokenValidator,
+    this.workflowProcessService = new TestThreeTaskWorkProcessService(this.workflowDataService,
         this.workStrategyFactory, this.workflowPrepare);
 
-    this.validTocken = "validTocken";
-
-    when(this.workStrategyFactory.selectSaveWorkStrategy(any(TestThreeTaskWorkflowSaveRequest.class), any(String.class)))
+    when(this.workStrategyFactory.selectSaveWorkStrategy(any(TestThreeTaskWorkflowSaveRequest.class), any()))
         .thenReturn(this.saveStrategy);
 
-    when(this.workStrategyFactory.selectValidationWorkStrategy(any(TestThreeTaskWorkflowSaveRequest.class), any(String.class)))
+    when(this.workStrategyFactory.selectValidationWorkStrategy(any(TestThreeTaskWorkflowSaveRequest.class), any()))
         .thenReturn(this.validateStrategy);
 
   }
@@ -87,10 +79,11 @@ public class TestThreeTaskWorkflowProcessServiceTest extends TestDataProducer {
 
     final TestThreeTaskWorkflow workflow = this.getTestTestThreeTaskWorkflow("workflow1");
 
-    when(this.workflowDataService.getByIdentity(any(String.class), any(String.class))).thenReturn(workflow);
-    when(this.workflowPrepare.prepareWorkflow(any(String.class), any(TestThreeTaskWorkflow.class))).thenReturn(workflow);
+    when(this.workflowDataService.getByIdentity(any(String.class), any())).thenReturn(workflow);
+    when(this.workflowPrepare.prepareWorkflow(any(), any(TestThreeTaskWorkflow.class))).thenReturn(workflow);
 
-    final TestThreeTaskWorkflow resWorkflow = this.workflowProcessService.getByIdentity(workflow.getIdentity(), this.validTocken);
+    final TestThreeTaskWorkflow resWorkflow = this.workflowProcessService
+        .getByIdentity(workflow.getIdentity(), this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), workflow.getIdentity());
@@ -106,7 +99,7 @@ public class TestThreeTaskWorkflowProcessServiceTest extends TestDataProducer {
 
     doThrow(new WorkflowCustomizedException("", EIFlowErrorType.INVALID_WORKFLOW_STATUS)).when(this.saveStrategy).process();
 
-    final TestThreeTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.validTocken);
+    final TestThreeTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), request.getWorkflow().getIdentity());
@@ -130,7 +123,7 @@ public class TestThreeTaskWorkflowProcessServiceTest extends TestDataProducer {
     doNothing().when(this.saveStrategy).process();
     when(this.saveStrategy.getSingleProceedWorkflow()).thenReturn(workflowSaveResult);
 
-    final TestThreeTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.validTocken);
+    final TestThreeTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), workflowSaveResult.getIdentity());
@@ -155,7 +148,7 @@ public class TestThreeTaskWorkflowProcessServiceTest extends TestDataProducer {
     final TestThreeTaskWorkflowSaveRequest request = this.getTestTestThreeTaskWorkflowSaveRequest();
     request.setWorkflow(workflow);
 
-    final TestThreeTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.validTocken);
+    final TestThreeTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), workflowSaveResult.getIdentity());
@@ -180,7 +173,7 @@ public class TestThreeTaskWorkflowProcessServiceTest extends TestDataProducer {
     final TestThreeTaskWorkflowSaveRequest request = this.getTestTestThreeTaskWorkflowSaveRequest();
     request.setWorkflow(workflow);
 
-    final TestThreeTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.validTocken);
+    final TestThreeTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), workflowSaveResult.getIdentity());
@@ -197,10 +190,10 @@ public class TestThreeTaskWorkflowProcessServiceTest extends TestDataProducer {
     ;
     final List<TestThreeTaskWorkflow> list = this.getTestTestThreeTaskWorkflowList();
 
-    when(this.workflowDataService.getListByIdentityList(any(Set.class), any(String.class))).thenReturn(list);
-    when(this.workflowPrepare.prepareWorkflowList(any(String.class), any(List.class))).thenReturn(list);
+    when(this.workflowDataService.getListByIdentityList(any(Set.class), any())).thenReturn(list);
+    when(this.workflowPrepare.prepareWorkflowList(any(), any(List.class))).thenReturn(list);
 
-    final List<TestThreeTaskWorkflow> resList = this.workflowProcessService.getListByIdentityList(idList, this.validTocken);
+    final List<TestThreeTaskWorkflow> resList = this.workflowProcessService.getListByIdentityList(idList, this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", list.size(), resList.size());
@@ -221,9 +214,9 @@ public class TestThreeTaskWorkflowProcessServiceTest extends TestDataProducer {
     doNothing().when(this.saveStrategy).process();
     when(this.saveStrategy.getSingleProceedWorkflow()).thenReturn(workflowSaveResult);
     when(this.saveStrategy.getProceedWorkflowList()).thenReturn(reultList);
-    when(this.workflowPrepare.prepareWorkflowList(any(String.class), any(List.class))).thenReturn(reultList);
+    when(this.workflowPrepare.prepareWorkflowList(any(), any(List.class))).thenReturn(reultList);
 
-    final List<TestThreeTaskWorkflow> resWorkflowList = this.workflowProcessService.create(request, this.validTocken);
+    final List<TestThreeTaskWorkflow> resWorkflowList = this.workflowProcessService.create(request, this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflowList);
     Assert.assertEquals("Result workflow-type has id 1!", request.getAssigns().size(), resWorkflowList.size());
@@ -242,7 +235,7 @@ public class TestThreeTaskWorkflowProcessServiceTest extends TestDataProducer {
 
     doNothing().when(this.validateStrategy).process();
 
-    this.workflowProcessService.validate(request, this.validTocken);
+    this.workflowProcessService.validate(request, this.getValidAuthentiocation());
 
   }
 

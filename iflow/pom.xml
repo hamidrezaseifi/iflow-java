@@ -39,7 +39,7 @@
 
   </properties>
 
-	<profiles>
+  <profiles>
 	
     <profile>
       <!-- runs all migratrion scripts and by default creates the needed schema/db if still missing -->

@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
@@ -21,12 +24,15 @@ public class TestThreeTaskWorkPrepare implements IWorkflowPrepare<TestThreeTaskW
   private final IWorkflowTypeDataService workflowTypeDataService;
 
   public TestThreeTaskWorkPrepare(@Autowired final IWorkflowTypeDataService workflowTypeDataService) {
+
     this.workflowTypeDataService = workflowTypeDataService;
   }
 
   @Override
-  public TestThreeTaskWorkflow prepareWorkflow(final String token, final TestThreeTaskWorkflow workflow) throws MalformedURLException, IFlowMessageConversionFailureException {
-    final WorkflowType workflowType = this.workflowTypeDataService.getByIdentity(workflow.getWorkflowTypeIdentity(), token);
+  public TestThreeTaskWorkflow prepareWorkflow(final Authentication authentication, final TestThreeTaskWorkflow workflow)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    final WorkflowType workflowType = this.workflowTypeDataService.getByIdentity(workflow.getWorkflowTypeIdentity(), authentication);
 
     workflow.setWorkflowType(workflowType);
 
@@ -47,11 +53,13 @@ public class TestThreeTaskWorkPrepare implements IWorkflowPrepare<TestThreeTaskW
   }
 
   @Override
-  public List<TestThreeTaskWorkflow> prepareWorkflowList(final String token, final List<TestThreeTaskWorkflow> workflowList) throws MalformedURLException, IFlowMessageConversionFailureException {
+  public List<TestThreeTaskWorkflow> prepareWorkflowList(final Authentication authentication,
+      final List<TestThreeTaskWorkflow> workflowList) throws MalformedURLException, IFlowMessageConversionFailureException {
+
     final List<TestThreeTaskWorkflow> list = new ArrayList<>();
     if (workflowList != null) {
       for (final TestThreeTaskWorkflow workflow : workflowList) {
-        list.add(this.prepareWorkflow(token, workflow));
+        list.add(this.prepareWorkflow(authentication, workflow));
       }
 
     }
@@ -61,9 +69,10 @@ public class TestThreeTaskWorkPrepare implements IWorkflowPrepare<TestThreeTaskW
 
   private Map<String, WorkflowTypeStep> getIdMapedSteps(final WorkflowType workflowType) {
 
-    final Map<String, WorkflowTypeStep> list = workflowType.getSteps()
-                                                           .stream()
-                                                           .collect(Collectors.toMap(s -> s.getIdentity(), s -> s));
+    final Map<String, WorkflowTypeStep> list = workflowType
+        .getSteps()
+        .stream()
+        .collect(Collectors.toMap(s -> s.getIdentity(), s -> s));
 
     return list;
   }

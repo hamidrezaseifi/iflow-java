@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
+
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Department;
@@ -14,31 +16,31 @@ import com.pth.iflow.profile.model.UserGroup;
 
 public interface ITokenUserDataManager {
 
-  ProfileResponse getProfileByToken(String appIdentity, String token)
+  ProfileResponse getProfileByToken(String appIdentity, Authentication authentication)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
 
-  UserAuthenticationSession validateToken(String token)
+  UserAuthenticationSession validateToken(Authentication authentication)
       throws ProfileCustomizedException, IFlowMessageConversionFailureException;
 
-  void validateTokenAndCompany(String token, String companyIdentity)
+  void validateTokenAndCompany(Authentication authentication, String companyIdentity)
       throws ProfileCustomizedException, IFlowMessageConversionFailureException;
 
-  ProfileResponse getProfileByTokenAndCheckCompany(String appIdentity, String token, String companyIdentity)
+  ProfileResponse getProfileByTokenAndCheckCompany(String appIdentity, Authentication authentication, String companyIdentity)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
 
-  ProfileResponse getProfileByTokenUserIdentity(String appIdentity, String userIdentity, String token)
+  ProfileResponse getProfileByTokenUserIdentity(String appIdentity, String userIdentity, Authentication authentication)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
 
-  List<User> getUserListByToken(String token, String companyIdentity)
+  List<User> getUserListByToken(Authentication authentication, String companyIdentity)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
 
-  List<UserGroup> getUserGroupListByToken(String token, String companyIdentity)
+  List<UserGroup> getUserGroupListByToken(Authentication authentication, String companyIdentity)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
 
-  List<Department> getDepartmentListByToken(String token, String companyIdentity)
+  List<Department> getDepartmentListByToken(Authentication authentication, String companyIdentity)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
 
-  List<User> getAllUserListByDepartmentId(String token, String identity)
+  List<User> getAllUserListByDepartmentId(Authentication authentication, String identity)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
 
 }

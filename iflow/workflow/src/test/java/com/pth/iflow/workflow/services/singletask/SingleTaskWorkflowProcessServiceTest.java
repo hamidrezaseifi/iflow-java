@@ -22,8 +22,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
-import com.pth.iflow.workflow.TestDataProducer;
-import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
@@ -33,6 +31,7 @@ import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategyFactory;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.workflow.singletask.SingleTaskWorkflow;
 import com.pth.iflow.workflow.models.workflow.singletask.SingleTaskWorkflowSaveRequest;
+import com.pth.iflow.workflow.test.TestDataProducer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -48,9 +47,6 @@ public class SingleTaskWorkflowProcessServiceTest extends TestDataProducer {
   private IWorkflowPrepare<SingleTaskWorkflow> workflowPrepare;
 
   @Mock
-  private ITokenValidator tokenValidator;
-
-  @Mock
   IWorkflowSaveStrategyFactory<SingleTaskWorkflow> workStrategyFactory;
 
   @Mock
@@ -59,20 +55,16 @@ public class SingleTaskWorkflowProcessServiceTest extends TestDataProducer {
   @Mock
   private IWorkflowSaveStrategy<SingleTaskWorkflow> validateStrategy;
 
-  private String validTocken;
-
   @Before
   public void setUp() throws Exception {
 
-    this.workflowProcessService = new SingleTaskWorkflowProcessService(this.workflowDataService, this.tokenValidator,
-        this.workStrategyFactory, this.workflowPrepare);
+    this.workflowProcessService = new SingleTaskWorkflowProcessService(this.workflowDataService, this.workStrategyFactory,
+        this.workflowPrepare);
 
-    this.validTocken = "validTocken";
-
-    when(this.workStrategyFactory.selectSaveWorkStrategy(any(SingleTaskWorkflowSaveRequest.class), any(String.class)))
+    when(this.workStrategyFactory.selectSaveWorkStrategy(any(SingleTaskWorkflowSaveRequest.class), any()))
         .thenReturn(this.saveStrategy);
 
-    when(this.workStrategyFactory.selectValidationWorkStrategy(any(SingleTaskWorkflowSaveRequest.class), any(String.class)))
+    when(this.workStrategyFactory.selectValidationWorkStrategy(any(SingleTaskWorkflowSaveRequest.class), any()))
         .thenReturn(this.validateStrategy);
 
   }
@@ -87,10 +79,11 @@ public class SingleTaskWorkflowProcessServiceTest extends TestDataProducer {
 
     final SingleTaskWorkflow workflow = this.getTestSingleTaskWorkflow("workflow1");
 
-    when(this.workflowDataService.getByIdentity(any(String.class), any(String.class))).thenReturn(workflow);
-    when(this.workflowPrepare.prepareWorkflow(any(String.class), any(SingleTaskWorkflow.class))).thenReturn(workflow);
+    when(this.workflowDataService.getByIdentity(any(String.class), any())).thenReturn(workflow);
+    when(this.workflowPrepare.prepareWorkflow(any(), any(SingleTaskWorkflow.class))).thenReturn(workflow);
 
-    final SingleTaskWorkflow resWorkflow = this.workflowProcessService.getByIdentity(workflow.getIdentity(), this.validTocken);
+    final SingleTaskWorkflow resWorkflow = this.workflowProcessService
+        .getByIdentity(workflow.getIdentity(), this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), workflow.getIdentity());
@@ -106,7 +99,7 @@ public class SingleTaskWorkflowProcessServiceTest extends TestDataProducer {
 
     doThrow(new WorkflowCustomizedException("", EIFlowErrorType.INVALID_WORKFLOW_STATUS)).when(this.saveStrategy).process();
 
-    final SingleTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.validTocken);
+    final SingleTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), request.getWorkflow().getIdentity());
@@ -130,7 +123,7 @@ public class SingleTaskWorkflowProcessServiceTest extends TestDataProducer {
     doNothing().when(this.saveStrategy).process();
     when(this.saveStrategy.getSingleProceedWorkflow()).thenReturn(workflowSaveResult);
 
-    final SingleTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.validTocken);
+    final SingleTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), workflowSaveResult.getIdentity());
@@ -155,7 +148,7 @@ public class SingleTaskWorkflowProcessServiceTest extends TestDataProducer {
     final SingleTaskWorkflowSaveRequest request = this.getTestSingleTaskWorkflowSaveRequest();
     request.setWorkflow(workflow);
 
-    final SingleTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.validTocken);
+    final SingleTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), workflowSaveResult.getIdentity());
@@ -180,7 +173,7 @@ public class SingleTaskWorkflowProcessServiceTest extends TestDataProducer {
     final SingleTaskWorkflowSaveRequest request = this.getTestSingleTaskWorkflowSaveRequest();
     request.setWorkflow(workflow);
 
-    final SingleTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.validTocken);
+    final SingleTaskWorkflow resWorkflow = this.workflowProcessService.save(request, this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), workflowSaveResult.getIdentity());
@@ -197,10 +190,10 @@ public class SingleTaskWorkflowProcessServiceTest extends TestDataProducer {
     ;
     final List<SingleTaskWorkflow> list = this.getTestSingleTaskWorkflowList();
 
-    when(this.workflowDataService.getListByIdentityList(any(Set.class), any(String.class))).thenReturn(list);
-    when(this.workflowPrepare.prepareWorkflowList(any(String.class), any(List.class))).thenReturn(list);
+    when(this.workflowDataService.getListByIdentityList(any(Set.class), any())).thenReturn(list);
+    when(this.workflowPrepare.prepareWorkflowList(any(), any(List.class))).thenReturn(list);
 
-    final List<SingleTaskWorkflow> resList = this.workflowProcessService.getListByIdentityList(idList, this.validTocken);
+    final List<SingleTaskWorkflow> resList = this.workflowProcessService.getListByIdentityList(idList, this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", list.size(), resList.size());
@@ -221,9 +214,9 @@ public class SingleTaskWorkflowProcessServiceTest extends TestDataProducer {
     doNothing().when(this.saveStrategy).process();
     when(this.saveStrategy.getSingleProceedWorkflow()).thenReturn(workflowSaveResult);
     when(this.saveStrategy.getProceedWorkflowList()).thenReturn(reultList);
-    when(this.workflowPrepare.prepareWorkflowList(any(String.class), any(List.class))).thenReturn(reultList);
+    when(this.workflowPrepare.prepareWorkflowList(any(), any(List.class))).thenReturn(reultList);
 
-    final List<SingleTaskWorkflow> resWorkflowList = this.workflowProcessService.create(request, this.validTocken);
+    final List<SingleTaskWorkflow> resWorkflowList = this.workflowProcessService.create(request, this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflowList);
     Assert.assertEquals("Result workflow-type has id 1!", request.getAssigns().size(), resWorkflowList.size());
@@ -242,7 +235,7 @@ public class SingleTaskWorkflowProcessServiceTest extends TestDataProducer {
 
     doNothing().when(this.validateStrategy).process();
 
-    this.workflowProcessService.validate(request, this.validTocken);
+    this.workflowProcessService.validate(request, this.getValidAuthentiocation());
 
   }
 

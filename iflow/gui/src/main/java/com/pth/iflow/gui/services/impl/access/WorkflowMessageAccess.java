@@ -6,16 +6,17 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.WorkflowMessageListEdo;
+import com.pth.iflow.common.rest.IRestTemplateCall;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowMessage;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
-import com.pth.iflow.gui.services.IRestTemplateCall;
 import com.pth.iflow.gui.services.IWorkflowMessageAccess;
 
 @Service
@@ -34,7 +35,8 @@ public class WorkflowMessageAccess implements IWorkflowMessageAccess {
   }
 
   @Override
-  public List<WorkflowMessage> readUserMessages(final String companyIdentity, final String userIdentity, final String token)
+  public List<WorkflowMessage> readUserMessages(final String companyIdentity, final String userIdentity,
+      final Authentication authentication)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("read messages for user");
@@ -42,13 +44,13 @@ public class WorkflowMessageAccess implements IWorkflowMessageAccess {
     final WorkflowMessageListEdo responseListEdo = this.restTemplate
         .callRestGet(
             this.moduleAccessConfig.getReadUserWorkflowMessageListUri(userIdentity), EModule.WORKFLOW,
-            WorkflowMessageListEdo.class, token, true);
+            WorkflowMessageListEdo.class, authentication.getDetails().toString(), true);
 
     return GuiModelEdoMapper.fromWorkflowMessageEdoList(responseListEdo.getWorkflowMessages());
   }
 
   @Override
-  public List<WorkflowMessage> getWorkflowMessageListByUser(final String userIdentity, final String token)
+  public List<WorkflowMessage> getWorkflowMessageListByUser(final String userIdentity, final Authentication authentication)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("read messages for user");
@@ -56,13 +58,13 @@ public class WorkflowMessageAccess implements IWorkflowMessageAccess {
     final WorkflowMessageListEdo responseListEdo = this.restTemplate
         .callRestGet(
             this.moduleAccessConfig.getReadUserWorkflowMessageListUri(userIdentity), EModule.WORKFLOW,
-            WorkflowMessageListEdo.class, token, true);
+            WorkflowMessageListEdo.class, authentication.getDetails().toString(), true);
 
     return GuiModelEdoMapper.fromWorkflowMessageEdoList(responseListEdo.getWorkflowMessages());
   }
 
   @Override
-  public List<WorkflowMessage> getWorkflowMessageListByWorkflow(final String workflowIdentity, final String token)
+  public List<WorkflowMessage> getWorkflowMessageListByWorkflow(final String workflowIdentity, final Authentication authentication)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("read messages for user");
@@ -70,7 +72,7 @@ public class WorkflowMessageAccess implements IWorkflowMessageAccess {
     final WorkflowMessageListEdo responseListEdo = this.restTemplate
         .callRestGet(
             this.moduleAccessConfig.getReadWorkflowWorkflowMessageListUri(workflowIdentity), EModule.WORKFLOW,
-            WorkflowMessageListEdo.class, token, true);
+            WorkflowMessageListEdo.class, authentication.getDetails().toString(), true);
 
     return GuiModelEdoMapper.fromWorkflowMessageEdoList(responseListEdo.getWorkflowMessages());
   }

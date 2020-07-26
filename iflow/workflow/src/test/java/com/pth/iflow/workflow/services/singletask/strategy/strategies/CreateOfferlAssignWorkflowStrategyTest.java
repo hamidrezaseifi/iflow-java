@@ -18,7 +18,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
-import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IGuiCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
@@ -29,6 +28,7 @@ import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.workflow.singletask.SingleTaskWorkflow;
 import com.pth.iflow.workflow.models.workflow.singletask.SingleTaskWorkflowSaveRequest;
+import com.pth.iflow.workflow.test.TestDataProducer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,15 +52,9 @@ public class CreateOfferlAssignWorkflowStrategyTest extends TestDataProducer {
   @Mock
   private IWorkflowPrepare<SingleTaskWorkflow> workflowPrepare;
 
-  private String validTocken;
-
   @Before
   public void setUp() throws Exception {
 
-    // when(this.workflowDataService.generateCoreUrl(any(String.class))).thenReturn(new
-    // URL("http://any-string"));
-
-    this.validTocken = "validTocken";
   }
 
   @After
@@ -75,14 +69,14 @@ public class CreateOfferlAssignWorkflowStrategyTest extends TestDataProducer {
     request.setCommand(EWorkflowProcessCommand.DONE);
     request.setAssigns(Arrays.asList(new AssignItem("user1", EAssignType.USER), new AssignItem("user2", EAssignType.DEPARTMENT)));
 
-    when(this.workflowDataService.save(any(SingleTaskWorkflow.class), any(String.class))).thenReturn(request.getWorkflow());
-    when(this.workflowPrepare.prepareWorkflow(any(String.class), any(SingleTaskWorkflow.class))).thenReturn(request.getWorkflow());
+    when(this.workflowDataService.save(any(SingleTaskWorkflow.class), any())).thenReturn(request.getWorkflow());
+    when(this.workflowPrepare.prepareWorkflow(any(), any(SingleTaskWorkflow.class))).thenReturn(request.getWorkflow());
 
-    when(this.departmentDataService.getUserListByDepartmentIdentity(any(String.class), any(String.class)))
+    when(this.departmentDataService.getUserListByDepartmentIdentity(any(String.class), any()))
         .thenReturn(getTestUserList());
 
     this.workflowStrategy = new CreateOfferlAssignWorkflowStrategy<SingleTaskWorkflow>(request,
-        this.validTocken,
+        this.getValidAuthentiocation(),
         this.departmentDataService,
         this.workflowMessageDataService,
         this.cachDataDataService,
@@ -106,10 +100,10 @@ public class CreateOfferlAssignWorkflowStrategyTest extends TestDataProducer {
     request.setCommand(EWorkflowProcessCommand.DONE);
     request.setAssigns(Arrays.asList());
 
-    when(this.workflowDataService.save(any(SingleTaskWorkflow.class), any(String.class))).thenReturn(request.getWorkflow());
+    when(this.workflowDataService.save(any(SingleTaskWorkflow.class), any())).thenReturn(request.getWorkflow());
 
     this.workflowStrategy = new CreateOfferlAssignWorkflowStrategy<SingleTaskWorkflow>(request,
-        this.validTocken,
+        this.getValidAuthentiocation(),
         this.departmentDataService,
         this.workflowMessageDataService,
         this.cachDataDataService,

@@ -16,13 +16,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.workflow.TestDataProducer;
-import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeProcessService;
 import com.pth.iflow.workflow.bl.impl.WorkflowTypeProcessService;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
+import com.pth.iflow.workflow.test.TestDataProducer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,21 +33,10 @@ public class WorkflowTypeProcessServiceTest extends TestDataProducer {
   @Mock
   private IWorkflowTypeDataService workflowTypeDataService;
 
-  @Mock
-  private ITokenValidator tokenValidator;
-
-  private String validTocken;
-
-  private String validSession;
-
   @Before
   public void setUp() throws Exception {
 
-    this.workflowTypeProcessService = new WorkflowTypeProcessService(this.workflowTypeDataService, this.tokenValidator);
-
-    this.validTocken = "validTocken";
-
-    this.validSession = "validSession";
+    this.workflowTypeProcessService = new WorkflowTypeProcessService(this.workflowTypeDataService);
 
   }
 
@@ -62,9 +50,10 @@ public class WorkflowTypeProcessServiceTest extends TestDataProducer {
 
     final WorkflowType workflowType = this.getTestTestThreeTaskWorkflowType();
 
-    when(this.workflowTypeDataService.getByIdentity(any(String.class), any(String.class))).thenReturn(workflowType);
+    when(this.workflowTypeDataService.getByIdentity(any(String.class), any())).thenReturn(workflowType);
 
-    final WorkflowType resWorkflowType = this.workflowTypeProcessService.getByIdentity(workflowType.getIdentity(), this.validTocken);
+    final WorkflowType resWorkflowType = this.workflowTypeProcessService
+        .getByIdentity(workflowType.getIdentity(), this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflowType);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflowType.getIdentity(), workflowType.getIdentity());
@@ -83,9 +72,9 @@ public class WorkflowTypeProcessServiceTest extends TestDataProducer {
     ;
     final List<WorkflowType> list = this.getTestWorkflowTypeList();
 
-    when(this.workflowTypeDataService.getListByIdentityList(any(Set.class), any(String.class))).thenReturn(list);
+    when(this.workflowTypeDataService.getListByIdentityList(any(Set.class), any())).thenReturn(list);
 
-    final List<WorkflowType> resList = this.workflowTypeProcessService.getListByIdentityList(idList, this.validTocken);
+    final List<WorkflowType> resList = this.workflowTypeProcessService.getListByIdentityList(idList, this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -97,9 +86,9 @@ public class WorkflowTypeProcessServiceTest extends TestDataProducer {
 
     final List<WorkflowType> list = this.getTestWorkflowTypeList();
 
-    when(this.workflowTypeDataService.getListByCompanyIdentity(any(String.class), any(String.class))).thenReturn(list);
+    when(this.workflowTypeDataService.getListByCompanyIdentity(any(String.class), any())).thenReturn(list);
 
-    final List<WorkflowType> resList = this.workflowTypeProcessService.getListByCompanyIdentity("company1", this.validTocken);
+    final List<WorkflowType> resList = this.workflowTypeProcessService.getListByCompanyIdentity("company1", this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -111,9 +100,9 @@ public class WorkflowTypeProcessServiceTest extends TestDataProducer {
 
     final List<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
 
-    when(this.workflowTypeDataService.getStepsByIdentity(any(String.class), any(String.class))).thenReturn(list);
+    when(this.workflowTypeDataService.getStepsByIdentity(any(String.class), any())).thenReturn(list);
 
-    final List<WorkflowTypeStep> resList = this.workflowTypeProcessService.getStepsByIdentity("type1", this.validTocken);
+    final List<WorkflowTypeStep> resList = this.workflowTypeProcessService.getStepsByIdentity("type1", this.getValidAuthentiocation());
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

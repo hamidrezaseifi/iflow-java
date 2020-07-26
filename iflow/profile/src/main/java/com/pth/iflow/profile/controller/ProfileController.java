@@ -5,12 +5,11 @@ import java.net.URISyntaxException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -19,15 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.enums.EModule;
-import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.AuthenticatedProfileRequestEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.TokenProfileRequestEdo;
 import com.pth.iflow.common.models.edo.UserAuthenticationRequestEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
@@ -53,16 +49,8 @@ public class ProfileController {
   @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.PROFILE_READ_AUTHENTOCATEDINFO)
   @ResponseBody
   public ResponseEntity<ProfileResponseEdo> readAuthenticatedInfo(@RequestBody final AuthenticatedProfileRequestEdo requestEdo,
-      final HttpServletRequest request,
-      @RequestHeader(
-        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
-      ) final String headerTokenId)
+      final HttpServletRequest request, final Authentication authentication)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
-
-    if (StringUtils.isEmpty(requestEdo.getToken()) || StringUtils.isEmpty(headerTokenId)
-        || (requestEdo.getToken().equals(headerTokenId) == false)) {
-      throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
-    }
 
     final ProfileResponse profile = this.tokenUserDataManager
         .getProfileByTokenUserIdentity(requestEdo.getAppId(), requestEdo.getUserIdentity(),
@@ -75,16 +63,8 @@ public class ProfileController {
   @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO)
   @ResponseBody
   public ResponseEntity<ProfileResponseEdo> readTokenInfo(@RequestBody final TokenProfileRequestEdo requestEdo,
-      final HttpServletRequest request,
-      @RequestHeader(
-        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
-      ) final String headerTokenId)
+      final HttpServletRequest request, final Authentication authentication)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
-
-    if (StringUtils.isEmpty(requestEdo.getToken()) || StringUtils.isEmpty(headerTokenId)
-        || (requestEdo.getToken().equals(headerTokenId) == false)) {
-      throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
-    }
 
     final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(requestEdo.getAppId(), requestEdo.getToken());
 
@@ -94,10 +74,7 @@ public class ProfileController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.PROFILE_VALIDATE_TOKEN)
   @ResponseBody
-  public void validateToken(final HttpServletRequest request,
-      @RequestHeader(
-        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
-      ) final String headerTokenId)
+  public void validateToken(final HttpServletRequest request, final Authentication authentication)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
     /*
@@ -113,17 +90,8 @@ public class ProfileController {
   @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.PROFILE_SAVE_AUTHENTOCATION)
   @ResponseBody
   public ResponseEntity<UserAuthenticationRequestEdo> saveAuthentication(@RequestBody final UserAuthenticationRequestEdo userEdo,
-      final HttpServletRequest request,
-      @RequestHeader(
-        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
-      ) final String headerTokenId)
+      final HttpServletRequest request, final Authentication authentication)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
-
-    if (StringUtils.isEmpty(headerTokenId)) {
-      throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
-    }
-
-    this.tokenUserDataManager.validateToken(headerTokenId);
 
     final UserAuthenticationRequest auth = this.authenticationService.setAuthentication(ProfileModelEdoMapper.fromEdo(userEdo));
 

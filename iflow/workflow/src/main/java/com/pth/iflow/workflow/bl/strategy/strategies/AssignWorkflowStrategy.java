@@ -2,6 +2,8 @@ package com.pth.iflow.workflow.bl.strategy.strategies;
 
 import java.net.MalformedURLException;
 
+import org.springframework.security.core.Authentication;
+
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IGuiCachDataDataService;
@@ -28,7 +30,7 @@ import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 public class AssignWorkflowStrategy<W extends IWorkflow> extends AbstractWorkflowSaveStrategy<W> {
 
   public AssignWorkflowStrategy(final IWorkflowSaveRequest<W> workflowCreateRequest,
-      final String token,
+      final Authentication authentication,
       final IDepartmentDataService departmentDataService,
       final IWorkflowMessageDataService workflowMessageDataService,
       final IGuiCachDataDataService cachDataDataService,
@@ -39,7 +41,7 @@ public class AssignWorkflowStrategy<W extends IWorkflow> extends AbstractWorkflo
       IFlowMessageConversionFailureException {
 
     super(workflowCreateRequest,
-        token,
+        authentication,
         departmentDataService,
         workflowMessageDataService,
         cachDataDataService,

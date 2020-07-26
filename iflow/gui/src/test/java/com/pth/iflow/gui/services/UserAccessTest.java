@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
+import com.pth.iflow.common.rest.IRestTemplateCall;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.User;

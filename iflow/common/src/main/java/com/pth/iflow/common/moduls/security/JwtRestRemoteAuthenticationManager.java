@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtRestRemoteAuthenticationManager implements AuthenticationProvider {
 
-  private final IJwtTokenProvider jwtTokenProvider;
+  private final IJwtRemoteTokenProvider jwtRemoteTokenProvider;
 
-  public JwtRestRemoteAuthenticationManager(@Autowired final IJwtTokenProvider jwtTokenProvider) {
+  public JwtRestRemoteAuthenticationManager(@Autowired final IJwtRemoteTokenProvider jwtRemoteTokenProvider) {
 
-    this.jwtTokenProvider = jwtTokenProvider;
+    this.jwtRemoteTokenProvider = jwtRemoteTokenProvider;
   }
 
   @Override
@@ -26,14 +26,16 @@ public class JwtRestRemoteAuthenticationManager implements AuthenticationProvide
 
       final String token = authentication.getDetails().toString();
 
-      final UsernamePasswordAuthenticationToken tokenAuthentication = this.jwtTokenProvider.getAuthentication(token);
+      final UsernamePasswordAuthenticationToken tokenAuthentication = this.jwtRemoteTokenProvider.getAuthentication(token);
 
-      SecurityContext ctx = SecurityContextHolder.getContext();
-      if (ctx == null) {
-        ctx = SecurityContextHolder.createEmptyContext();
+      if (tokenAuthentication != null) {
+        SecurityContext ctx = SecurityContextHolder.getContext();
+        if (ctx == null) {
+          ctx = SecurityContextHolder.createEmptyContext();
+        }
+
+        ctx.setAuthentication(tokenAuthentication);
       }
-
-      ctx.setAuthentication(tokenAuthentication);
 
       return tokenAuthentication;
     }

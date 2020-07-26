@@ -14,24 +14,25 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.IdentityListEdo;
 import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowEdo;
 import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
+import com.pth.iflow.common.rest.IRestTemplateCall;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflow;
 import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflowSaveRequest;
-import com.pth.iflow.gui.services.IRestTemplateCall;
 import com.pth.iflow.gui.services.IWorkflowAccess;
 
 @Service
 public class TestThreeTaskWorkflowAccess implements IWorkflowAccess<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> {
 
-  private static final Logger                               logger = LoggerFactory.getLogger(TestThreeTaskWorkflowAccess.class);
+  private static final Logger logger = LoggerFactory.getLogger(TestThreeTaskWorkflowAccess.class);
 
-  private final IRestTemplateCall                           restTemplate;
+  private final IRestTemplateCall restTemplate;
   private final GuiConfiguration.WorkflowModuleAccessConfig moduleAccessConfig;
 
   public TestThreeTaskWorkflowAccess(@Autowired final IRestTemplateCall restTemplate,
       @Autowired final GuiConfiguration.WorkflowModuleAccessConfig moduleAccessConfig) {
+
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
   }
@@ -40,9 +41,11 @@ public class TestThreeTaskWorkflowAccess implements IWorkflowAccess<TestThreeTas
   public TestThreeTaskWorkflow readWorkflow(final String workflowIdentity, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final TestThreeTaskWorkflowEdo responseEdo = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.getReadTestThreeTaskWorkflowUri(workflowIdentity), EModule.WORKFLOW, TestThreeTaskWorkflowEdo.class, token,
-        true);
+    final TestThreeTaskWorkflowEdo responseEdo = this.restTemplate
+        .callRestGet(
+            this.moduleAccessConfig.getReadTestThreeTaskWorkflowUri(workflowIdentity), EModule.WORKFLOW, TestThreeTaskWorkflowEdo.class,
+            token,
+            true);
 
     return GuiModelEdoMapper.fromEdo(responseEdo);
   }
@@ -50,11 +53,13 @@ public class TestThreeTaskWorkflowAccess implements IWorkflowAccess<TestThreeTas
   @Override
   public List<TestThreeTaskWorkflow> createWorkflow(final TestThreeTaskWorkflowSaveRequest createRequest, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     logger.debug("Create workflow");
 
-    final TestThreeTaskWorkflowListEdo responseListEdo = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.getCreateTestThreeTaskWorkflowUri(), EModule.WORKFLOW, GuiModelEdoMapper.toEdo(createRequest),
-        TestThreeTaskWorkflowListEdo.class, token, true);
+    final TestThreeTaskWorkflowListEdo responseListEdo = this.restTemplate
+        .callRestPost(
+            this.moduleAccessConfig.getCreateTestThreeTaskWorkflowUri(), EModule.WORKFLOW, GuiModelEdoMapper.toEdo(createRequest),
+            TestThreeTaskWorkflowListEdo.class, token, true);
 
     return GuiModelEdoMapper.fromTestThreeTaskWorkflowEdoList(responseListEdo.getWorkflows());
   }
@@ -62,10 +67,12 @@ public class TestThreeTaskWorkflowAccess implements IWorkflowAccess<TestThreeTas
   @Override
   public TestThreeTaskWorkflow saveWorkflow(final TestThreeTaskWorkflowSaveRequest request, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     logger.debug("save workflow");
 
-    final TestThreeTaskWorkflowEdo responseEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getSaveTestThreeTaskWorkflowUri(),
-        EModule.WORKFLOW, GuiModelEdoMapper.toEdo(request), TestThreeTaskWorkflowEdo.class, token, true);
+    final TestThreeTaskWorkflowEdo responseEdo = this.restTemplate
+        .callRestPost(this.moduleAccessConfig.getSaveTestThreeTaskWorkflowUri(),
+            EModule.WORKFLOW, GuiModelEdoMapper.toEdo(request), TestThreeTaskWorkflowEdo.class, token, true);
 
     return GuiModelEdoMapper.fromEdo(responseEdo);
   }
@@ -73,24 +80,28 @@ public class TestThreeTaskWorkflowAccess implements IWorkflowAccess<TestThreeTas
   @Override
   public void validateWorkflow(final TestThreeTaskWorkflowSaveRequest request, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     logger.debug("save workflow");
 
-    this.restTemplate.callRestPost(this.moduleAccessConfig.getValidateTestThreeTaskWorkflowUri(), EModule.WORKFLOW,
-        GuiModelEdoMapper.toEdo(request), Void.class, token, true);
+    this.restTemplate
+        .callRestPost(this.moduleAccessConfig.getValidateTestThreeTaskWorkflowUri(), EModule.WORKFLOW,
+            GuiModelEdoMapper.toEdo(request), Void.class, token, true);
 
   }
 
   @Override
   public List<TestThreeTaskWorkflow> readWorkflowList(final Set<String> workflowIdentityList, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     logger.debug("Read workflow by identity list");
 
-    final IdentityListEdo              listEdo         = new IdentityListEdo(workflowIdentityList);
-    final TestThreeTaskWorkflowListEdo responseListEdo = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.getReadTestThreeTaskWorkflowListByIdentityListUri(), EModule.WORKFLOW, listEdo,
-        TestThreeTaskWorkflowListEdo.class, token, true);
+    final IdentityListEdo listEdo = new IdentityListEdo(workflowIdentityList);
+    final TestThreeTaskWorkflowListEdo responseListEdo = this.restTemplate
+        .callRestPost(
+            this.moduleAccessConfig.getReadTestThreeTaskWorkflowListByIdentityListUri(), EModule.WORKFLOW, listEdo,
+            TestThreeTaskWorkflowListEdo.class, token, true);
 
-    final List<TestThreeTaskWorkflow>  list            = GuiModelEdoMapper.fromTestThreeTaskWorkflowEdoList(responseListEdo.getWorkflows());
+    final List<TestThreeTaskWorkflow> list = GuiModelEdoMapper.fromTestThreeTaskWorkflowEdoList(responseListEdo.getWorkflows());
 
     return list;
   }

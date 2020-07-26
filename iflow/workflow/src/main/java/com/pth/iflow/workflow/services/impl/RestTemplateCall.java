@@ -10,12 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
@@ -23,12 +20,13 @@ import org.springframework.web.client.RestTemplate;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.response.IFlowErrorRestResponse;
-import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
+import com.pth.iflow.common.rest.IRestTemplateCall;
+import com.pth.iflow.common.rest.RestTemplateException;
+import com.pth.iflow.common.rest.RestTemplateHelper;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.services.IRestTemplateCall;
 
 @Service
-public class RestTemplateCall implements IRestTemplateCall {
+public class RestTemplateCall extends RestTemplateHelper implements IRestTemplateCall {
 
   protected final Logger log = LoggerFactory.getLogger(RestTemplateCall.class);
 
@@ -44,27 +42,28 @@ public class RestTemplateCall implements IRestTemplateCall {
   }
 
   @Override
-  public <I, O> O callRestPost(final URI url, final String token, final EModule service, final I edo, final Class<O> responseClass,
-      final boolean throwError) throws WorkflowCustomizedException {
+  public <I, O> O callRestPost(final URI uri, final EModule service, final I edo, final Class<O> responseClass,
+      final String token,
+      final boolean throwError) throws RestTemplateException {
 
     final HttpEntity<I> request = new HttpEntity<I>(edo, generateTokenHeader(token));
 
     try {
       if (responseClass.equals(Void.class)) {
 
-        this.restTemplate.postForEntity(url, request, responseClass);
+        this.restTemplate.postForEntity(uri, request, responseClass);
 
         return null;
       }
       else {
-        final ResponseEntity<O> responseEntity = this.restTemplate.postForEntity(url, request, responseClass);
+        final ResponseEntity<O> responseEntity = this.restTemplate.postForEntity(uri, request, responseClass);
 
         return responseEntity.getBody();
       }
     }
     catch (final RestClientResponseException e) {
       final String resp = e.getResponseBodyAsString();
-      this.log.error("ERROR in connection with \"{}\" through url \"{}\" and response is {} ", service.getModuleName(), url, resp, e);
+      this.log.error("ERROR in connection with \"{}\" through url \"{}\" and response is {} ", service.getModuleName(), uri, resp, e);
 
       if (!throwError) {
         return null;
@@ -75,7 +74,7 @@ public class RestTemplateCall implements IRestTemplateCall {
         response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
       }
       catch (final IOException e1) {
-        final WorkflowCustomizedException uiCustomizedException = new WorkflowCustomizedException("failed to POST: " + url, e1,
+        final WorkflowCustomizedException uiCustomizedException = new WorkflowCustomizedException("failed to POST: " + uri, e1,
             service.name(), EIFlowErrorType.SERVICE_NOT_FOUND);
         uiCustomizedException.initCause(e1);
         throw uiCustomizedException;
@@ -85,7 +84,7 @@ public class RestTemplateCall implements IRestTemplateCall {
           response.getErrorType());
     }
     catch (final RestClientException e) {
-      this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), url, e);
+      this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), uri, e);
 
       if (!throwError) {
         return null;
@@ -95,17 +94,10 @@ public class RestTemplateCall implements IRestTemplateCall {
     }
   }
 
-  private MultiValueMap<String, String> generateTokenHeader(final String token) {
-
-    final MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-    headers.add(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, token);
-    headers.add("Content-Type", MediaType.APPLICATION_XML_VALUE);
-    return headers;
-  }
-
   @Override
-  public <O> O callRestGet(final URI uri, final String token, final EModule service, final Class<O> responseClass,
-      final boolean throwError, final Object... args) throws WorkflowCustomizedException {
+  public <O> O callRestGet(final URI uri, final EModule service, final Class<O> responseClass, final String token,
+      final boolean throwError)
+      throws RestTemplateException {
 
     try {
       final HttpEntity<Object> requestEntity = new HttpEntity<Object>(generateTokenHeader(token));

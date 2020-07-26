@@ -21,6 +21,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import com.pth.iflow.common.enums.EUserDepartmentMemberType;
 import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.moduls.security.JwtAuthenticationToken;
 import com.pth.iflow.gui.authentication.GuiAuthenticationToken;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.Company;
@@ -149,6 +150,11 @@ public class SessionUserInfo {
   public String getToken() {
 
     return this.token;
+  }
+
+  public JwtAuthenticationToken getAuthentication() {
+
+    return new JwtAuthenticationToken(this.user.getUsername(), this.token);
   }
 
   public String getSessionId() {
