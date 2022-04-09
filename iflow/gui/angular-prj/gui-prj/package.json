@@ -30,7 +30,7 @@
     "angular-resizable-element": "^3.2.6",
     "bootstrap": "^4.4.1",
     "jquery": "^3.4.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "net": "^1.0.2",
     "ng-angular8-datatable": "^0.9.11",
     "ng-seven-datatable": "^0.9.0",
